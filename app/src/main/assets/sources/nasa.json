@@ -1,0 +1,33 @@
+{
+  "id": "nasa",
+  "name": "NASA",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://www.nasa.gov/",
+  "needs_proxy": false,
+  "category": "science",
+  "origin": {
+    "type": "calibre_recipe",
+    "id": "nasa"
+  },
+  "index": {
+    "type": "rss",
+    "url": "https://www.nasa.gov/rss/dyn/breaking_news.rss",
+    "max": 20
+  },
+  "article": {
+    "content": "article",
+    "title": "h1",
+    "remove": [],
+    "encoding": null
+  },
+  "request": {
+    "delay_seconds": 1,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "NASA 官方新闻稿,航天科普词汇。2026-07-25 直连探测:feed 10 items,article 约 4700 字符。",
+  "test": {
+    "fixture": "fixtures/nasa/"
+  }
+}

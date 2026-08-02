@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Handypage Tab 转场动效 · 四方向预览</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
+
+:root {
+  --paper: #fbfaf7;
+  --paper-alt: #f3f0e9;
+  --ink: #141414;
+  --sub: #5c5c58;
+  --faint: #a39e98;
+  --hairline: rgba(0,0,0,.10);
+  --red: #b3352b;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  background: #efece6;
+  color: var(--ink);
+  padding: 24px 16px 80px;
+}
+.shell-head { max-width: 1080px; margin: 0 auto 20px; }
+.shell-head h1 { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 700; }
+.shell-head .note { font-size: 12px; color: var(--sub); margin-top: 6px; }
+
+.grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+@media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+
+.dir-card { background: var(--paper); border: 1px solid var(--hairline); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
+.dir-card .card-top { display: flex; align-items: baseline; gap: 10px; padding: 14px 16px 10px; }
+.dir-card .dir-letter { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700; }
+.dir-card .dir-name { font-size: 15px; font-weight: 600; }
+.dir-card .dir-tag { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--sub); }
+.dir-card .reco { margin-left: auto; font-size: 11px; font-weight: 600; color: var(--red); border: 1px solid rgba(179,53,43,.35); background: rgba(179,53,43,.08); border-radius: 999px; padding: 2px 10px; }
+
+.stage { display: flex; justify-content: center; align-items: center; padding: 8px 16px 16px; flex: 1; }
+.phone {
+  width: 260px; height: 440px; background: var(--paper);
+  border: 1px solid var(--hairline); border-radius: 24px;
+  box-shadow: 0 12px 32px rgba(20,20,20,.10);
+  display: flex; flex-direction: column; overflow: hidden; position: relative;
+}
+.masthead { padding: 14px 14px 0; flex-shrink: 0; }
+.masthead .kicker { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--sub); }
+.masthead .mtitle { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700; line-height: 1.15; margin-top: 2px; }
+.masthead .mmeta { font-size: 8px; letter-spacing: .12em; text-transform: uppercase; color: var(--sub); margin-top: 3px; }
+.masthead .drule { margin-top: 6px; }
+.masthead .drule .t { height: 2px; background: var(--ink); }
+.masthead .drule .b { height: 1px; background: var(--ink); margin-top: 2px; }
+
+.viewport { position: relative; flex: 1; overflow: hidden; margin: 8px 0 0; }
+.page { position: absolute; inset: 0; padding: 4px 14px 10px; display: flex; flex-direction: column; gap: 10px; }
+.page .sec { font-family: 'Fraunces', serif; font-size: 13px; font-weight: 600; }
+.page .sec-rule { height: 1px; background: var(--ink); margin-top: 3px; }
+.row { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--hairline); }
+.row .mono { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 600; width: 18px; }
+.row .rname { font-size: 11px; font-weight: 500; }
+.row .rsub { font-size: 9px; color: var(--sub); }
+.row .pill { margin-left: auto; font-size: 8px; color: var(--red); border: 1px solid rgba(179,53,43,.35); background: rgba(179,53,43,.08); border-radius: 999px; padding: 1px 6px; }
+
+.tabbar { flex-shrink: 0; border-top: 2px solid var(--ink); display: flex; position: relative; background: var(--paper); }
+.tabbar button {
+  flex: 1; background: none; border: none; cursor: pointer;
+  padding: 8px 0 10px; display: flex; flex-direction: column; align-items: center; gap: 2px;
+  font-size: 9px; color: var(--sub); font-family: inherit; position: relative;
+}
+.tabbar button .ic { font-size: 15px; line-height: 1; }
+.tabbar button.active { color: var(--ink); font-weight: 600; }
+.tab-ink { position: absolute; bottom: 0; height: 2px; background: var(--ink); width: 25%; left: 0; }
+
+.pick-row { padding: 0 16px 16px; }
+.qmdp-pick-button {
+  width: 100%; padding: 10px; border-radius: 4px; cursor: pointer;
+  border: 1px solid var(--ink); background: transparent; color: var(--ink);
+  font-size: 13px; font-weight: 600; font-family: inherit;
+  transition: background 120ms var(--ease-out), transform 120ms var(--ease-out);
+}
+.qmdp-pick-button:hover { background: var(--paper-alt); }
+.qmdp-pick-button:active { transform: scale(0.98); }
+.dir-card.selected { outline: 2px solid var(--ink); }
+
+/* A · 墨韵 */
+.dir-a .page { opacity: 0; transform: translateY(4px); transition: opacity 160ms var(--ease-out), transform 160ms var(--ease-out); }
+.dir-a .page.on { opacity: 1; transform: translateY(0); }
+.dir-a .tab-ink { transition: left 240ms var(--ease-out); }
+
+/* B · 规则线 */
+.dir-b .sweep-line { position: absolute; top: 0; left: 0; height: 1px; width: 100%; background: var(--ink); transform: translateX(-101%); z-index: 5; pointer-events: none; }
+.dir-b .sweep-line.run { animation: b-sweep 220ms var(--ease-out) forwards; }
+@keyframes b-sweep { from { transform: translateX(-101%);} to { transform: translateX(101%);} }
+.dir-b .page { opacity: 0; }
+.dir-b .page.on { animation: b-in 200ms var(--ease-out) forwards; }
+.dir-b .page.from-right.on { animation-name: b-in-right; }
+@keyframes b-in { from { opacity: 0; transform: translateX(-22px);} to { opacity: 1; transform: translateX(0);} }
+@keyframes b-in-right { from { opacity: 0; transform: translateX(22px);} to { opacity: 1; transform: translateX(0);} }
+.dir-b .tab-ink { transition: left 220ms var(--ease-out); }
+
+/* C · 栏目翻页 */
+.dir-c .page { opacity: 0; }
+.dir-c .page .inner { will-change: transform; }
+.dir-c .page.on { animation: c-in 280ms var(--ease-in-out) forwards; }
+.dir-c .page.on .inner { animation: c-inner 280ms var(--ease-in-out) forwards; }
+.dir-c .page.from-right.on { animation-name: c-in-right; }
+.dir-c .page.from-right.on .inner { animation-name: c-inner-right; }
+@keyframes c-in { from { opacity: 0; transform: translateX(-34%);} to { opacity: 1; transform: translateX(0);} }
+@keyframes c-in-right { from { opacity: 0; transform: translateX(34%);} to { opacity: 1; transform: translateX(0);} }
+@keyframes c-inner { from { transform: translateX(-14%);} to { transform: translateX(0);} }
+@keyframes c-inner-right { from { transform: translateX(14%);} to { transform: translateX(0);} }
+.dir-c .tab-ink { transition: left 280ms var(--ease-in-out); }
+
+/* D · 刊头呼吸 */
+.dir-d .page { opacity: 0; transform: scale(0.985); transition: opacity 150ms var(--ease-out), transform 150ms var(--ease-out); }
+.dir-d .page.on { opacity: 1; transform: scale(1); }
+.dir-d .mtitle span { display: inline-block; }
+.dir-d .mtitle span.rise { animation: d-rise 260ms var(--ease-out); }
+@keyframes d-rise { from { opacity: 0; transform: translateY(7px);} to { opacity: 1; transform: translateY(0);} }
+.dir-d .tab-ink { transition: opacity 150ms var(--ease-out); }
+
+.dials { max-width: 1080px; margin: 28px auto 0; background: var(--paper); border: 1px solid var(--hairline); border-radius: 8px; padding: 18px 20px; }
+.dials h2 { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 600; margin-bottom: 12px; }
+.dial-row { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; flex-wrap: wrap; }
+.dial-row label { width: 110px; font-size: 13px; color: var(--sub); }
+.dial-row input[type=range] { flex: 1; min-width: 160px; accent-color: var(--ink); }
+.dial-row .val { width: 44px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; font-size: 13px; }
+
+.modal-mask { position: fixed; inset: 0; background: rgba(20,20,20,.4); display: none; align-items: center; justify-content: center; z-index: 100; }
+.modal-mask.open { display: flex; }
+.modal { background: var(--paper); border-radius: 8px; width: min(420px, 92vw); padding: 22px; box-shadow: 0 20px 60px rgba(0,0,0,.25); }
+.modal h3 { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+.modal .m-dials { font-size: 12px; color: var(--sub); margin-bottom: 12px; }
+.modal textarea { width: 100%; border: 1px solid var(--hairline); border-radius: 4px; padding: 8px; font-family: inherit; font-size: 13px; resize: vertical; min-height: 60px; }
+.modal .m-actions { display: flex; gap: 10px; margin-top: 14px; }
+.modal .m-actions button { flex: 1; padding: 10px; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
+.modal .m-cancel { border: 1px solid var(--hairline); background: transparent; color: var(--sub); }
+.modal .m-confirm { border: 1px solid var(--ink); background: var(--ink); color: var(--paper); }
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(16px); background: var(--ink); color: var(--paper); padding: 9px 18px; border-radius: 4px; font-size: 13px; opacity: 0; transition: all 200ms var(--ease-out); pointer-events: none; z-index: 200; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="shell-head">
+  <h1>Handypage · Tab 转场动效四方向</h1>
+  <div class="note">设计方向样机，用于选择转场气质，不是最终 App。点击样机内的 tab 试手感，再点「选择」回传。</div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="dials">
+  <h2>三拨盘</h2>
+  <div class="dial-row"><label>视觉冒险度</label><input type="range" id="d-var" min="1" max="10" value="6"><span class="val" id="v-var">6</span></div>
+  <div class="dial-row"><label>动效强度</label><input type="range" id="d-mot" min="1" max="10" value="6"><span class="val" id="v-mot">6</span></div>
+  <div class="dial-row"><label>信息密度</label><input type="range" id="d-den" min="1" max="10" value="6"><span class="val" id="v-den">6</span></div>
+</div>
+
+<div class="modal-mask" id="mask">
+  <div class="modal">
+    <h3 id="m-title">选择方向</h3>
+    <div class="m-dials" id="m-dials"></div>
+    <textarea id="m-notes" placeholder="调整建议（可选），如「要 A 的干脆 + C 的方向感」"></textarea>
+    <div class="m-actions">
+      <button class="m-cancel" id="m-cancel">取消</button>
+      <button class="m-confirm" id="m-confirm">确认并回传</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const TABS = [
+  { key:'reading', label:'阅读', ic:'📰', title:'阅读', meta:'15 SOURCES · 4 SECTIONS',
+    rows:[['N','NPR','npr.org'],['B','BBC','bbc.com','需代理'],['Q','Quanta','quantamagazine.org']] },
+  { key:'local', label:'本机', ic:'📱', title:'本机', meta:'12 ARTICLES · 48 WORDS',
+    rows:[['文','文章','12 篇已缓存'],['词','生词','48 个'],['句','好句','7 句']] },
+  { key:'agent', label:'Agent', ic:'✦', title:'Agent', meta:'DEEPSEEK · DEEPSEEK-CHAT',
+    rows:[['✦','今日推荐','适合你的文章'],['✦','最新论文','arXiv cs.CL']] },
+  { key:'settings', label:'设置', ic:'⚙', title:'设置', meta:'READING & AI CONFIG',
+    rows:[['A','阅读设置','字号 · 主题 · 对齐'],['A','AI 配置','API Key · Provider']] },
+];
+
+const DIRS = [
+  { id:'A', name:'墨韵', cls:'dir-a', tag:'INK FADE', reco:true,
+    desc:'干脆 crossfade + 4px 上浮，墨短线弹簧滑动。最稳、最印刷。' },
+  { id:'B', name:'规则线', cls:'dir-b', tag:'RULE SWEEP', reco:false,
+    desc:'1dp 实墨线横扫引导，内容按方向滑入。空间叙事最强。' },
+  { id:'C', name:'栏目翻页', cls:'dir-c', tag:'COLUMN SHIFT', reco:false,
+    desc:'整版横向位移 + 前后景视差，像翻报纸栏目。最"纸"。' },
+  { id:'D', name:'刊头呼吸', cls:'dir-d', tag:'MASTHEAD BREATH', reco:false,
+    desc:'内容缩放呼吸，刊头标题逐字上浮。最现代。' },
+];
+
+function buildPage(t) {
+  const inner = '<div class="sec">'+t.title+'</div><div class="sec-rule"></div>' +
+    t.rows.map(function(r){
+      return '<div class="row"><span class="mono">'+r[0]+'</span><span><span class="rname">'+r[1]+'</span><br><span class="rsub">'+r[2]+'</span></span>'+(r[3]?'<span class="pill">'+r[3]+'</span>':'')+'</div>';
+    }).join('');
+  return '<div class="page"><div class="inner">'+inner+'</div></div>';
+}
+
+function buildPhone(dir) {
+  const pages = TABS.map(buildPage).join('');
+  const tabs = TABS.map(function(t,i){
+    return '<button data-i="'+i+'" class="'+(i===0?'active':'')+'"><span class="ic">'+t.ic+'</span>'+t.label+'</button>';
+  }).join('');
+  return '<div class="phone '+dir.cls+'" data-dir="'+dir.id+'">' +
+    (dir.cls==='dir-b' ? '<div class="sweep-line"></div>' : '') +
+    '<div class="masthead"><div class="kicker">HANDYPAGE</div><div class="mtitle">'+TABS[0].title+'</div><div class="mmeta">'+TABS[0].meta+'</div><div class="drule"><div class="t"></div><div class="b"></div></div></div>' +
+    '<div class="viewport">'+pages+'</div>' +
+    '<div class="tabbar">'+tabs+'<div class="tab-ink"></div></div></div>';
+}
+
+const grid = document.getElementById('grid');
+DIRS.forEach(function(d){
+  const card = document.createElement('div');
+  card.className = 'dir-card';
+  card.dataset.dir = d.id;
+  card.innerHTML =
+    '<div class="card-top"><span class="dir-letter">'+d.id+'</span><span class="dir-name">'+d.name+'</span><span class="dir-tag">'+d.tag+'</span>'+(d.reco?'<span class="reco">推荐</span>':'')+'</div>' +
+    '<div class="stage">'+buildPhone(d)+'</div>' +
+    '<div class="pick-row"><button class="qmdp-pick-button" data-pick="'+d.id+'">选择 '+d.id+' · '+d.name+'</button></div>';
+  grid.appendChild(card);
+});
+
+document.querySelectorAll('.phone').forEach(function(phone){
+  const dir = phone.dataset.dir;
+  const pages = Array.prototype.slice.call(phone.querySelectorAll('.page'));
+  const tabBtns = Array.prototype.slice.call(phone.querySelectorAll('.tabbar button'));
+  const ink = phone.querySelector('.tab-ink');
+  const mtitle = phone.querySelector('.mtitle');
+  const mmeta = phone.querySelector('.mmeta');
+  const sweep = phone.querySelector('.sweep-line');
+  let cur = 0;
+  pages[0].classList.add('on');
+  function placeInk(i){ ink.style.left = (i*25)+'%'; }
+  placeInk(0);
+
+  tabBtns.forEach(function(btn,i){
+    btn.addEventListener('click', function(){
+      if(i===cur) return;
+      const fromRight = i>cur;
+      tabBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      placeInk(i);
+      mtitle.textContent = TABS[i].title;
+      mmeta.textContent = TABS[i].meta;
+      const oldPage = pages[cur], newPage = pages[i];
+      if(dir==='A'){
+        oldPage.classList.remove('on');
+        newPage.classList.add('on');
+      } else if(dir==='B'){
+        if(sweep){ sweep.classList.remove('run'); void sweep.offsetWidth; sweep.classList.add('run'); }
+        oldPage.classList.remove('on','from-right');
+        newPage.classList.toggle('from-right', fromRight);
+        newPage.classList.remove('on'); void newPage.offsetWidth; newPage.classList.add('on');
+      } else if(dir==='C'){
+        oldPage.classList.remove('on','from-right');
+        newPage.classList.toggle('from-right', fromRight);
+        newPage.classList.remove('on'); void newPage.offsetWidth; newPage.classList.add('on');
+      } else if(dir==='D'){
+        oldPage.classList.remove('on');
+        const txt = mtitle.textContent;
+        mtitle.innerHTML = Array.from(txt).map(function(c,k){
+          return '<span style="animation-delay:'+(k*24)+'ms" class="rise">'+(c===' '?'&nbsp;':c)+'</span>';
+        }).join('');
+        setTimeout(function(){ newPage.classList.add('on'); }, 60);
+      }
+      cur = i;
+    });
+  });
+});
+
+['var','mot','den'].forEach(function(k){
+  const inp = document.getElementById('d-'+k), val = document.getElementById('v-'+k);
+  inp.addEventListener('input', function(){ val.textContent = inp.value; });
+});
+function getDials(){ return {
+  variance: +document.getElementById('d-var').value,
+  motion: +document.getElementById('d-mot').value,
+  density: +document.getElementById('d-den').value,
+};}
+
+const mask = document.getElementById('mask');
+let pendingDir = null;
+document.querySelectorAll('[data-pick]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    pendingDir = btn.dataset.pick;
+    const d = DIRS.find(function(x){ return x.id===pendingDir; });
+    document.getElementById('m-title').textContent = '选择 '+d.id+' · '+d.name;
+    const dl = getDials();
+    document.getElementById('m-dials').textContent = '视觉冒险度 '+dl.variance+' · 动效强度 '+dl.motion+' · 信息密度 '+dl.density;
+    document.getElementById('m-notes').value = '';
+    mask.classList.add('open');
+  });
+});
+document.getElementById('m-cancel').addEventListener('click', function(){ mask.classList.remove('open'); pendingDir=null; });
+document.getElementById('m-confirm').addEventListener('click', async function(){
+  const d = DIRS.find(function(x){ return x.id===pendingDir; });
+  const payload = {
+    id: d.id, label: d.id, name: d.name,
+    notes: d.desc, dials: getDials(),
+    adjustments: document.getElementById('m-notes').value.trim(),
+  };
+  mask.classList.remove('open');
+  document.querySelectorAll('.dir-card').forEach(function(c){ c.classList.toggle('selected', c.dataset.dir===d.id); });
+  try {
+    await fetch('/api/select', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    showToast('已回传：'+d.id+' · '+d.name);
+  } catch(e) {
+    showToast('已选择 '+d.id+' · '+d.name+'（回传服务未运行，请在对话中告知）');
+  }
+  pendingDir = null;
+});
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2200);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "id": "npr",
+  "name": "NPR",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://www.npr.org/",
+  "needs_proxy": false,
+  "category": "news",
+  "origin": {
+    "type": "calibre_recipe",
+    "id": "npr"
+  },
+  "index": {
+    "type": "rss",
+    "url": "https://feeds.npr.org/1001/rss.xml",
+    "max": 20
+  },
+  "article": {
+    "content": "#storytext",
+    "title": "h1",
+    "remove": [
+      ".bucketwrap",
+      ".enlarge_measure",
+      ".enlarge_html",
+      "aside",
+      ".ad-wrap"
+    ],
+    "encoding": null
+  },
+  "request": {
+    "delay_seconds": 1,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "calibre recipe 的 2010 选择器(remove_tags_after div#storytext)证明 #storytext 容器至今稳定;原 feed 地址 npr.org/rss/rss.php?id=1001 已迁移到 feeds.npr.org。",
+  "test": {
+    "fixture": "fixtures/npr/"
+  }
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- M16 editorial palette for the View layer (word card panel etc.), the
+     XML twin of ui/Theme.kt's Compose scheme (docs/design-system.md §2). -->
+<resources>
+    <color name="hp_paper">#FBFAF7</color>
+    <color name="hp_paper_alt">#F3F0E9</color>
+    <color name="hp_ink">#141414</color>
+    <color name="hp_sub">#5C5C58</color>
+    <color name="hp_faint">#A39E98</color>
+    <color name="hp_hairline">#1A000000</color>
+</resources>

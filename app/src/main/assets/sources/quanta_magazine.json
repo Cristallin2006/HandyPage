@@ -1,0 +1,36 @@
+{
+  "id": "quanta_magazine",
+  "name": "Quanta Magazine",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://www.quantamagazine.org/",
+  "needs_proxy": false,
+  "category": "science",
+  "origin": {
+    "type": "calibre_recipe",
+    "id": "quanta_magazine"
+  },
+  "index": {
+    "type": "rss",
+    "url": "https://api.quantamagazine.org/feed/",
+    "max": 10
+  },
+  "article": {
+    "content": ".post__content__section",
+    "title": "h1",
+    "remove": [
+      ".post__sidebar",
+      ".comments__inner"
+    ],
+    "encoding": null
+  },
+  "request": {
+    "delay_seconds": 1,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "高质量数学/物理/生物长文,学习者可挑战。feed 仅约 5 篇(周刊节奏)。2026-07-25 直连探测:.post__content__section 为正文容器(文章+播客文稿会很长,属正常内容)。",
+  "test": {
+    "fixture": "fixtures/quanta_magazine/"
+  }
+}

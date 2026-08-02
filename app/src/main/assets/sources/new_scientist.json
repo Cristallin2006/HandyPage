@@ -1,0 +1,33 @@
+{
+  "id": "new_scientist",
+  "name": "New Scientist",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://www.newscientist.com/",
+  "needs_proxy": false,
+  "category": "science",
+  "origin": {
+    "type": "calibre_recipe",
+    "id": "new_scientist"
+  },
+  "index": {
+    "type": "rss",
+    "url": "https://www.newscientist.com/section/news/feed/",
+    "max": 20
+  },
+  "article": {
+    "content": ".article__content",
+    "title": "h1",
+    "remove": [],
+    "encoding": null
+  },
+  "request": {
+    "delay_seconds": 1,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "科学新闻周刊,部分文章有注册墙(正文可能截断)。2026-07-25 直连探测:feed 10 items,.article__content 约 2900 字符,开头干净;#content 会带入 'Subscribe now' 杂讯,弃用。",
+  "test": {
+    "fixture": "fixtures/new_scientist/"
+  }
+}

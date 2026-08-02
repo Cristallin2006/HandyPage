@@ -1,0 +1,33 @@
+{
+  "id": "lightspeed",
+  "name": "Lightspeed Magazine",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://www.lightspeedmagazine.com/",
+  "needs_proxy": false,
+  "category": "fiction",
+  "origin": {
+    "type": "calibre_recipe",
+    "id": "lightspeed_magazine"
+  },
+  "index": {
+    "type": "rss",
+    "url": "https://www.lightspeedmagazine.com/rss-2/",
+    "max": 20
+  },
+  "article": {
+    "content": ".entry-content",
+    "title": "h1.posttitle",
+    "remove": [],
+    "encoding": null
+  },
+  "request": {
+    "delay_seconds": 1,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "科幻短篇/中篇杂志,补叙事类阅读空白。2026-07-31 直连探测:feed 50 items(小说/书评/作者访谈混合);.entry-content 为干净正文(小说 1.6 万字符),#content 会带进侧栏 junk 弃用。",
+  "test": {
+    "fixture": "fixtures/lightspeed/"
+  }
+}

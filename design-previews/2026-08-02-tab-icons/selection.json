@@ -1,0 +1,14 @@
+{
+  "id": "B",
+  "label": "B: 花体手书 · Pinyon Script",
+  "name": "花体手书 · Pinyon Script",
+  "notes": "",
+  "dials": {
+    "variance": 6,
+    "motion": 5,
+    "density": 4
+  },
+  "adjustments": "‘本机’换成‘我的’",
+  "source": "click",
+  "receivedAt": "2026-08-02T11:21:15.447Z"
+}

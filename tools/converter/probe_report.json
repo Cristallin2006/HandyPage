@@ -1,0 +1,109 @@
+{
+  "apod": {
+    "name": "Astronomy Picture of the Day",
+    "feed": "https://apod.nasa.gov/apod.rss",
+    "feed_ok": true,
+    "feed_status": 200,
+    "items": 1,
+    "first_titles": [
+      "Red Sun through Wildfire Smoke"
+    ],
+    "article_url": "https://apod.nasa.gov/apod/ap260730.html",
+    "article": {
+      "final_url": "https://apod.nasa.gov/apod/ap260730.html",
+      "h1": "Astronomy Picture of the Day",
+      "og_title": null,
+      "selectors": {}
+    }
+  },
+  "phys_org": {
+    "name": "Phys.org",
+    "feed": "https://phys.org/rss-feed/",
+    "feed_ok": true,
+    "feed_status": 200,
+    "items": 30,
+    "first_titles": [
+      "Deadly blooms offer a genetic blueprint for making hard-to-synthesize medicinal compounds",
+      "Leave it: Dog trainers help pets avoid poisonous snakes",
+      "Solar wind stirs Mars' upper atmosphere, boosting ion loss to space"
+    ],
+    "article_url": "https://phys.org/news/2026-07-deadly-blooms-genetic-blueprint-hard.html",
+    "article_error": "HTTPError: 403 Client Error: Forbidden for url: https://phys.org/news/2026-07-deadly-blooms-genetic-blueprint-hard.html"
+  },
+  "nautilus": {
+    "name": "Nautilus",
+    "feed": "https://nautil.us/feed/",
+    "feed_ok": true,
+    "feed_status": 200,
+    "items": 10,
+    "first_titles": [
+      "You’re Carrying “Ghost DNA” From Extinct Hominins",
+      "The Bizarre Life Cycle of “Zombie-Ant” Fungus Gets a New Twist",
+      "Which Fish Species Will Invade the Mediterranean Next?"
+    ],
+    "article_url": "https://nautil.us/youre-carrying-ghost-dna-from-extinct-hominins-1283291/",
+    "article": {
+      "final_url": "https://nautil.us/youre-carrying-ghost-dna-from-extinct-hominins-1283291",
+      "h1": "You’re Carrying “Ghost DNA” From Extinct Hominins",
+      "og_title": "You’re Carrying “Ghost DNA” From Extinct Hominins",
+      "selectors": {
+        "main": [
+          5012,
+          "Advertisement Genetics You’re Carrying “Ghost DNA” From Extinct Hominins A new technique reveals human evolution was rif"
+        ]
+      }
+    }
+  },
+  "ieeespectrum": {
+    "name": "IEEE Spectrum",
+    "feed": "https://spectrum.ieee.org/rss/fulltext",
+    "feed_ok": true,
+    "feed_status": 200,
+    "items": 30,
+    "first_titles": [
+      "IEEE Publishing Ethics Team Upholds Research Integrity",
+      "Detect Dark Matter’s Mark From Your Backyard",
+      "A Remote Indigenous Community Built One of Canada’s Fastest Fiber Networks"
+    ],
+    "article_url": "https://spectrum.ieee.org/ieee-publishing-ethics-research-integrity",
+    "article": {
+      "final_url": "https://spectrum.ieee.org/ieee-publishing-ethics-research-integrity",
+      "h1": "IEEE Publishing Ethics Team Upholds Research Integrity",
+      "og_title": "IEEE Publishing Ethics Team Upholds Research Integrity",
+      "selectors": {
+        "article": [
+          310,
+          "The Institute News IEEE Publishing Ethics Team Upholds Research Integrity The group integrated new tools and resolved mi"
+        ]
+      }
+    }
+  },
+  "lightspeed": {
+    "name": "Lightspeed Magazine",
+    "feed": "https://www.lightspeedmagazine.com/rss-2/",
+    "feed_ok": true,
+    "feed_status": 200,
+    "items": 50,
+    "first_titles": [
+      "Announcement: We’re Launching a New Kickstarter Soon. Sign up to be notified when it launches!",
+      "Book Review: We Interrupt This Program by Randee Dawn",
+      "Author Spotlight: V.M. Ayala"
+    ],
+    "article_url": "https://www.lightspeedmagazine.com/nonfiction/announcement-were-launching-a-new-kickstarter-soon-sign-up-to-be-notified-when-it-launches/",
+    "article": {
+      "final_url": "https://www.lightspeedmagazine.com/nonfiction/announcement-were-launching-a-new-kickstarter-soon-sign-up-to-be-notified-when-it-launches/",
+      "h1": "",
+      "og_title": "Announcement: We're Launching a New Kickstarter Soon. Sign up to be notified when it launches! - Lig",
+      "selectors": {
+        "#content": [
+          3572,
+          "Advertisement Editorial Buy eBook Direct (ePub/Mobi/PDF) Subscribe Announcement: We’re Launching a New Kickstarter Soon."
+        ],
+        ".entry-content": [
+          2316,
+          "On September 15, 2026, we’ll be launching our first Kickstarter campaign in more than a decade, to fund Year 17 of Light"
+        ]
+      }
+    }
+  }
+}

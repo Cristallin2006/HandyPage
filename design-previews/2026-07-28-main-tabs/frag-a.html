@@ -1,0 +1,136 @@
+<style>
+.dirA-stage,.dirA-stage *{box-sizing:border-box}
+.dirA-stage{width:390px;height:640px;overflow:hidden;position:relative;background:#fafafa;color:#171717;font-family:"Sora",-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;-webkit-font-smoothing:antialiased}
+.dirA-stage .dirA-head{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid #e5e5e5}
+.dirA-stage .dirA-title{font-size:24px;line-height:32px;font-weight:700;letter-spacing:.02em}
+.dirA-stage .dirA-gear{width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:#737373}
+.dirA-stage .dirA-hicon{width:20px;height:20px;display:block}
+.dirA-stage .dirA-group-sep{margin-top:23px;border-top:1px solid #e5e5e5}
+.dirA-stage .dirA-glabel{padding:0 20px;font-size:11px;line-height:14px;font-weight:600;letter-spacing:.12em;color:#737373;text-transform:uppercase}
+.dirA-stage .dirA-glabel-first{padding-top:6px}
+.dirA-stage .dirA-row{height:56px;display:flex;align-items:center;gap:12px;padding:0 20px;border-bottom:1px solid #e5e5e5}
+.dirA-stage .dirA-row-last{border-bottom:none}
+.dirA-stage .dirA-mono{width:40px;height:40px;flex:none;border-radius:50%;border:1.5px solid #4f46e5;color:#4f46e5;display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1;font-weight:600}
+.dirA-stage .dirA-rtext{display:flex;flex-direction:column;gap:2px;min-width:0}
+.dirA-stage .dirA-rname{font-size:14px;line-height:18px;font-weight:400;color:#171717;white-space:nowrap}
+.dirA-stage .dirA-rdom{font-size:12px;line-height:16px;font-weight:400;color:#737373;white-space:nowrap}
+.dirA-stage .dirA-tag{margin-left:auto;flex:none;font-size:10px;line-height:16px;font-weight:600;letter-spacing:.02em;color:#b45309;border:1px solid rgba(180,83,9,.45);border-radius:4px;padding:0 6px}
+.dirA-stage .dirA-nav{position:absolute;left:0;right:0;bottom:0;height:52px;background:#ffffff;border-top:1px solid #e5e5e5;display:flex}
+.dirA-stage .dirA-nitem{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:#737373}
+.dirA-stage .dirA-nitem-on{color:#4f46e5}
+.dirA-stage .dirA-nicon{width:20px;height:20px;display:block}
+.dirA-stage .dirA-nlab{font-size:10px;line-height:12px;font-weight:400;letter-spacing:.02em}
+.dirA-stage .dirA-nitem-on .dirA-nlab{font-weight:600}
+</style>
+<div class="dirA-stage">
+  <div class="dirA-head">
+    <div class="dirA-title">源</div>
+    <div class="dirA-gear">
+      <svg class="dirA-hicon" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.1" stroke="currentColor" stroke-width="2.7" stroke-dasharray="2.85 3.51"/><circle cx="12" cy="12" r="3.3" stroke="currentColor" stroke-width="1.7"/></svg>
+    </div>
+  </div>
+  <div class="dirA-group">
+    <div class="dirA-glabel dirA-glabel-first">分级学习</div>
+    <div class="dirA-row">
+      <div class="dirA-mono">C</div>
+      <div class="dirA-rtext">
+        <div class="dirA-rname">China Daily</div>
+        <div class="dirA-rdom">chinadaily.com.cn</div>
+      </div>
+    </div>
+    <div class="dirA-row dirA-row-last">
+      <div class="dirA-mono">V</div>
+      <div class="dirA-rtext">
+        <div class="dirA-rname">VOA Learning English</div>
+        <div class="dirA-rdom">learningenglish.voanews.com</div>
+      </div>
+    </div>
+  </div>
+  <div class="dirA-group dirA-group-sep">
+    <div class="dirA-glabel">新闻</div>
+    <div class="dirA-row">
+      <div class="dirA-mono">N</div>
+      <div class="dirA-rtext">
+        <div class="dirA-rname">NPR</div>
+        <div class="dirA-rdom">npr.org</div>
+      </div>
+    </div>
+    <div class="dirA-row">
+      <div class="dirA-mono">R</div>
+      <div class="dirA-rtext">
+        <div class="dirA-rname">RTÉ</div>
+        <div class="dirA-rdom">rte.ie</div>
+      </div>
+    </div>
+    <div class="dirA-row dirA-row-last">
+      <div class="dirA-mono">G</div>
+      <div class="dirA-rtext">
+        <div class="dirA-rname">The Guardian</div>
+        <div class="dirA-rdom">theguardian.com</div>
+      </div>
+      <div class="dirA-tag">需代理</div>
+    </div>
+  </div>
+  <div class="dirA-group dirA-group-sep">
+    <div class="dirA-glabel">科学</div>
+    <div class="dirA-row">
+      <div class="dirA-mono">N</div>
+      <div class="dirA-rtext">
+        <div class="dirA-rname">Nature News</div>
+        <div class="dirA-rdom">nature.com</div>
+      </div>
+    </div>
+    <div class="dirA-row">
+      <div class="dirA-mono">Q</div>
+      <div class="dirA-rtext">
+        <div class="dirA-rname">Quanta</div>
+        <div class="dirA-rdom">quantamagazine.org</div>
+      </div>
+    </div>
+    <div class="dirA-row dirA-row-last">
+      <div class="dirA-mono">N</div>
+      <div class="dirA-rtext">
+        <div class="dirA-rname">NASA</div>
+        <div class="dirA-rdom">nasa.gov</div>
+      </div>
+    </div>
+  </div>
+  <div class="dirA-group dirA-group-sep">
+    <div class="dirA-glabel">科技</div>
+    <div class="dirA-row dirA-row-last">
+      <div class="dirA-mono">T</div>
+      <div class="dirA-rtext">
+        <div class="dirA-rname">TechCrunch</div>
+        <div class="dirA-rdom">techcrunch.com</div>
+      </div>
+    </div>
+  </div>
+  <div class="dirA-group dirA-group-sep">
+    <div class="dirA-glabel">论文</div>
+    <div class="dirA-row dirA-row-last">
+      <div class="dirA-mono">a</div>
+      <div class="dirA-rtext">
+        <div class="dirA-rname">arXiv</div>
+        <div class="dirA-rdom">arxiv.org</div>
+      </div>
+    </div>
+  </div>
+  <div class="dirA-nav">
+    <div class="dirA-nitem dirA-nitem-on">
+      <svg class="dirA-nicon" viewBox="0 0 24 24" fill="none"><rect x="4.5" y="3.5" width="15" height="17" rx="2.5" fill="#4f46e5" fill-opacity=".08" stroke="currentColor" stroke-width="1.7"/><path d="M8.2 8.3h7.6M8.2 11.9h7.6M8.2 15.5h4.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      <div class="dirA-nlab">源</div>
+    </div>
+    <div class="dirA-nitem">
+      <svg class="dirA-nicon" viewBox="0 0 24 24" fill="none"><rect x="7" y="3" width="10" height="18" rx="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M10.5 17.8h3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      <div class="dirA-nlab">本机</div>
+    </div>
+    <div class="dirA-nitem">
+      <svg class="dirA-nicon" viewBox="0 0 24 24" fill="none"><path d="M12 4.6v2.9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="3.6" r="1.1" fill="currentColor"/><rect x="4.5" y="7.5" width="15" height="11" rx="3" stroke="currentColor" stroke-width="1.7"/><circle cx="9.4" cy="13" r="1.15" fill="currentColor"/><circle cx="14.6" cy="13" r="1.15" fill="currentColor"/></svg>
+      <div class="dirA-nlab">Agent</div>
+    </div>
+    <div class="dirA-nitem">
+      <svg class="dirA-nicon" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.1" stroke="currentColor" stroke-width="2.7" stroke-dasharray="2.85 3.51"/><circle cx="12" cy="12" r="3.3" stroke="currentColor" stroke-width="1.7"/></svg>
+      <div class="dirA-nlab">设置</div>
+    </div>
+  </div>
+</div>

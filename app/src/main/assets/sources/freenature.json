@@ -1,0 +1,37 @@
+{
+  "id": "freenature",
+  "name": "Nature News",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://www.nature.com/",
+  "needs_proxy": false,
+  "category": "science",
+  "origin": {
+    "type": "calibre_recipe",
+    "id": "freenature"
+  },
+  "index": {
+    "type": "rss",
+    "url": "https://feeds.nature.com/nature/rss/current",
+    "max": 20
+  },
+  "article": {
+    "content": ".c-article-body",
+    "title": "h1",
+    "remove": [
+      ".c-article-references",
+      ".c-article-metrics",
+      ".app-access-wall"
+    ],
+    "encoding": null
+  },
+  "request": {
+    "delay_seconds": 1,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "Nature 当期文章(含研究论文摘要/更正,偏学术)。2026-07-25 直连探测:feed 75 items,.c-article-body 约 4000 字符;#content/main 会带入页眉杂讯,弃用。2026-07-26:remove 增 .app-access-wall(注册墙,其 SVG 的 xlink 未声明曾致 XHTML 解析警告,引擎侧已在 EpubPackager 通杀)。",
+  "test": {
+    "fixture": "fixtures/freenature/"
+  }
+}

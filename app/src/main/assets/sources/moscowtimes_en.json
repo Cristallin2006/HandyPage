@@ -1,0 +1,33 @@
+{
+  "id": "moscowtimes_en",
+  "name": "The Moscow Times",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://www.themoscowtimes.com/",
+  "needs_proxy": false,
+  "category": "news",
+  "origin": {
+    "type": "calibre_recipe",
+    "id": "moscowtimes_en"
+  },
+  "index": {
+    "type": "rss",
+    "url": "https://www.themoscowtimes.com/rss/news",
+    "max": 20
+  },
+  "article": {
+    "content": "article",
+    "title": "h1",
+    "remove": [],
+    "encoding": null
+  },
+  "request": {
+    "delay_seconds": 1,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "独立英语俄闻媒体。2026-07-25 直连探测:feed 50 items,article 约 6200 字符。",
+  "test": {
+    "fixture": "fixtures/moscowtimes_en/"
+  }
+}

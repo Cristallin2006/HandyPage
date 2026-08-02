@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<!--
+  Handypage minimal pdf.js paper viewer (M12-A).
+
+  Loaded by PaperReaderActivity from the virtual origin https://paper.local/
+  (every request is served by WebViewClient.shouldInterceptRequest). The PDF
+  URL arrives as ?file=<urlencoded https://paper.local/papers/NAME.pdf>.
+
+  Bridges: Handypage.onSelection(text) / Handypage.onCleared() /
+  Handypage.onError(msg) / Handypage.onTap(); inbound:
+  window.__setVocabTerms(jsonArray), window.__clearSelection().
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Handypage Paper</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #525659;
+  }
+  #viewer {
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  #status {
+    position: fixed;
+    top: 40%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #eee;
+    font: 14px/1.6 sans-serif;
+    padding: 0 32px;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .pdfPage {
+    /* pdf.js 6.x text-layer scaling variables (web/pdf_viewer.css .pdfViewer .page) */
+    --user-unit: 1;
+    --total-scale-factor: calc(var(--scale-factor) * var(--user-unit));
+    --scale-round-x: 1px;
+    --scale-round-y: 1px;
+    direction: ltr;
+    position: relative;
+    margin: 8px auto;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .35);
+    overflow: hidden;
+  }
+  .pdfPage canvas {
+    display: block;
+  }
+
+  /* --- text layer: core rules from pdf.js web/pdf_viewer.css (.textLayer) --- */
+  .textLayer {
+    position: absolute;
+    text-align: initial;
+    inset: 0;
+    overflow: hidden;
+    line-height: 1;
+    letter-spacing: normal;
+    word-spacing: normal;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+    transform-origin: 0 0;
+    z-index: 0;
+    --min-font-size: 1;
+    --text-scale-factor: calc(var(--total-scale-factor) * var(--min-font-size));
+    --min-font-size-inv: calc(1 / var(--min-font-size));
+  }
+  .textLayer :is(span, br) {
+    color: transparent;
+    position: absolute;
+    white-space: pre;
+    cursor: text;
+    transform-origin: 0% 0%;
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  .textLayer > :not(.markedContent),
+  .textLayer .markedContent span:not(.markedContent) {
+    z-index: 1;
+    --font-height: 0;
+    font-size: calc(var(--text-scale-factor) * var(--font-height));
+    --scale-x: 1;
+    --rotate: 0deg;
+    transform: rotate(var(--rotate)) scaleX(var(--scale-x)) scale(var(--min-font-size-inv));
+  }
+  .textLayer .markedContent {
+    display: contents;
+  }
+  .textLayer span[role="img"] {
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+  }
+  /* Selected text-layer glyphs must stay invisible — the canvas below already
+     paints them; without this the UA selection foreground draws a second copy
+     on top (the "double/overlapping word" effect). */
+  .textLayer ::selection {
+    background: rgba(30, 100, 220, 0.28);
+    color: transparent;
+  }
+  /* M8 vocab weak highlight, injected around matched terms inside leaf
+     text spans. Must stay position:static — the blanket rule above makes
+     every .textLayer span absolute, which would collapse nested wrappers. */
+  .textLayer span span.vocabHl {
+    position: static;
+    background: rgba(255, 213, 79, .35);
+    border-radius: 2px;
+  }
+</style>
+</head>
+<body>
+<div id="status">正在加载论文…</div>
+<div id="viewer"></div>
+<script type="module">
+import * as pdfjsLib from './pdf.mjs';
+
+const statusEl = document.getElementById('status');
+const viewerEl = document.getElementById('viewer');
+/**
+ * Canvas backing supersampling.
+ *
+ * baseOutput caps the fit-width render at 3 so a DPR≈2.6 phone gets ~1:1
+ * physical pixels. Pinch/double-tap zoom only scales that bitmap (blurry),
+ * so once visualViewport.scale settles (500 ms debounce) every near-viewport
+ * page is re-rendered at clamp(devicePixelRatio * zoom, baseOutput, 4) —
+ * canvas CSS size unchanged, layout and scroll never jump. Off-screen pages
+ * rendered above base are re-rendered back at baseOutput to free bitmap
+ * memory; zoom back to 1 returns everything to base. The text layer is DOM
+ * and stays sharp under Chromium zoom on its own, so it is never touched.
+ */
+let baseOutput = 1;
+/** Backing factor pages are rendered (or being re-rendered) at right now. */
+let currentOutput = 1;
+
+function showStatus(msg) {
+  statusEl.textContent = msg;
+  statusEl.style.display = msg ? '' : 'none';
+}
+
+function fail(err) {
+  const msg = (err && (err.message || err.toString())) || 'unknown error';
+  showStatus('论文加载失败: ' + msg);
+  try { Handypage.onError(msg); } catch (ignored) {}
+}
+
+/* ---------------- selection bridge ---------------- */
+
+let selTimer = null;
+document.addEventListener('selectionchange', () => {
+  if (selTimer) clearTimeout(selTimer);
+  selTimer = setTimeout(() => {
+    let text = '';
+    try { text = (window.getSelection() || '').toString(); } catch (ignored) {}
+    text = text.trim();
+    try {
+      if (text) Handypage.onSelection(text.slice(0, 10000));
+      else Handypage.onCleared();
+    } catch (ignored) {}
+  }, 300);
+});
+
+window.__clearSelection = function () {
+  try { window.getSelection().removeAllRanges(); } catch (ignored) {}
+};
+
+/* ---------------- tap-to-toggle chrome bridge (M17) ---------------- */
+
+/**
+ * A clean single tap on the paper toggles the native top bar, mirroring the
+ * EPUB reader. Two guards: a click that lands with a non-empty selection is
+ * the tail of a long-press lookup, not a page tap; and double-tap zoom fires
+ * two clicks inside ~260 ms, so the first tap's timer is cancelled by the
+ * second and zooming never flips the chrome.
+ */
+let tapTimer = null;
+document.addEventListener('click', () => {
+  let text = '';
+  try { text = (window.getSelection() || '').toString(); } catch (ignored) {}
+  if (text.trim()) return;
+  if (tapTimer) { clearTimeout(tapTimer); tapTimer = null; return; }
+  tapTimer = setTimeout(() => {
+    tapTimer = null;
+    try { Handypage.onTap(); } catch (ignored) {}
+  }, 260);
+});
+
+/* ---------------- vocab weak highlight ---------------- */
+
+/** Alternation source "\b(t1|t2|…)\b" built from __setVocabTerms; null = off. */
+let vocabRegexSrc = null;
+/** textLayer containers already rendered; __setVocabTerms re-applies to them. */
+const renderedLayers = new Set();
+
+window.__setVocabTerms = function (terms) {
+  const list = (Array.isArray(terms) ? terms : [])
+    .map(t => String(t).trim().toLowerCase())
+    .filter(t => t.length >= 2);
+  if (!list.length) {
+    vocabRegexSrc = null;
+  } else {
+    const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    vocabRegexSrc = '\\b(' + list.map(esc).join('|') + ')\\b';
+  }
+  for (const layer of renderedLayers) applyVocab(layer);
+};
+
+/**
+ * Wraps whole-word term hits inside leaf text spans in <span class="vocabHl">.
+ * Idempotent: the span's original text is kept in dataset.vorig, so a term
+ * update re-wraps (or restores) from scratch instead of nesting.
+ */
+function applyVocab(layer) {
+  const re = vocabRegexSrc ? new RegExp(vocabRegexSrc, 'gi') : null;
+  layer.querySelectorAll('span').forEach(span => {
+    if (span.classList.contains('vocabHl')) return;
+    // Only leaf text spans: a span with non-highlight element children is a
+    // .markedContent wrapper — flattening it would destroy real text spans.
+    for (const child of span.children) {
+      if (!child.classList.contains('vocabHl')) return;
+    }
+    const orig = span.dataset.vorig !== undefined ? span.dataset.vorig : span.textContent;
+    if (!orig) return;
+    if (!re || !orig.match(re)) {
+      // No hit under the current term set: restore the pristine text node.
+      if (span.dataset.vorig !== undefined) {
+        span.textContent = orig;
+        delete span.dataset.vorig;
+      }
+      return;
+    }
+    span.dataset.vorig = orig;
+    span.textContent = '';
+    re.lastIndex = 0;
+    let last = 0, m;
+    while ((m = re.exec(orig)) !== null) {
+      if (m.index > last) span.append(document.createTextNode(orig.slice(last, m.index)));
+      const hl = document.createElement('span');
+      hl.className = 'vocabHl';
+      hl.textContent = m[0];
+      span.append(hl);
+      last = m.index + m[0].length;
+      if (m[0].length === 0) re.lastIndex++;
+    }
+    if (last < orig.length) span.append(document.createTextNode(orig.slice(last)));
+  });
+}
+
+/* ---------------- pdf loading + lazy page rendering ---------------- */
+
+/**
+ * Renders the page's canvas at backing factor [os] and swaps it in only
+ * after the render completes — no blank flash, and the old bitmap is freed
+ * by the swap. The canvas CSS size is fixed, so page layout never moves.
+ */
+async function renderCanvas(pageDiv, os) {
+  const page = pageDiv._page;
+  const viewport = pageDiv._viewport;
+  const cssW = Math.floor(viewport.width);
+  const cssH = Math.floor(viewport.height);
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.floor(cssW * os);
+  canvas.height = Math.floor(cssH * os);
+  canvas.style.width = cssW + 'px';
+  canvas.style.height = cssH + 'px';
+  await page.render({
+    canvasContext: canvas.getContext('2d', { alpha: false }),
+    viewport,
+    transform: os !== 1 ? [os, 0, 0, os, 0, 0] : null,
+  }).promise;
+  const old = pageDiv.querySelector('canvas');
+  if (old) old.replaceWith(canvas); else pageDiv.prepend(canvas);
+  pageDiv.dataset.output = String(os);
+}
+
+async function renderPage(pageDiv) {
+  if (pageDiv.dataset.rendered) return;
+  pageDiv.dataset.rendered = '1';
+  await renderCanvas(pageDiv, currentOutput);
+
+  const textDiv = document.createElement('div');
+  textDiv.className = 'textLayer';
+  pageDiv.append(textDiv);
+  // NOTE: pageDiv._page — a bare `page` here is an M14 refactor foot-gun
+  // (the binding lives inside renderCanvas's scope); a ReferenceError in the
+  // constructor args silently kills the whole text layer.
+  const textLayer = new pdfjsLib.TextLayer({
+    textContentSource: pageDiv._page.streamTextContent(),
+    container: textDiv,
+    viewport: pageDiv._viewport,
+  });
+  await textLayer.render();
+  renderedLayers.add(textDiv);
+  applyVocab(textDiv);
+}
+
+/* ---------------- pinch-zoom re-render (M14) ---------------- */
+
+/** Pages within the viewport ±1.5 screens, tracked by the observer in boot. */
+const nearPages = new Set();
+
+/** Serial re-render queue: one page at a time, newest zoom generation wins. */
+const renderQueue = [];
+let renderRunning = false;
+/** Generation counter: a new zoom-settle cancels not-yet-started tasks. */
+let renderGen = 0;
+/**
+ * A canvas swap mid-gesture makes Chromium cancel an in-progress long-press
+ * selection — so the pump pauses while a finger is down and resumes shortly
+ * after release. (Root cause of the M14 zoomed-selection regression.)
+ */
+let touchActive = false;
+document.addEventListener('touchstart', () => { touchActive = true; }, true);
+document.addEventListener('touchend', () => {
+  // Small delay: long-press selection UI appears just after touch-up.
+  setTimeout(() => { touchActive = false; }, 350);
+}, true);
+document.addEventListener('touchcancel', () => { touchActive = false; }, true);
+
+function enqueueRender(pageDiv, os, gen) {
+  pageDiv._targetOutput = os;
+  pageDiv._targetGen = gen;
+  if (!renderQueue.includes(pageDiv)) renderQueue.push(pageDiv);
+  if (renderRunning) return;
+  renderRunning = true;
+  (async () => {
+    while (renderQueue.length) {
+      if (touchActive) { await new Promise(r => setTimeout(r, 250)); continue; }
+      const next = renderQueue.shift();
+      // A task from a superseded zoom generation is dropped; an in-flight
+      // render simply finishes and gets overwritten by the newer generation.
+      if (next._targetGen !== renderGen) continue;
+      try { await renderCanvas(next, next._targetOutput); } catch (ignored) {}
+    }
+    renderRunning = false;
+  })();
+}
+
+/** Backing factor matching the current visualViewport zoom z. */
+function zoomTarget() {
+  const z = (window.visualViewport && window.visualViewport.scale) || 1;
+  return Math.min(Math.max((window.devicePixelRatio || 1) * z, baseOutput), 4);
+}
+
+/** Zoom settled: sharpen visible pages, downgrade off-screen ones to base. */
+function applyZoom() {
+  const target = zoomTarget();
+  // Epsilon absorbs sub-pixel scale jitter reported while panning — without
+  // it every pan re-triggers a full re-render round.
+  if (Math.abs(target - currentOutput) < 0.05) return;
+  currentOutput = target;
+  const gen = ++renderGen;
+  renderQueue.length = 0; // cancel the previous generation's pending tasks
+  // 1) near-viewport pages first, top-to-bottom.
+  [...nearPages]
+    .sort((a, b) => a.offsetTop - b.offsetTop)
+    .forEach(div => { if (div.dataset.rendered) enqueueRender(div, target, gen); });
+  // 2) off-screen pages rendered above base fall back to base (memory).
+  document.querySelectorAll('.pdfPage').forEach(div => {
+    if (!div.dataset.rendered || nearPages.has(div)) return;
+    if (parseFloat(div.dataset.output || '1') > baseOutput + 0.01) {
+      enqueueRender(div, baseOutput, gen);
+    }
+  });
+}
+
+let zoomTimer = null;
+function onViewportMaybeZoomed() {
+  if (zoomTimer) clearTimeout(zoomTimer);
+  zoomTimer = setTimeout(applyZoom, 500);
+}
+
+if (window.visualViewport) {
+  // resize covers pinch and double-tap zoom. 'scroll' (panning) is NOT
+  // listened to: scale does not change while panning, and every pan would
+  // otherwise schedule a needless re-render round (which also risks killing
+  // an in-progress long-press selection).
+  window.visualViewport.addEventListener('resize', onViewportMaybeZoomed);
+}
+
+async function boot() {
+  const file = new URLSearchParams(location.search).get('file');
+  if (!file) throw new Error('missing ?file= parameter');
+  pdfjsLib.GlobalWorkerOptions.workerSrc = './pdf.worker.mjs';
+  showStatus('正在加载论文…');
+  const pdf = await pdfjsLib.getDocument({
+    url: file,
+    cMapUrl: './cmaps/',
+    cMapPacked: true,
+    standardFontDataUrl: './standard_fonts/',
+  }).promise;
+
+  const containerWidth = viewerEl.clientWidth || document.documentElement.clientWidth;
+  baseOutput = Math.min(window.devicePixelRatio || 1, 3);
+  currentOutput = baseOutput;
+  // Pages render only when scrolled near the viewport (1.5 screens ahead);
+  // the same visibility set drives zoom re-renders, so keep observing.
+  const observer = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        nearPages.add(entry.target);
+        if (entry.target.dataset.rendered) {
+          // Scrolled into view while zoomed in: upgrade a base-rendered page.
+          if (parseFloat(entry.target.dataset.output || '1') < currentOutput - 0.01) {
+            enqueueRender(entry.target, currentOutput, renderGen);
+          }
+        } else {
+          renderPage(entry.target).catch(() => {});
+        }
+      } else {
+        nearPages.delete(entry.target);
+      }
+    }
+  }, { root: viewerEl, rootMargin: '150% 0px' });
+
+  for (let num = 1; num <= pdf.numPages; num++) {
+    const page = await pdf.getPage(num);
+    const baseViewport = page.getViewport({ scale: 1 });
+    const scale = (containerWidth - 16) / baseViewport.width;
+    const viewport = page.getViewport({ scale });
+    const pageDiv = document.createElement('div');
+    pageDiv.className = 'pdfPage';
+    pageDiv.style.width = Math.floor(viewport.width) + 'px';
+    pageDiv.style.height = Math.floor(viewport.height) + 'px';
+    pageDiv.style.setProperty('--scale-factor', scale);
+    pageDiv._page = page;
+    pageDiv._viewport = viewport;
+    viewerEl.append(pageDiv);
+    observer.observe(pageDiv);
+  }
+  showStatus('');
+}
+
+boot().catch(fail);
+</script>
+</body>
+</html>

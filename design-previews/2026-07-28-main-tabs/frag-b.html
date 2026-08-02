@@ -1,0 +1,180 @@
+<style>
+.dirB-stage, .dirB-stage *{box-sizing:border-box;margin:0;padding:0}
+.dirB-stage{
+  width:390px;height:640px;overflow:hidden;position:relative;
+  background:#0d0d0f;color:#e4e4e7;
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.dirB-stage .dirB-mono-f{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+
+/* status bar */
+.dirB-stage .dirB-status{
+  height:24px;display:flex;align-items:center;padding:0 16px;
+  color:#8b8b93;
+}
+.dirB-stage .dirB-time{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;font-weight:500;letter-spacing:.02em}
+.dirB-stage .dirB-status-r{margin-left:auto;display:flex;align-items:center;gap:6px}
+
+/* header */
+.dirB-stage .dirB-head{
+  height:40px;display:flex;align-items:center;gap:8px;padding:0 16px;
+  border-bottom:1px solid #232327;
+}
+.dirB-stage .dirB-title{font-size:15px;font-weight:600;color:#e4e4e7;letter-spacing:.02em}
+.dirB-stage .dirB-path{
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;font-weight:400;color:#8b8b93;
+  display:flex;align-items:center;
+}
+.dirB-stage .dirB-cursor{display:inline-block;width:6px;height:11px;margin-left:3px;background:#4ade80;animation:dirB-blink 1.1s steps(1) infinite}
+@keyframes dirB-blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+.dirB-stage .dirB-head-r{margin-left:auto;display:flex;align-items:center;gap:10px;color:#8b8b93}
+.dirB-stage .dirB-total{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10px;color:#8b8b93;letter-spacing:.06em}
+
+/* group header */
+.dirB-stage .dirB-group{
+  height:16px;display:flex;align-items:center;gap:5px;padding:0 16px;
+  font-size:10px;font-weight:500;letter-spacing:.14em;color:#8b8b93;
+}
+.dirB-stage .dirB-hash{font-family:"JetBrains Mono",ui-monospace,monospace;color:#4ade80;opacity:.55;font-weight:400}
+.dirB-stage .dirB-gc{font-family:"JetBrains Mono",ui-monospace,monospace;letter-spacing:.04em}
+
+/* source row */
+.dirB-stage .dirB-row{
+  height:44px;display:flex;align-items:center;padding:0 16px;
+  border-bottom:1px solid #232327;
+}
+.dirB-stage .dirB-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;flex:none}
+.dirB-stage .dirB-dot-a{background:#f59e0b}
+.dirB-stage .dirB-mg{
+  width:28px;height:28px;flex:none;margin-left:10px;border-radius:8px;
+  background:#161619;border:1px solid #232327;
+  display:flex;align-items:center;justify-content:center;
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;font-weight:700;color:#e4e4e7;
+}
+.dirB-stage .dirB-meta{margin-left:12px;min-width:0;display:flex;flex-direction:column;gap:2px}
+.dirB-stage .dirB-name{
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:13px;font-weight:500;color:#e4e4e7;
+  line-height:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.dirB-stage .dirB-dom{
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;font-weight:400;color:#8b8b93;
+  line-height:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.dirB-stage .dirB-pill{
+  margin-left:auto;flex:none;
+  font-size:10px;font-weight:500;color:#f59e0b;line-height:16px;padding:0 6px;
+  border:1px solid rgba(245,158,11,.35);border-radius:4px;background:rgba(245,158,11,.08);
+}
+
+/* bottom nav */
+.dirB-stage .dirB-nav{
+  position:absolute;left:0;right:0;bottom:0;height:56px;
+  background:#111114;border-top:1px solid #232327;
+  display:flex;align-items:stretch;
+}
+.dirB-stage .dirB-navi{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  color:#8b8b93;
+}
+.dirB-stage .dirB-navi span{font-size:10px;font-weight:500;line-height:12px;letter-spacing:.04em}
+.dirB-stage .dirB-on{color:#4ade80}
+</style>
+<div class="dirB-stage">
+  <div class="dirB-status">
+    <span class="dirB-time">9:41</span>
+    <span class="dirB-status-r">
+      <svg width="14" height="10" viewBox="0 0 14 10"><rect x="0" y="6" width="2.4" height="4" rx="0.6" fill="#8b8b93"/><rect x="3.8" y="4" width="2.4" height="6" rx="0.6" fill="#8b8b93"/><rect x="7.6" y="2" width="2.4" height="8" rx="0.6" fill="#8b8b93"/><rect x="11.4" y="0" width="2.4" height="10" rx="0.6" fill="#8b8b93"/></svg>
+      <svg width="18" height="10" viewBox="0 0 18 10"><rect x="0.5" y="0.5" width="14" height="9" rx="2" fill="none" stroke="#8b8b93"/><rect x="2.5" y="2.5" width="9" height="5" rx="1" fill="#8b8b93"/><rect x="15.8" y="3" width="1.8" height="4" rx="0.9" fill="#8b8b93"/></svg>
+    </span>
+  </div>
+
+  <div class="dirB-head">
+    <span class="dirB-title">源</span>
+    <span class="dirB-path">~/sources<span class="dirB-cursor"></span></span>
+    <span class="dirB-head-r">
+      <span class="dirB-total">10 SRC</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 4.5v2.5M12 17v2.5M4.5 12h2.5M17 12h2.5M6.7 6.7l1.8 1.8M15.5 15.5l1.8 1.8M17.3 6.7l-1.8 1.8M8.5 15.5l-1.8 1.8"/></svg>
+    </span>
+  </div>
+
+  <div class="dirB-group"><span class="dirB-hash">#</span>分级学习<span class="dirB-gc">· 2</span></div>
+  <div class="dirB-row">
+    <span class="dirB-dot"></span>
+    <span class="dirB-mg">C</span>
+    <span class="dirB-meta"><span class="dirB-name">China Daily</span><span class="dirB-dom">chinadaily.com.cn</span></span>
+  </div>
+  <div class="dirB-row">
+    <span class="dirB-dot"></span>
+    <span class="dirB-mg">V</span>
+    <span class="dirB-meta"><span class="dirB-name">VOA Learning English</span><span class="dirB-dom">learningenglish.voanews.com</span></span>
+  </div>
+
+  <div class="dirB-group"><span class="dirB-hash">#</span>新闻<span class="dirB-gc">· 3</span></div>
+  <div class="dirB-row">
+    <span class="dirB-dot"></span>
+    <span class="dirB-mg">N</span>
+    <span class="dirB-meta"><span class="dirB-name">NPR</span><span class="dirB-dom">npr.org</span></span>
+  </div>
+  <div class="dirB-row">
+    <span class="dirB-dot"></span>
+    <span class="dirB-mg">R</span>
+    <span class="dirB-meta"><span class="dirB-name">RTÉ</span><span class="dirB-dom">rte.ie</span></span>
+  </div>
+  <div class="dirB-row">
+    <span class="dirB-dot dirB-dot-a"></span>
+    <span class="dirB-mg">G</span>
+    <span class="dirB-meta"><span class="dirB-name">The Guardian</span><span class="dirB-dom">theguardian.com</span></span>
+    <span class="dirB-pill">需代理</span>
+  </div>
+
+  <div class="dirB-group"><span class="dirB-hash">#</span>科学<span class="dirB-gc">· 3</span></div>
+  <div class="dirB-row">
+    <span class="dirB-dot"></span>
+    <span class="dirB-mg">N</span>
+    <span class="dirB-meta"><span class="dirB-name">Nature News</span><span class="dirB-dom">nature.com</span></span>
+  </div>
+  <div class="dirB-row">
+    <span class="dirB-dot"></span>
+    <span class="dirB-mg">Q</span>
+    <span class="dirB-meta"><span class="dirB-name">Quanta</span><span class="dirB-dom">quantamagazine.org</span></span>
+  </div>
+  <div class="dirB-row">
+    <span class="dirB-dot"></span>
+    <span class="dirB-mg">N</span>
+    <span class="dirB-meta"><span class="dirB-name">NASA</span><span class="dirB-dom">nasa.gov</span></span>
+  </div>
+
+  <div class="dirB-group"><span class="dirB-hash">#</span>科技<span class="dirB-gc">· 1</span></div>
+  <div class="dirB-row">
+    <span class="dirB-dot"></span>
+    <span class="dirB-mg">T</span>
+    <span class="dirB-meta"><span class="dirB-name">TechCrunch</span><span class="dirB-dom">techcrunch.com</span></span>
+  </div>
+
+  <div class="dirB-group"><span class="dirB-hash">#</span>论文<span class="dirB-gc">· 1</span></div>
+  <div class="dirB-row">
+    <span class="dirB-dot"></span>
+    <span class="dirB-mg">A</span>
+    <span class="dirB-meta"><span class="dirB-name">arXiv</span><span class="dirB-dom">arxiv.org</span></span>
+  </div>
+
+  <div class="dirB-nav">
+    <div class="dirB-navi dirB-on">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M8 7h11M8 12h11M8 17h11"/><circle cx="5" cy="7" r="1" fill="currentColor" stroke="none"/><circle cx="5" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="5" cy="17" r="1" fill="currentColor" stroke="none"/></svg>
+      <span>源</span>
+    </div>
+    <div class="dirB-navi">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="7" y="3.5" width="10" height="17" rx="2"/><path d="M10.5 17.8h3"/></svg>
+      <span>本机</span>
+    </div>
+    <div class="dirB-navi">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M7 9.5l3 2.5-3 2.5M12.5 14.5H16"/></svg>
+      <span>Agent</span>
+    </div>
+    <div class="dirB-navi">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 4.5v2.5M12 17v2.5M4.5 12h2.5M17 12h2.5M6.7 6.7l1.8 1.8M15.5 15.5l1.8 1.8M17.3 6.7l-1.8 1.8M8.5 15.5l-1.8 1.8"/></svg>
+      <span>设置</span>
+    </div>
+  </div>
+</div>

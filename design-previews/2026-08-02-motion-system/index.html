@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Handypage 全局动效系统 · 四方向预览</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
+
+:root{
+  --paper:#fbfaf7; --paper-alt:#f3f0e9; --ink:#141414; --sub:#5c5c58; --faint:#a39e98;
+  --hairline:rgba(0,0,0,.10); --red:#b3352b;
+  --e-out:cubic-bezier(.23,1,.32,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;background:#efece6;color:var(--ink);padding:24px 16px 96px}
+.shell-head{max-width:1080px;margin:0 auto 18px}
+.shell-head h1{font-family:'Fraunces',serif;font-size:26px;font-weight:700}
+.shell-head .note{font-size:12px;color:var(--sub);margin-top:6px;line-height:1.6}
+.dials{max-width:1080px;margin:0 auto 22px;display:grid;grid-template-columns:repeat(3,minmax(160px,1fr));gap:14px}
+.dial{display:grid;gap:6px;font-size:13px}
+.dial b{font-weight:650}
+.dial output{font-variant-numeric:tabular-nums;color:var(--red);font-weight:700}
+.dial input{width:100%;accent-color:var(--ink)}
+.grid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.card{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.mock{position:relative;display:grid;place-items:center;padding:22px 12px;min-height:486px;background:
+  repeating-linear-gradient(0deg,transparent 0 27px,rgba(0,0,0,.025) 27px 28px)}
+.proto{position:absolute;top:8px;left:10px;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.meta{padding:14px 16px 10px;display:grid;gap:8px;border-top:.5px solid var(--hairline)}
+.meta-head{display:flex;align-items:baseline;gap:10px}
+.meta-head .letter{font-family:'Fraunces',serif;font-size:20px;font-weight:700}
+.meta-head strong{font-size:15px;font-weight:600}
+.meta-head .rec{margin-left:auto;font-size:11px;font-weight:600;color:var(--red);border:1px solid rgba(179,53,43,.35);background:rgba(179,53,43,.08);border-radius:999px;padding:2px 10px}
+.tag{font-size:12px;color:var(--sub);line-height:1.55;width:100%;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pickrow{padding:2px 16px 16px}
+.pickrow .qmdp-pick-button{width:100%;min-height:44px;border:1px solid var(--ink);border-radius:8px;background:var(--ink);color:var(--paper);font-size:14px;font-weight:650;cursor:pointer;font-family:inherit}
+.notes{max-width:1080px;margin:28px auto 0}
+.notes h2{font-family:'Fraunces',serif;font-size:18px;font-weight:700;margin-bottom:12px}
+.note-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.note{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:14px 16px;font-size:12px;line-height:1.7;color:var(--sub)}
+.note h3{font-size:13px;font-weight:650;color:var(--ink);margin-bottom:6px}
+.note p+p{margin-top:4px}
+.note b{color:var(--ink)}
+.mix{margin-top:14px;font-size:13px;line-height:1.7;color:var(--ink);background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:14px 16px}
+@media (max-width:860px){
+  .grid{grid-template-columns:1fr}
+  .note-grid{grid-template-columns:1fr}
+  .dials{grid-template-columns:1fr}
+}
+
+/* ===== 手机样机共享骨架（四方向同 DOM，动效差异在方向作用域） ===== */
+.phone{position:relative;width:260px;height:440px;background:var(--paper);border:1px solid var(--hairline);border-radius:24px;overflow:hidden;box-shadow:0 12px 32px rgba(20,20,20,.10);flex:none}
+.ph-mast{padding:14px 14px 0}
+.ph-kicker{font-size:8px;letter-spacing:.14em;color:var(--sub);text-transform:uppercase}
+.ph-title{font-family:'Fraunces',serif;font-size:22px;font-weight:700;margin-top:2px}
+.ph-meta{font-size:8px;letter-spacing:.1em;color:var(--sub);margin-top:3px;text-transform:uppercase}
+.ph-rule{margin:8px 14px 0;border-top:1.5px solid var(--ink);padding-top:2.5px;border-bottom:.5px solid var(--ink);height:0}
+.ph-body{position:absolute;top:92px;bottom:46px;left:0;right:0}
+.scr{position:absolute;inset:0;background:var(--paper);padding:8px 14px;opacity:0;pointer-events:none}
+.scr.on{opacity:1}
+.row{display:flex;align-items:baseline;gap:9px;padding:10px 0;border-bottom:.5px solid var(--hairline)}
+.mono{font-family:'Fraunces',serif;font-size:16px;font-weight:600;width:16px;flex:none}
+.rt{font-size:11px;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rs{font-size:7.5px;letter-spacing:.08em;color:var(--sub);text-transform:uppercase;flex:none}
+.vrow .rt{font-family:'Fraunces',serif;font-size:13px;font-weight:600}
+.scr-reader{position:absolute;inset:0;z-index:3;background:var(--paper);opacity:0;pointer-events:none}
+.scr-reader.on{opacity:1}
+.rbar{display:flex;align-items:center;gap:8px;padding:12px 14px 10px;border-bottom:.5px solid var(--hairline)}
+.rbar-l{flex:1;min-width:0}
+.rbar-k{font-size:7.5px;letter-spacing:.14em;color:var(--sub);text-transform:uppercase}
+.rbar-t{font-family:'Fraunces',serif;font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.star{width:16px;height:16px;flex:none;fill:#a39e98;transform-origin:center;transform-box:fill-box}
+.st-star .star{fill:#141414}
+.rbody{padding:12px 14px}
+.rbody p{font-size:9.5px;line-height:1.75;margin:0 0 8px}
+.drawer{position:absolute;left:0;right:0;bottom:0;height:250px;z-index:4;background:var(--paper);border-top:2px solid var(--ink);border-radius:10px 10px 0 0;transform:translateY(105%)}
+.drawer.on{transform:none}
+.d-head{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 8px;border-bottom:.5px solid var(--hairline)}
+.d-head .d-t{font-size:8px;letter-spacing:.14em;color:var(--sub);text-transform:uppercase}
+.d-x{width:18px;height:18px;border:1px solid var(--hairline);border-radius:50%;display:grid;place-items:center;font-size:10px;color:var(--sub)}
+.d-bub{max-width:82%;font-size:9px;line-height:1.6;padding:6px 9px;border-radius:4px;margin:8px 14px}
+.d-bub.u{background:var(--ink);color:var(--paper);margin-left:auto}
+.d-bub.a{border:.5px solid var(--hairline);margin-right:auto}
+.nav{position:absolute;left:0;right:0;bottom:0;height:46px;border-top:1.5px solid var(--ink);display:flex;background:var(--paper);z-index:2}
+.nt{flex:1;display:grid;place-items:center;font-size:9.5px;color:var(--sub);padding-bottom:5px}
+.nt.on{color:var(--ink);font-weight:600}
+.nind{position:absolute;bottom:5px;left:24.5px;width:16px;border-top:1.5px solid var(--ink)}
+.st-tab1 .nind{left:89.5px}
+.fly{position:absolute;z-index:5;font-family:'Fraunces',serif;font-weight:600;color:var(--ink);opacity:0;pointer-events:none;white-space:nowrap}
+
+/* ===== 方向 A · 静默纸面：只许 opacity + 指示器位移，≤160ms ===== */
+.dirA .scr{transition:opacity .15s var(--e-out)}
+.dirA .scr-reader{transition:opacity .16s var(--e-out)}
+.dirA .drawer{transform:none;opacity:0;transition:opacity .14s var(--e-out)}
+.dirA .drawer.on{opacity:1}
+.dirA .nind{transition:left .15s var(--e-out)}
+
+/* ===== 方向 B · 墨线轴线（推荐）：M3 emphasized 纵轴，fade-through / 上推 ===== */
+.dirB .scr{transform:translateY(10px);transition:opacity .09s ease,transform .09s ease}
+.dirB .scr.on{transform:none;transition:opacity .21s var(--e-out) .06s,transform .21s var(--e-out) .06s}
+.dirB .scr-reader{transform:translateY(26px);transition:opacity .12s ease,transform .12s ease}
+.dirB .scr-reader.on{transform:none;transition:opacity .24s var(--e-out),transform .24s var(--e-out)}
+.dirB .drawer{transition:transform .18s ease}
+.dirB .drawer.on{transition:transform .25s var(--e-out)}
+.dirB .nind{transition:left .2s var(--e-out)}
+.dirB .star{transition:fill .12s ease}
+
+/* ===== 方向 C · 编辑编排：共享标题飞行 + stagger + 星标 pop ===== */
+.dirC .scr{transition:opacity .15s var(--e-out)}
+.dirC .nind{transition:left .2s var(--e-out)}
+.dirC .scr-reader{transition:opacity .12s ease}
+.dirC .scr-reader.on{transition:opacity .22s ease .16s}
+.dirC .rbar-t{opacity:0;transition:opacity .1s ease}
+.dirC.st-reader .rbar-t{opacity:1;transition:opacity .12s ease .34s}
+.dirC .rbody p{opacity:0;transform:translateY(6px);transition:opacity .12s ease,transform .12s ease}
+.dirC.st-reader .rbody p{opacity:1;transform:none;transition:opacity .25s var(--e-out) .3s,transform .25s var(--e-out) .3s}
+.dirC.st-reader .rbody p:nth-child(2){transition-delay:.38s}
+.dirC .drawer{transition:transform .3s var(--e-out)}
+.dirC.st-star .star{animation:cPop .32s var(--e-out)}
+@keyframes cPop{0%{transform:scale(.72)}55%{transform:scale(1.14)}100%{transform:scale(1)}}
+
+/* ===== 方向 D · 流体纸页：全 spring（过冲曲线近似），无固定时长感 ===== */
+.dirD .scr{transform:translateY(14px);transition:opacity .14s ease,transform .14s ease}
+.dirD .scr.on{transform:none;transition:opacity .2s ease,transform .4s cubic-bezier(.34,1.35,.4,1)}
+.dirD .scr-reader{transform:translateY(44px);transition:opacity .14s ease,transform .14s ease}
+.dirD .scr-reader.on{transform:none;transition:opacity .2s ease,transform .42s cubic-bezier(.34,1.3,.4,1)}
+.dirD .drawer{transition:transform .2s ease}
+.dirD .drawer.on{transition:transform .46s cubic-bezier(.3,1.4,.4,1)}
+.dirD .nind{transition:left .44s cubic-bezier(.3,1.45,.4,1)}
+.dirD.st-star .star{animation:dPop .4s cubic-bezier(.3,1.4,.4,1)}
+@keyframes dPop{0%{transform:scale(.6)}65%{transform:scale(1.2)}100%{transform:scale(1)}}
+</style>
+</head>
+<body>
+<header class="shell-head">
+  <h1>Handypage 全局动效系统 · 方向样机</h1>
+  <p class="note">四个方向只演示动效气质（时值、曲线、方向感），视觉元素不变，<b>不是最终 App</b>；每个样机自动循环演示：切 tab → 打开文章 → AI 抽屉 → 收藏星标。点选方向或按 1-4，确认后才进入正式实现。</p>
+</header>
+<div class="dials" data-qmdp-dials aria-label="设计拨盘">
+  <label class="dial"><b>视觉冒险度 <output data-qmdp-output="variance">5</output></b><input data-qmdp-dial="variance" type="range" min="1" max="10" value="5"></label>
+  <label class="dial"><b>动效强度 <output data-qmdp-output="motion">5</output></b><input data-qmdp-dial="motion" type="range" min="1" max="10" value="5"></label>
+  <label class="dial"><b>信息密度 <output data-qmdp-output="density">6</output></b><input data-qmdp-dial="density" type="range" min="1" max="10" value="6"></label>
+</div>
+<main class="grid">
+
+  <article class="card" data-design-option="A" data-name="静默纸面 · 纯淡变零位移">
+    <div class="mock"><span class="proto">方向样机 · 循环演示</span>
+      <div class="phone dirA">
+        <div class="ph-mast"><div class="ph-kicker">Handypage</div><div class="ph-title">阅读</div><div class="ph-meta">12 sources · Aug 2, 2026</div></div>
+        <div class="ph-rule"></div>
+        <div class="ph-body">
+          <div class="scr scr-list on">
+            <div class="row"><span class="mono">E</span><span class="rt">The future of attention</span><span class="rs">Economist</span></div>
+            <div class="row"><span class="mono">N</span><span class="rt">How memory reshapes reading</span><span class="rs">Nature</span></div>
+            <div class="row"><span class="mono">A</span><span class="rt">Why we reread the classics</span><span class="rs">Aeon</span></div>
+          </div>
+          <div class="scr scr-local">
+            <div class="row vrow"><span class="rt">ephemeral</span><span class="rs">短暂的 · ×3</span></div>
+            <div class="row vrow"><span class="rt">ubiquitous</span><span class="rs">无处不在的 · ×2</span></div>
+            <div class="row vrow"><span class="rt">alleviate</span><span class="rs">缓解，减轻 · ×1</span></div>
+          </div>
+        </div>
+        <div class="scr-reader">
+          <div class="rbar"><div class="rbar-l"><div class="rbar-k">The Economist</div><div class="rbar-t">The future of attention</div></div><svg class="star" viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+          <div class="rbody">
+            <p>Attention is the rarest currency of the modern mind. A page that does not scroll asks something of its reader: stay, and finish.</p>
+            <p>The printed word waits. It does not refresh, does not notify, does not beg. In that patience lies its strange power.</p>
+          </div>
+        </div>
+        <div class="drawer">
+          <div class="d-head"><span class="d-t">Handypage AI</span><span class="d-x">×</span></div>
+          <div class="d-bub u">这段在讲什么？</div>
+          <div class="d-bub a">作者认为纸页的「不打扰」正是专注的来源——它把节奏交还给读者。</div>
+        </div>
+        <div class="nav"><span class="nt on">阅读</span><span class="nt">本机</span><span class="nt">Agent</span><span class="nt">设置</span><i class="nind"></i></div>
+        <div class="fly">The future of attention</div>
+      </div>
+    </div>
+    <div class="meta"><div class="meta-head"><span class="letter">A</span><strong>静默纸面</strong></div>
+      <p class="tag">只许淡变 + 指示器滑动，禁止任何屏幕级位移 · 全部 ≤160ms · 最小改动、最克制</p></div>
+    <div class="pickrow"><button type="button" class="qmdp-pick-button">选择 A · 静默纸面</button></div>
+  </article>
+
+  <article class="card" data-design-option="B" data-name="墨线轴线 · M3 纵轴推进">
+    <div class="mock"><span class="proto">方向样机 · 循环演示</span>
+      <div class="phone dirB">
+        <div class="ph-mast"><div class="ph-kicker">Handypage</div><div class="ph-title">阅读</div><div class="ph-meta">12 sources · Aug 2, 2026</div></div>
+        <div class="ph-rule"></div>
+        <div class="ph-body">
+          <div class="scr scr-list on">
+            <div class="row"><span class="mono">E</span><span class="rt">The future of attention</span><span class="rs">Economist</span></div>
+            <div class="row"><span class="mono">N</span><span class="rt">How memory reshapes reading</span><span class="rs">Nature</span></div>
+            <div class="row"><span class="mono">A</span><span class="rt">Why we reread the classics</span><span class="rs">Aeon</span></div>
+          </div>
+          <div class="scr scr-local">
+            <div class="row vrow"><span class="rt">ephemeral</span><span class="rs">短暂的 · ×3</span></div>
+            <div class="row vrow"><span class="rt">ubiquitous</span><span class="rs">无处不在的 · ×2</span></div>
+            <div class="row vrow"><span class="rt">alleviate</span><span class="rs">缓解，减轻 · ×1</span></div>
+          </div>
+        </div>
+        <div class="scr-reader">
+          <div class="rbar"><div class="rbar-l"><div class="rbar-k">The Economist</div><div class="rbar-t">The future of attention</div></div><svg class="star" viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+          <div class="rbody">
+            <p>Attention is the rarest currency of the modern mind. A page that does not scroll asks something of its reader: stay, and finish.</p>
+            <p>The printed word waits. It does not refresh, does not notify, does not beg. In that patience lies its strange power.</p>
+          </div>
+        </div>
+        <div class="drawer">
+          <div class="d-head"><span class="d-t">Handypage AI</span><span class="d-x">×</span></div>
+          <div class="d-bub u">这段在讲什么？</div>
+          <div class="d-bub a">作者认为纸页的「不打扰」正是专注的来源——它把节奏交还给读者。</div>
+        </div>
+        <div class="nav"><span class="nt on">阅读</span><span class="nt">本机</span><span class="nt">Agent</span><span class="nt">设置</span><i class="nind"></i></div>
+        <div class="fly">The future of attention</div>
+      </div>
+    </div>
+    <div class="meta"><div class="meta-head"><span class="letter">B</span><strong>墨线轴线</strong><span class="rec">推荐</span></div>
+      <p class="tag">严格 M3 emphasized 曲线族 · 向前上推 / 返回下沉的纵轴语义 · fade-through 换 tab · ≤250ms</p></div>
+    <div class="pickrow"><button type="button" class="qmdp-pick-button">选择 B · 墨线轴线</button></div>
+  </article>
+
+  <article class="card" data-design-option="C" data-name="编辑编排 · 共享标题飞行">
+    <div class="mock"><span class="proto">方向样机 · 循环演示</span>
+      <div class="phone dirC">
+        <div class="ph-mast"><div class="ph-kicker">Handypage</div><div class="ph-title">阅读</div><div class="ph-meta">12 sources · Aug 2, 2026</div></div>
+        <div class="ph-rule"></div>
+        <div class="ph-body">
+          <div class="scr scr-list on">
+            <div class="row"><span class="mono">E</span><span class="rt">The future of attention</span><span class="rs">Economist</span></div>
+            <div class="row"><span class="mono">N</span><span class="rt">How memory reshapes reading</span><span class="rs">Nature</span></div>
+            <div class="row"><span class="mono">A</span><span class="rt">Why we reread the classics</span><span class="rs">Aeon</span></div>
+          </div>
+          <div class="scr scr-local">
+            <div class="row vrow"><span class="rt">ephemeral</span><span class="rs">短暂的 · ×3</span></div>
+            <div class="row vrow"><span class="rt">ubiquitous</span><span class="rs">无处不在的 · ×2</span></div>
+            <div class="row vrow"><span class="rt">alleviate</span><span class="rs">缓解，减轻 · ×1</span></div>
+          </div>
+        </div>
+        <div class="scr-reader">
+          <div class="rbar"><div class="rbar-l"><div class="rbar-k">The Economist</div><div class="rbar-t">The future of attention</div></div><svg class="star" viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+          <div class="rbody">
+            <p>Attention is the rarest currency of the modern mind. A page that does not scroll asks something of its reader: stay, and finish.</p>
+            <p>The printed word waits. It does not refresh, does not notify, does not beg. In that patience lies its strange power.</p>
+          </div>
+        </div>
+        <div class="drawer">
+          <div class="d-head"><span class="d-t">Handypage AI</span><span class="d-x">×</span></div>
+          <div class="d-bub u">这段在讲什么？</div>
+          <div class="d-bub a">作者认为纸页的「不打扰」正是专注的来源——它把节奏交还给读者。</div>
+        </div>
+        <div class="nav"><span class="nt on">阅读</span><span class="nt">本机</span><span class="nt">Agent</span><span class="nt">设置</span><i class="nind"></i></div>
+        <div class="fly">The future of attention</div>
+      </div>
+    </div>
+    <div class="meta"><div class="meta-head"><span class="letter">C</span><strong>编辑编排</strong></div>
+      <p class="tag">列表标题「飞入」阅读器顶栏 · 正文 stagger 入场 · 星标 pop 微反馈 · 编排感最强</p></div>
+    <div class="pickrow"><button type="button" class="qmdp-pick-button">选择 C · 编辑编排</button></div>
+  </article>
+
+  <article class="card" data-design-option="D" data-name="流体纸页 · 弹簧物理">
+    <div class="mock"><span class="proto">方向样机 · 循环演示</span>
+      <div class="phone dirD">
+        <div class="ph-mast"><div class="ph-kicker">Handypage</div><div class="ph-title">阅读</div><div class="ph-meta">12 sources · Aug 2, 2026</div></div>
+        <div class="ph-rule"></div>
+        <div class="ph-body">
+          <div class="scr scr-list on">
+            <div class="row"><span class="mono">E</span><span class="rt">The future of attention</span><span class="rs">Economist</span></div>
+            <div class="row"><span class="mono">N</span><span class="rt">How memory reshapes reading</span><span class="rs">Nature</span></div>
+            <div class="row"><span class="mono">A</span><span class="rt">Why we reread the classics</span><span class="rs">Aeon</span></div>
+          </div>
+          <div class="scr scr-local">
+            <div class="row vrow"><span class="rt">ephemeral</span><span class="rs">短暂的 · ×3</span></div>
+            <div class="row vrow"><span class="rt">ubiquitous</span><span class="rs">无处不在的 · ×2</span></div>
+            <div class="row vrow"><span class="rt">alleviate</span><span class="rs">缓解，减轻 · ×1</span></div>
+          </div>
+        </div>
+        <div class="scr-reader">
+          <div class="rbar"><div class="rbar-l"><div class="rbar-k">The Economist</div><div class="rbar-t">The future of attention</div></div><svg class="star" viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+          <div class="rbody">
+            <p>Attention is the rarest currency of the modern mind. A page that does not scroll asks something of its reader: stay, and finish.</p>
+            <p>The printed word waits. It does not refresh, does not notify, does not beg. In that patience lies its strange power.</p>
+          </div>
+        </div>
+        <div class="drawer">
+          <div class="d-head"><span class="d-t">Handypage AI</span><span class="d-x">×</span></div>
+          <div class="d-bub u">这段在讲什么？</div>
+          <div class="d-bub a">作者认为纸页的「不打扰」正是专注的来源——它把节奏交还给读者。</div>
+        </div>
+        <div class="nav"><span class="nt on">阅读</span><span class="nt">本机</span><span class="nt">Agent</span><span class="nt">设置</span><i class="nind"></i></div>
+        <div class="fly">The future of attention</div>
+      </div>
+    </div>
+    <div class="meta"><div class="meta-head"><span class="letter">D</span><strong>流体纸页</strong></div>
+      <p class="tag">无固定时长 spring 物理 · 可中断、速度交接 · 指示器/抽屉带过冲跟手感（预览用曲线近似）</p></div>
+    <div class="pickrow"><button type="button" class="qmdp-pick-button">选择 D · 流体纸页</button></div>
+  </article>
+
+</main>
+
+<section class="notes">
+  <h2>方向说明（时值表 / 落地方式 / 代价）</h2>
+  <div class="note-grid">
+    <div class="note"><h3>A · 静默纸面</h3>
+      <p>气质：像换了一张纸——没有东西在「动」，只是内容换了。最贴报纸的冷静。</p>
+      <p>时值：tab crossfade 150 · 阅读器 160 · 抽屉 140 · 指示器 150ms。</p>
+      <p>落地：<b>Crossfade(tween(150))</b> + 指示器 animateDp，改动量最小。</p>
+      <p>代价：没有空间方向感，「从哪来、回哪去」读不出来；抽屉 fade 略显悬空。</p></div>
+    <div class="note"><h3>B · 墨线轴线（推荐）</h3>
+      <p>气质：向前一步就往上推、返回就下沉——方向感来自「轴」而非花哨，和编辑排印同频。</p>
+      <p>时值：tab fade-through 90+150 · 阅读器 24dp 上推 + 淡入 240 · 抽屉 250 · 指示器 200 · 星标 crossfade 120ms。</p>
+      <p>落地：M3 emphasized 曲线写成统一 <b>MotionTokens</b>，NavHost 六个目的地 + 六处 AnimatedVisibility 全部吃同一套 token，杜绝各写各的。</p>
+      <p>代价：需要先把 token 层建起来（一次性成本）；共享元素做不了，靠轴语义补偿。</p></div>
+    <div class="note"><h3>C · 编辑编排</h3>
+      <p>气质：杂志封面式编排——标题自己「走」进阅读器顶栏，正文段落随后依次落位。</p>
+      <p>时值：fly 260 · 顶栏延迟 340 · 正文 stagger 80 · 星标 pop 320ms。</p>
+      <p>落地：列表在 MainActivity、阅读器是独立 Activity，真共享元素成本高——需 overlay 伪造飞行层或合并 Activity。</p>
+      <p>代价：实现最贵；编排只能给低频路径（开文章/收藏），高频 tab 严禁编排，否则每天几十次会烦。</p></div>
+    <div class="note"><h3>D · 流体纸页</h3>
+      <p>气质：iOS 式跟手，一切有质量感；预览里用过冲曲线近似，真机用 spring 物理。</p>
+      <p>时值：无固定时长，spring stiffness≈300 / dampingRatio≈0.8，轻微过冲。</p>
+      <p>落地：Compose spring() 全量替换 tween；手势路径接 AnchoredDraggable。</p>
+      <p>代价：与 M17「抽屉去手势化」只兼容程序触发路径；过弹会和报纸的克制打架，参数必须收敛。</p></div>
+  </div>
+  <p class="mix">推荐 <b>B · 墨线轴线</b>：拨盘 5「有生命力但克制」的最优解——有方向性推进、有指示器滑动、有微反馈，全部收在 250ms 内的官方曲线里，Compose 落地成本最低。可混搭：<b>B 骨架 + C 的星标 pop</b>（写在确认弹层的调整框里即可）；也可以只取某个细节，在对话里告诉我。</p>
+</section>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 拨盘数值即时同步（服务注入时也会绑定，双监听无副作用）
+  document.querySelectorAll('[data-qmdp-dial]').forEach(function(input){
+    input.addEventListener('input', function(){
+      document.querySelectorAll('[data-qmdp-output="' + input.dataset.qmdpDial + '"]').forEach(function(o){
+        o.value = input.value; o.textContent = input.value;
+      });
+    });
+  });
+
+  // 循环演示状态机：切tab → 回 → 开文章 → 抽屉 → 星标 → 关抽屉 → 回列表
+  var steps = [
+    {t:2100, s:[true ,false,false,false]},
+    {t:1600, s:[false,false,false,false]},
+    {t:2700, s:[false,true ,false,false]},
+    {t:2000, s:[false,true ,true ,false]},
+    {t:1500, s:[false,true ,true ,true ]},
+    {t:1000, s:[false,true ,false,true ]},
+    {t:1500, s:[false,false,false,false]}
+  ];
+
+  function setState(ph, tab1, reader, drawer, star){
+    var wasReader = ph.classList.contains('st-reader');
+    ph.classList.toggle('st-tab1', tab1);
+    ph.classList.toggle('st-reader', reader);
+    ph.classList.toggle('st-drawer', drawer);
+    ph.classList.toggle('st-star', star);
+    ph.querySelector('.scr-list').classList.toggle('on', !tab1);
+    ph.querySelector('.scr-local').classList.toggle('on', tab1);
+    ph.querySelector('.scr-reader').classList.toggle('on', reader);
+    ph.querySelector('.drawer').classList.toggle('on', drawer);
+    var nts = ph.querySelectorAll('.nt');
+    nts[0].classList.toggle('on', !tab1);
+    nts[1].classList.toggle('on', tab1);
+    if (reader && !wasReader) flyTitle(ph);
+  }
+
+  // 方向 C 专属：列表标题 FLIP 飞入阅读器顶栏
+  function flyTitle(ph){
+    if (!ph.classList.contains('dirC')) return;
+    var src = ph.querySelector('.scr-list .row .rt');
+    var dst = ph.querySelector('.rbar-t');
+    var fly = ph.querySelector('.fly');
+    var pr = ph.getBoundingClientRect(), s = src.getBoundingClientRect(), d = dst.getBoundingClientRect();
+    fly.style.transition = 'none';
+    fly.style.left = (s.left - pr.left) + 'px';
+    fly.style.top = (s.top - pr.top) + 'px';
+    fly.style.fontSize = '11px';
+    fly.style.opacity = '1';
+    void fly.offsetWidth;
+    fly.style.transition = 'left .26s cubic-bezier(.23,1,.32,1), top .26s cubic-bezier(.23,1,.32,1), font-size .26s cubic-bezier(.23,1,.32,1), opacity .12s ease .3s';
+    fly.style.left = (d.left - pr.left) + 'px';
+    fly.style.top = (d.top - pr.top) + 'px';
+    fly.style.fontSize = '15px';
+    fly.style.opacity = '0';
+  }
+
+  document.querySelectorAll('.phone').forEach(function(ph, i){
+    if (reduce) return; // 减弱动效：静态展示首屏，不自动循环
+    setTimeout(function(){
+      var k = 0;
+      (function tick(){
+        var step = steps[k % steps.length];
+        setState(ph, step.s[0], step.s[1], step.s[2], step.s[3]);
+        k++;
+        setTimeout(tick, step.t);
+      })();
+    }, 500 + i * 350);
+  });
+})();
+</script>
+</body>
+</html>

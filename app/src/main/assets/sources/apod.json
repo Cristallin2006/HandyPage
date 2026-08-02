@@ -1,0 +1,37 @@
+{
+  "id": "apod",
+  "name": "Astronomy Picture of the Day",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://apod.nasa.gov/",
+  "needs_proxy": false,
+  "category": "science",
+  "origin": {
+    "type": "calibre_recipe",
+    "id": "apod"
+  },
+  "index": {
+    "type": "html",
+    "url": "https://apod.nasa.gov/apod/archivepix.html",
+    "link_css": "b a",
+    "link_regex": "ap\\d{6}\\.html$",
+    "max": 20
+  },
+  "article": {
+    "content": "body",
+    "title": "center:nth-of-type(2) b:first-of-type",
+    "remove": [
+      "center"
+    ],
+    "encoding": null
+  },
+  "request": {
+    "delay_seconds": 1,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "NASA 每日天文图,~150 词图文解说,每日短读首选。官方 RSS 标题几乎全空不可用(2026-07-31 实测 7 条 6 空),改用存档页 HTML 索引(1995 年代表格 markup,三十年不变=零维护);链接文本即标题。正文=body 剥掉两个 center(头部图区+版权行),剩 Explanation 段落。title 留空回退索引标题。",
+  "test": {
+    "fixture": "fixtures/apod/"
+  }
+}

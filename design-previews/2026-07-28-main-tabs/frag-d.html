@@ -1,0 +1,224 @@
+<style>
+.dirD-stage, .dirD-stage *{box-sizing:border-box}
+.dirD-stage{width:390px;height:640px;overflow:hidden;position:relative;background:#f1f3f5;color:#1a2330;font-family:"Barlow",-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;-webkit-font-smoothing:antialiased}
+.dirD-stage .dirD-status{display:flex;align-items:center;justify-content:space-between;height:24px;padding:0 16px}
+.dirD-stage .dirD-time{font-family:"Barlow Semi Condensed",-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums;color:#1a2330}
+.dirD-stage .dirD-sicons{display:flex;align-items:center;gap:4px;color:#1a2330}
+.dirD-stage .dirD-appbar{display:flex;align-items:center;justify-content:space-between;height:44px;padding:0 16px}
+.dirD-stage .dirD-titleblock{display:flex;align-items:baseline;gap:8px}
+.dirD-stage .dirD-title{font-family:"Barlow Semi Condensed",-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:20px;font-weight:700;line-height:24px;color:#1a2330}
+.dirD-stage .dirD-kicker{font-family:"Barlow Semi Condensed",-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:10px;font-weight:600;letter-spacing:0.16em;color:#5b6673}
+.dirD-stage .dirD-gear{display:flex;color:#5b6673}
+.dirD-stage .dirD-stats{display:flex;height:44px;margin:8px 12px;background:#ffffff;border:1px solid #dfe4ea;border-radius:8px}
+.dirD-stage .dirD-stat{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0}
+.dirD-stage .dirD-stat + .dirD-stat{border-left:1px solid #dfe4ea}
+.dirD-stage .dirD-stat-num{font-family:"Barlow Semi Condensed",-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:20px;font-weight:700;line-height:22px;font-variant-numeric:tabular-nums;color:#1a2330}
+.dirD-stage .dirD-stat-num-accent{color:#0e7490}
+.dirD-stage .dirD-stat-num-green{color:#15803d}
+.dirD-stage .dirD-stat-label{font-size:10px;font-weight:500;line-height:12px;letter-spacing:0.08em;color:#5b6673}
+.dirD-stage .dirD-content{padding:0 12px}
+.dirD-stage .dirD-group{margin-bottom:12px}
+.dirD-stage .dirD-ghead{display:flex;align-items:center;height:20px;margin-bottom:8px}
+.dirD-stage .dirD-gbar{flex:none;width:3px;height:12px;border-radius:2px;background:#0e7490}
+.dirD-stage .dirD-gtitle{margin-left:8px;font-family:"Barlow Semi Condensed",-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:13px;font-weight:600;letter-spacing:0.04em;color:#1a2330;white-space:nowrap}
+.dirD-stage .dirD-grule{flex:1;height:1px;background:#dfe4ea;margin:0 8px}
+.dirD-stage .dirD-gcount{flex:none;font-family:"Barlow Semi Condensed",-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:11px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums;color:#0e7490;background:#ffffff;border:1px solid #dfe4ea;border-radius:999px;padding:3px 8px}
+.dirD-stage .dirD-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dirD-stage .dirD-card{background:#ffffff;border:1px solid #dfe4ea;border-radius:8px;padding:8px;min-width:0}
+.dirD-stage .dirD-card-top{display:flex;align-items:center;min-width:0}
+.dirD-stage .dirD-mono{flex:none;width:24px;height:24px;border-radius:8px;background:#0e7490;color:#ffffff;display:flex;align-items:center;justify-content:center;font-family:"Barlow Semi Condensed",-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:12px;font-weight:700}
+.dirD-stage .dirD-name{flex:1;min-width:0;margin-left:6px;font-family:"Barlow Semi Condensed",-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:13px;font-weight:600;line-height:16px;color:#1a2330;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dirD-stage .dirD-badge{flex:none;margin-left:4px;font-size:10px;font-weight:600;line-height:1;padding:3px 6px;border-radius:999px;white-space:nowrap}
+.dirD-stage .dirD-badge-ok{color:#15803d;background:#dcfce7}
+.dirD-stage .dirD-badge-proxy{color:#b45309;background:#fef3c7}
+.dirD-stage .dirD-domain{margin-top:4px;font-size:11px;font-weight:500;line-height:12px;color:#5b6673;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dirD-stage .dirD-nav{position:absolute;left:0;right:0;bottom:0;height:56px;background:#ffffff;border-top:1px solid #dfe4ea;display:flex}
+.dirD-stage .dirD-nav-item{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#5b6673}
+.dirD-stage .dirD-nav-item.dirD-nav-active{color:#0e7490}
+.dirD-stage .dirD-nav-item.dirD-nav-active::before{content:"";position:absolute;top:-1px;left:20px;right:20px;height:2px;background:#0e7490;border-radius:0 0 2px 2px}
+.dirD-stage .dirD-nav-label{font-size:10px;font-weight:500;line-height:12px}
+.dirD-stage .dirD-nav-item.dirD-nav-active .dirD-nav-label{font-weight:600}
+</style>
+<div class="dirD-stage">
+  <div class="dirD-status">
+    <span class="dirD-time">9:41</span>
+    <span class="dirD-sicons">
+      <svg width="15" height="12" viewBox="0 0 16 12"><rect x="0.5" y="7" width="3" height="5" rx="1" fill="currentColor"/><rect x="4.5" y="5" width="3" height="7" rx="1" fill="currentColor"/><rect x="8.5" y="2.5" width="3" height="9.5" rx="1" fill="currentColor"/><rect x="12.5" y="0.5" width="3" height="11.5" rx="1" fill="currentColor"/></svg>
+      <svg width="15" height="12" viewBox="0 0 16 12" fill="none"><path d="M1.5 4.2a9 9 0 0 1 13 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3.8 6.8a6 6 0 0 1 8.4 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="8" cy="9.6" r="1.3" fill="currentColor"/></svg>
+      <svg width="22" height="12" viewBox="0 0 24 12" fill="none"><rect x="1" y="1.5" width="18" height="9" rx="2.5" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3.5" width="12" height="5" rx="1" fill="currentColor"/><rect x="20.6" y="4" width="2.2" height="4" rx="1" fill="currentColor"/></svg>
+    </span>
+  </div>
+  <div class="dirD-appbar">
+    <div class="dirD-titleblock">
+      <span class="dirD-title">源</span>
+      <span class="dirD-kicker">SOURCES</span>
+    </div>
+    <span class="dirD-gear">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 4.5v2.6M12 16.9v2.6M4.5 12h2.6M16.9 12h2.6M6.7 6.7l1.9 1.9M15.4 15.4l1.9 1.9M17.3 6.7l-1.9 1.9M8.6 15.4l-1.9 1.9"/></svg>
+    </span>
+  </div>
+  <div class="dirD-stats">
+    <div class="dirD-stat">
+      <span class="dirD-stat-num dirD-stat-num-accent">15</span>
+      <span class="dirD-stat-label">源</span>
+    </div>
+    <div class="dirD-stat">
+      <span class="dirD-stat-num">5</span>
+      <span class="dirD-stat-label">分组</span>
+    </div>
+    <div class="dirD-stat">
+      <span class="dirD-stat-num dirD-stat-num-green">14</span>
+      <span class="dirD-stat-label">直连</span>
+    </div>
+  </div>
+  <div class="dirD-content">
+    <div class="dirD-group">
+      <div class="dirD-ghead">
+        <span class="dirD-gbar"></span>
+        <span class="dirD-gtitle">分级学习</span>
+        <span class="dirD-grule"></span>
+        <span class="dirD-gcount">2</span>
+      </div>
+      <div class="dirD-grid">
+        <div class="dirD-card">
+          <div class="dirD-card-top">
+            <span class="dirD-mono">C</span>
+            <span class="dirD-name">China Daily</span>
+            <span class="dirD-badge dirD-badge-ok">直连</span>
+          </div>
+          <div class="dirD-domain">chinadaily.com.cn</div>
+        </div>
+        <div class="dirD-card">
+          <div class="dirD-card-top">
+            <span class="dirD-mono">V</span>
+            <span class="dirD-name">VOA Learning English</span>
+            <span class="dirD-badge dirD-badge-ok">直连</span>
+          </div>
+          <div class="dirD-domain">learningenglish.voanews.com</div>
+        </div>
+      </div>
+    </div>
+    <div class="dirD-group">
+      <div class="dirD-ghead">
+        <span class="dirD-gbar"></span>
+        <span class="dirD-gtitle">新闻</span>
+        <span class="dirD-grule"></span>
+        <span class="dirD-gcount">3</span>
+      </div>
+      <div class="dirD-grid">
+        <div class="dirD-card">
+          <div class="dirD-card-top">
+            <span class="dirD-mono">N</span>
+            <span class="dirD-name">NPR</span>
+            <span class="dirD-badge dirD-badge-ok">直连</span>
+          </div>
+          <div class="dirD-domain">npr.org</div>
+        </div>
+        <div class="dirD-card">
+          <div class="dirD-card-top">
+            <span class="dirD-mono">R</span>
+            <span class="dirD-name">RTÉ</span>
+            <span class="dirD-badge dirD-badge-ok">直连</span>
+          </div>
+          <div class="dirD-domain">rte.ie</div>
+        </div>
+        <div class="dirD-card">
+          <div class="dirD-card-top">
+            <span class="dirD-mono">T</span>
+            <span class="dirD-name">The Guardian</span>
+            <span class="dirD-badge dirD-badge-proxy">需代理</span>
+          </div>
+          <div class="dirD-domain">theguardian.com</div>
+        </div>
+      </div>
+    </div>
+    <div class="dirD-group">
+      <div class="dirD-ghead">
+        <span class="dirD-gbar"></span>
+        <span class="dirD-gtitle">科学</span>
+        <span class="dirD-grule"></span>
+        <span class="dirD-gcount">3</span>
+      </div>
+      <div class="dirD-grid">
+        <div class="dirD-card">
+          <div class="dirD-card-top">
+            <span class="dirD-mono">N</span>
+            <span class="dirD-name">Nature News</span>
+            <span class="dirD-badge dirD-badge-ok">直连</span>
+          </div>
+          <div class="dirD-domain">nature.com</div>
+        </div>
+        <div class="dirD-card">
+          <div class="dirD-card-top">
+            <span class="dirD-mono">Q</span>
+            <span class="dirD-name">Quanta</span>
+            <span class="dirD-badge dirD-badge-ok">直连</span>
+          </div>
+          <div class="dirD-domain">quantamagazine.org</div>
+        </div>
+        <div class="dirD-card">
+          <div class="dirD-card-top">
+            <span class="dirD-mono">N</span>
+            <span class="dirD-name">NASA</span>
+            <span class="dirD-badge dirD-badge-ok">直连</span>
+          </div>
+          <div class="dirD-domain">nasa.gov</div>
+        </div>
+      </div>
+    </div>
+    <div class="dirD-group">
+      <div class="dirD-ghead">
+        <span class="dirD-gbar"></span>
+        <span class="dirD-gtitle">科技</span>
+        <span class="dirD-grule"></span>
+        <span class="dirD-gcount">1</span>
+      </div>
+      <div class="dirD-grid">
+        <div class="dirD-card">
+          <div class="dirD-card-top">
+            <span class="dirD-mono">T</span>
+            <span class="dirD-name">TechCrunch</span>
+            <span class="dirD-badge dirD-badge-ok">直连</span>
+          </div>
+          <div class="dirD-domain">techcrunch.com</div>
+        </div>
+      </div>
+    </div>
+    <div class="dirD-group">
+      <div class="dirD-ghead">
+        <span class="dirD-gbar"></span>
+        <span class="dirD-gtitle">论文</span>
+        <span class="dirD-grule"></span>
+        <span class="dirD-gcount">1</span>
+      </div>
+      <div class="dirD-grid">
+        <div class="dirD-card">
+          <div class="dirD-card-top">
+            <span class="dirD-mono">A</span>
+            <span class="dirD-name">arXiv</span>
+            <span class="dirD-badge dirD-badge-ok">直连</span>
+          </div>
+          <div class="dirD-domain">arxiv.org</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dirD-nav">
+    <div class="dirD-nav-item dirD-nav-active">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 5a14 14 0 0 1 14 14"/><circle cx="5.5" cy="18.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+      <span class="dirD-nav-label">源</span>
+    </div>
+    <div class="dirD-nav-item">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M10.5 17.8h3"/></svg>
+      <span class="dirD-nav-label">本机</span>
+    </div>
+    <div class="dirD-nav-item">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9.5" width="14" height="9.5" rx="3"/><path d="M12 9.5V6"/><circle cx="12" cy="4.8" r="1.1" fill="currentColor" stroke="none"/><circle cx="9.6" cy="13.6" r="0.9" fill="currentColor" stroke="none"/><circle cx="14.4" cy="13.6" r="0.9" fill="currentColor" stroke="none"/><path d="M9.8 16.3h4.4"/></svg>
+      <span class="dirD-nav-label">Agent</span>
+    </div>
+    <div class="dirD-nav-item">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 4.5v2.6M12 16.9v2.6M4.5 12h2.6M16.9 12h2.6M6.7 6.7l1.9 1.9M15.4 15.4l1.9 1.9M17.3 6.7l-1.9 1.9M8.6 15.4l-1.9 1.9"/></svg>
+      <span class="dirD-nav-label">设置</span>
+    </div>
+  </div>
+</div>

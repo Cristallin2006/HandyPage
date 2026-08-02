@@ -1,0 +1,34 @@
+{
+  "id": "china_daily",
+  "name": "China Daily",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://www.chinadaily.com.cn/",
+  "needs_proxy": false,
+  "category": "news",
+  "origin": {
+    "type": "handypage_builtin"
+  },
+  "index": {
+    "type": "html",
+    "url": "https://www.chinadaily.com.cn/world",
+    "link_css": "a[href*='/a/']",
+    "link_regex": "/a/\\d{6}/\\d{2}/WS[0-9a-f]+\\.html$",
+    "max": 20
+  },
+  "article": {
+    "content": "#Content",
+    "title": "h1",
+    "remove": [],
+    "encoding": null
+  },
+  "request": {
+    "delay_seconds": 1,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "官方 RSS(rss/world_rss.xml 等)2017-2019 年起全部停更,弃用;改用 /world 栏目 HTML 索引(链接为协议相对 //host/a/...。现代文章页仍是 2017 同款 #Content 容器,稳定性意外的好。国内可达性兜底源。",
+  "test": {
+    "fixture": "fixtures/china_daily/"
+  }
+}

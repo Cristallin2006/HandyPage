@@ -1,0 +1,36 @@
+{
+  "id": "news_in_levels",
+  "name": "News in Levels",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://www.newsinlevels.com/",
+  "needs_proxy": false,
+  "category": "learning",
+  "origin": {
+    "type": "handypage_builtin"
+  },
+  "index": {
+    "type": "html",
+    "url": "https://www.newsinlevels.com/",
+    "link_css": "a[href*='/products/']",
+    "link_regex": "-level-1/?$",
+    "max": 20
+  },
+  "article": {
+    "content": "#nContent",
+    "title": ".article-title",
+    "remove": [
+      "p:first-of-type"
+    ],
+    "encoding": null
+  },
+  "request": {
+    "delay_seconds": 2,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "每篇 3 个级别,索引只收 -level-1(最简),级别 2/3 可由 URL 字符串替换派生(v2 做级别切换)。正文取 #nContent,首个 p 是日期行故移除;末尾 'Difficult words:' 段是自带的生词注释,对学习者是加分项。h1 是站名 slogan,标题必须取 .article-title。",
+  "test": {
+    "fixture": "fixtures/news_in_levels/"
+  }
+}

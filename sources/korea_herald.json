@@ -1,0 +1,33 @@
+{
+  "id": "korea_herald",
+  "name": "Korea Herald",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://www.koreaherald.com/",
+  "needs_proxy": false,
+  "category": "news",
+  "origin": {
+    "type": "calibre_recipe",
+    "id": "korea_herald"
+  },
+  "index": {
+    "type": "rss",
+    "url": "https://www.koreaherald.com/rss/newsAll",
+    "max": 20
+  },
+  "article": {
+    "content": "#articleText",
+    "title": "h1",
+    "remove": [],
+    "encoding": null
+  },
+  "request": {
+    "delay_seconds": 1,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "recipe 里的 2011 年 feed(rss/020100000000.xml 等)已返回空 channel,换用首页公布的 rss/newsAll;正文容器 #articleText 与 2011 recipe 一致,至今未变。",
+  "test": {
+    "fixture": "fixtures/korea_herald/"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "id": "livescience",
+  "name": "Live Science",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://www.livescience.com/",
+  "needs_proxy": false,
+  "category": "science",
+  "origin": {
+    "type": "calibre_recipe",
+    "id": "livescience"
+  },
+  "index": {
+    "type": "rss",
+    "url": "https://www.livescience.com/feeds.xml",
+    "max": 20
+  },
+  "article": {
+    "content": "article",
+    "title": "h1",
+    "remove": [],
+    "encoding": null
+  },
+  "request": {
+    "delay_seconds": 1,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "大众科学读物,长文。2026-07-25 直连探测:feed 50 items,article 约 17000 字符。2026-07-26:旧 /feeds/all 301 降级到 http(明文),换用 canonical feeds.xml(HTTPS 直出)。",
+  "test": {
+    "fixture": "fixtures/livescience/"
+  }
+}

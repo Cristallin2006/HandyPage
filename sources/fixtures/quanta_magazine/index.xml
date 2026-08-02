@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:media="http://search.yahoo.com/mrss/"
+  xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+  xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Quanta Magazine</title>
+	<atom:link href="https://www.quantamagazine.org/feed/" rel="self" type="application/rss+xml"></atom:link>
+	<link>https://www.quantamagazine.org</link>
+	<description>Illuminating science</description>
+	<lastBuildDate>Fri, 24 Jul 2026 20:14:04 -0400</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.9.5</generator>
+	<item>
+		<title>How Fast Is the Universe Really Expanding?</title>
+		<link>https://www.quantamagazine.org/how-fast-is-the-universe-really-expanding-20260723/</link>
+		<comments>https://www.quantamagazine.org/how-fast-is-the-universe-really-expanding-20260723/#respond</comments>
+		<pubDate>Thu, 23 Jul 2026 14:53:45 +0000</pubDate>
+    <dc:creator><![CDATA[Steven Strogatz and Janna Levin]]></dc:creator>
+				<category><![CDATA[Multimedia]]></category>
+		<category><![CDATA[Physics]]></category>
+
+		<guid isPermaLink="false">https://www.quantamagazine.org/?p=164912</guid>
+		<description><![CDATA[One of the most contested issues in astrophysics is our understanding of the Universe’s expansion. Adam Riess discusses why there is disagreement and what might resolve it.            <p>The post <a href="https://www.quantamagazine.org/how-fast-is-the-universe-really-expanding-20260723/" target="_blank">How Fast Is the Universe Really Expanding?</a> first appeared on <a href="https://www.quantamagazine.org" target="_blank">Quanta Magazine</a></p>]]></description>
+				<content:encoded><![CDATA[<p>One of the biggest mysteries in cosmology seems to keep getting bigger. Astronomers have known since the 1930s that the universe is expanding, but in the 1990s, the discovery that this expansion is accelerating rather than slowing down came as a huge shock to the field. Something had to be driving that acceleration, and dark energy was proposed as the cause. What began as a seismic shock in&#8230;</p>
+<p><a href="https://www.quantamagazine.org/how-fast-is-the-universe-really-expanding-20260723/" rel="nofollow">Source</a></p>]]></content:encoded>
+			<wfw:commentRss>https://www.quantamagazine.org/how-fast-is-the-universe-really-expanding-20260723/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+<media:content url="https://www.quantamagazine.org/wp-content/uploads/2026/07/JOW-Adam-Reiss-cr-Chanelle-Nibbelink-Default.webp" type="image/jpg"></media:content>
+	</item>
+		<item>
+		<title>Fields and Abacus Medals 2026</title>
+		<link>https://www.quantamagazine.org/fields-and-abacus-medals-2026-20260723/</link>
+		<comments>https://www.quantamagazine.org/fields-and-abacus-medals-2026-20260723/#respond</comments>
+		<pubDate>Thu, 23 Jul 2026 14:20:31 +0000</pubDate>
+    <dc:creator><![CDATA[Jordana Cepelewicz, Konstantin Kakaes, Ben Brubaker, Kevin Hartnett and Natalie Wolchover]]></dc:creator>
+				<category><![CDATA[Mathematics]]></category>
+
+		<guid isPermaLink="false">https://www.quantamagazine.org/?p=165024</guid>
+		<description><![CDATA[Every four years, the math world’s preeminent awards are given to the finest minds of a generation. The young winners — all under 40 on the first day of the year — have reshaped mathematics and theoretical computer science. Here are their stories.
+
+            <p>The post <a href="https://www.quantamagazine.org/fields-and-abacus-medals-2026-20260723/" target="_blank">Fields and Abacus Medals 2026</a> first appeared on <a href="https://www.quantamagazine.org" target="_blank">Quanta Magazine</a></p>]]></description>
+				<content:encoded><![CDATA[Every four years, the math world’s preeminent awards are given to the finest minds of a generation. The young winners — all under 40 on the first day of the year — have reshaped mathematics and theoretical computer science. Here are their stories.
+
+            <p>The post <a href="https://www.quantamagazine.org/fields-and-abacus-medals-2026-20260723/" target="_blank">Fields and Abacus Medals 2026</a> first appeared on <a href="https://www.quantamagazine.org" target="_blank">Quanta Magazine</a></p>]]></content:encoded>
+			<wfw:commentRss>https://www.quantamagazine.org/fields-and-abacus-medals-2026-20260723/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+<media:content url="https://www.quantamagazine.org/wp-content/uploads/2026/07/2026-Fields-and-Abacus-Medals-cr-Kristina-Armitage-Default.webp" type="image/jpg"></media:content>
+	</item>
+		<item>
+		<title>A Master of the Traveling Salesperson Problem Finds His Own Path</title>
+		<link>https://www.quantamagazine.org/shayan-oveis-gharan-wins-2026-imu-abacus-medal-20260723/</link>
+		<comments>https://www.quantamagazine.org/shayan-oveis-gharan-wins-2026-imu-abacus-medal-20260723/#respond</comments>
+		<pubDate>Thu, 23 Jul 2026 14:18:20 +0000</pubDate>
+    <dc:creator><![CDATA[Ben Brubaker]]></dc:creator>
+				<category><![CDATA[Computer Science]]></category>
+
+		<guid isPermaLink="false">https://www.quantamagazine.org/?p=164352</guid>
+		<description><![CDATA[Shayan Oveis Gharan has won the Abacus Medal for using tools from across mathematics to boost the power of algorithms.            <p>The post <a href="https://www.quantamagazine.org/shayan-oveis-gharan-wins-2026-imu-abacus-medal-20260723/" target="_blank">A Master of the Traveling Salesperson Problem Finds His Own Path</a> first appeared on <a href="https://www.quantamagazine.org" target="_blank">Quanta Magazine</a></p>]]></description>
+				<content:encoded><![CDATA[<p>In theoretical computer science, the key to cracking tough problems is finding the right tools. Most researchers gravitate toward tools that match the problems they hope to solve, and some devote entire careers to mastering a few familiar techniques. But Shayan Oveis Gharan, a computer scientist at the University of Washington in Seattle, has never been content with the familiar.</p>
+<p><a href="https://www.quantamagazine.org/shayan-oveis-gharan-wins-2026-imu-abacus-medal-20260723/" rel="nofollow">Source</a></p>]]></content:encoded>
+			<wfw:commentRss>https://www.quantamagazine.org/shayan-oveis-gharan-wins-2026-imu-abacus-medal-20260723/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+<media:content url="https://www.quantamagazine.org/wp-content/uploads/2026/07/Shayan-Gharan-crChona-Kasinger-V2-Default.webp" type="image/jpg"></media:content>
+	</item>
+		<item>
+		<title>Living Fully in the Math World Means Threading the Needle</title>
+		<link>https://www.quantamagazine.org/hong-wang-wins-2026-fields-medal-the-third-woman-ever-20260723/</link>
+		<comments>https://www.quantamagazine.org/hong-wang-wins-2026-fields-medal-the-third-woman-ever-20260723/#respond</comments>
+		<pubDate>Thu, 23 Jul 2026 13:55:53 +0000</pubDate>
+    <dc:creator><![CDATA[Natalie Wolchover]]></dc:creator>
+				<category><![CDATA[Mathematics]]></category>
+
+		<guid isPermaLink="false">https://www.quantamagazine.org/?p=164737</guid>
+		<description><![CDATA[Focus, commitment, and insight resulted in a “once in a century” proof. Hong Wang is now just the third woman to win a Fields Medal.            <p>The post <a href="https://www.quantamagazine.org/hong-wang-wins-2026-fields-medal-the-third-woman-ever-20260723/" target="_blank">Living Fully in the Math World Means Threading the Needle</a> first appeared on <a href="https://www.quantamagazine.org" target="_blank">Quanta Magazine</a></p>]]></description>
+				<content:encoded><![CDATA[<p>One might imagine that, for a mathematician, proving a monumental theorem is a blissful experience. It wasn&rsquo;t so for Hong Wang. In February 2025, Wang and her collaborator Joshua Zahl presented a 127&#x2d;page proof of a long&#x2d;standing conjecture at the intersection of multiple branches of math. The duo had been checking their work for months and had sent it to select colleagues for review before&#8230;</p>
+<p><a href="https://www.quantamagazine.org/hong-wang-wins-2026-fields-medal-the-third-woman-ever-20260723/" rel="nofollow">Source</a></p>]]></content:encoded>
+			<wfw:commentRss>https://www.quantamagazine.org/hong-wang-wins-2026-fields-medal-the-third-woman-ever-20260723/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+<media:content url="https://www.quantamagazine.org/wp-content/uploads/2026/07/Hong_Wang-cr-M.Y.O.P.-Julien-Pebrel-Default.webp" type="image/jpg"></media:content>
+	</item>
+		<item>
+		<title>Sometimes Being First Means Seeing the End Before Anyone Else</title>
+		<link>https://www.quantamagazine.org/jacob-tsimerman-wins-2026-fields-medal-for-andre-oort-conjecture-proof-20260723/</link>
+		<comments>https://www.quantamagazine.org/jacob-tsimerman-wins-2026-fields-medal-for-andre-oort-conjecture-proof-20260723/#respond</comments>
+		<pubDate>Thu, 23 Jul 2026 13:47:40 +0000</pubDate>
+    <dc:creator><![CDATA[Kevin Hartnett]]></dc:creator>
+				<category><![CDATA[Mathematics]]></category>
+
+		<guid isPermaLink="false">https://www.quantamagazine.org/?p=164354</guid>
+		<description><![CDATA[Determination and effort propelled Jacob Tsimerman to the top of the math world. But now that he’s won a Fields Medal, he worries that the field is in jeopardy.            <p>The post <a href="https://www.quantamagazine.org/jacob-tsimerman-wins-2026-fields-medal-for-andre-oort-conjecture-proof-20260723/" target="_blank">Sometimes Being First Means Seeing the End Before Anyone Else</a> first appeared on <a href="https://www.quantamagazine.org" target="_blank">Quanta Magazine</a></p>]]></description>
+				<content:encoded><![CDATA[<p>Jacob Tsimerman knows that many people see mathematics as a search for beauty. Over the course of his career, he has encountered beauty many times. But beauty is not what drives him. What he loves most is to solve hard problems, and to be the first to do so. &ldquo;In my experience, and I think many people&rsquo;s experience, math is very much a goal&#x2d;oriented endeavor,&rdquo; he said. &ldquo;The truth&#x2d;and&#x2d;beauty stuff&#8230;</p>
+<p><a href="https://www.quantamagazine.org/jacob-tsimerman-wins-2026-fields-medal-for-andre-oort-conjecture-proof-20260723/" rel="nofollow">Source</a></p>]]></content:encoded>
+			<wfw:commentRss>https://www.quantamagazine.org/jacob-tsimerman-wins-2026-fields-medal-for-andre-oort-conjecture-proof-20260723/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+<media:content url="https://www.quantamagazine.org/wp-content/uploads/2026/07/Jacob-Tsimerman-profile-cr-Caroline-Gutman-Default.webp" type="image/jpg"></media:content>
+	</item>
+	</channel>
+</rss>
+

@@ -1,0 +1,14 @@
+{
+  "id": "C",
+  "label": "C: 排印 · 瑞士报纸编辑感",
+  "name": "排印 · 瑞士报纸编辑感",
+  "notes": "",
+  "dials": {
+    "variance": 6,
+    "motion": 4,
+    "density": 6
+  },
+  "adjustments": "把源换成阅读；让分类更明显一点",
+  "source": "click",
+  "receivedAt": "2026-07-28T14:02:17.936Z"
+}

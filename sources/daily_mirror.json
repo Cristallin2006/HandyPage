@@ -1,0 +1,33 @@
+{
+  "id": "daily_mirror",
+  "name": "Daily Mirror",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://www.mirror.co.uk/",
+  "needs_proxy": false,
+  "category": "news",
+  "origin": {
+    "type": "calibre_recipe",
+    "id": "daily_mirror"
+  },
+  "index": {
+    "type": "rss",
+    "url": "https://www.mirror.co.uk/news/uk-news/?service=rss",
+    "max": 20
+  },
+  "article": {
+    "content": "#article-body",
+    "title": "h1",
+    "remove": [],
+    "encoding": null
+  },
+  "request": {
+    "delay_seconds": 1,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "英国大众小报,口语化英文。2026-07-25 直连探测:feed 25 items,#article-body 约 7000 字符,比 main 更干净。2026-07-26:旧 rss.xml 301 到 http 明文(触发 App 网络安全策略),换用重定向最终地址 ?service=rss;文章详情页不受影响。",
+  "test": {
+    "fixture": "fixtures/daily_mirror/"
+  }
+}

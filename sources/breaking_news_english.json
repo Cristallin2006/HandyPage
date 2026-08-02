@@ -1,0 +1,34 @@
+{
+  "id": "breaking_news_english",
+  "name": "Breaking News English",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://breakingnewsenglish.com/",
+  "needs_proxy": false,
+  "category": "learning",
+  "origin": {
+    "type": "handypage_builtin"
+  },
+  "index": {
+    "type": "html",
+    "url": "https://breakingnewsenglish.com/",
+    "link_css": "a[href]",
+    "link_regex": "^\\d{4}/\\d{6}-[\\w-]+(?<!-\\d)\\.html$",
+    "max": 20
+  },
+  "article": {
+    "content": "div.lesson-excerpt",
+    "title": "h1.site-title",
+    "remove": [],
+    "encoding": null
+  },
+  "request": {
+    "delay_seconds": 2,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "ESL 分级课:主页面即 Level 6(原文),URL 加 -0/-1/-2/-4/-5 后缀切换更简单级别(v2 可在阅读页提供级别切换)。正文必须是 div.lesson-excerpt;#language-cloze 是完形填空练习,不能当正文。标题带 'Breaking News English Lesson: ' 前缀,引擎可裁剪。首页头条课程的索引链接无文本(图片链接),标题回退用 slug 人性化。",
+  "test": {
+    "fixture": "fixtures/breaking_news_english/"
+  }
+}

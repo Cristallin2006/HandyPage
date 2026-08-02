@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Handypage 阅读器 · 编辑排印效果样机</title>
+<style>
+  @font-face {
+    font-family: 'Fraunces';
+    src: url('fraunces_semibold.ttf') format('truetype');
+    font-weight: 600;
+  }
+  @font-face {
+    font-family: 'Fraunces';
+    src: url('fraunces_bold.ttf') format('truetype');
+    font-weight: 700;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  body {
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    background: #e9e7e1;
+    font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    color: #141414;
+    padding: 32px 16px;
+  }
+
+  .bench { display: grid; gap: 14px; justify-items: center; }
+
+  .bench-head { text-align: center; display: grid; gap: 6px; }
+  .bench-head .kicker {
+    font-size: 11px; font-weight: 500; letter-spacing: .12em;
+    color: #6b6760; text-transform: uppercase;
+  }
+  .bench-head h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 24px; font-weight: 700; letter-spacing: -0.01em;
+  }
+  .bench-head .note { font-size: 12px; color: #8a857c; }
+
+  /* ---------- 手机框 ---------- */
+  .phone {
+    width: 390px; height: 800px;
+    border-radius: 28px;
+    border: 1px solid #cfccc4;
+    box-shadow: 0 1px 2px rgb(0 0 0 / .04), 0 4px 8px rgb(0 0 0 / .04), 0 12px 24px rgb(0 0 0 / .05), 0 24px 48px rgb(0 0 0 / .04);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ---------- 阅读器主题变量 ---------- */
+  .reader {
+    --paper: #fbfaf7;
+    --paperAlt: #f3f0e9;
+    --ink: #141414;
+    --sub: #5c5c58;
+    --faint: #a39e98;
+    --hair: rgb(0 0 0 / .10);
+    --hl: rgb(20 20 20 / .10);
+    --fsize: 17px;
+    --pagepad: 28px;
+    position: absolute; inset: 0;
+    background: var(--paper);
+    color: var(--ink);
+    transition: background-color 200ms var(--ease-out), color 200ms var(--ease-out);
+    overflow: hidden;
+  }
+  .reader[data-theme="sepia"] {
+    --paper: #f4ecdc;
+    --paperAlt: #eae0cc;
+    --ink: #2b2417;
+    --sub: #6d5f47;
+    --faint: #a2947a;
+    --hair: rgb(43 36 23 / .12);
+    --hl: rgb(43 36 23 / .11);
+  }
+  .reader[data-theme="dark"] {
+    --paper: #171512;
+    --paperAlt: #26231e;
+    --ink: #ece7db;
+    --sub: #a8a29a;
+    --faint: #6f6a62;
+    --hair: rgb(255 255 255 / .14);
+    --hl: rgb(236 231 219 / .14);
+  }
+
+  /* ---------- 状态栏(拟真) ---------- */
+  .statusbar {
+    position: absolute; top: 0; left: 0; right: 0; height: 30px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 22px;
+    font-size: 12px; font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+    z-index: 6;
+    pointer-events: none;
+  }
+  .statusbar .sicons { display: flex; gap: 5px; align-items: center; }
+  .statusbar .sicons svg { display: block; }
+
+  /* ---------- 顶栏(点按显隐) ---------- */
+  .topbar {
+    position: absolute; top: 0; left: 0; right: 0;
+    padding: 38px 16px 0;
+    background: var(--paper);
+    border-bottom: 1px solid var(--hair);
+    z-index: 5;
+    transform: translateY(0);
+    transition: transform 250ms var(--ease-out), background-color 200ms var(--ease-out);
+  }
+  .topbar.hidden { transform: translateY(-102%); }
+  .topbar .row { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; padding-bottom: 10px; }
+  .topbar .titles { min-width: 0; display: grid; gap: 3px; }
+  .topbar .kicker {
+    font-size: 11px; font-weight: 500; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--sub);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .topbar .atitle {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 17px; font-weight: 600; line-height: 1.25;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .topbar .actions { display: flex; gap: 2px; flex-shrink: 0; }
+  .iconbtn {
+    width: 40px; height: 40px;
+    display: grid; place-items: center;
+    background: none; border: none; cursor: pointer;
+    color: var(--ink);
+    border-radius: 4px;
+    font-size: 15px; font-weight: 600;
+    transition: background-color 120ms var(--ease-out);
+  }
+  .iconbtn:active { background: var(--hl); }
+  .iconbtn svg { display: block; }
+
+  /* ---------- 文章 ---------- */
+  .article {
+    position: absolute; inset: 0;
+    overflow-y: auto;
+    padding: 96px var(--pagepad) 120px;
+    transition: padding-top 250ms var(--ease-out);
+    scrollbar-width: none;
+  }
+  .article::-webkit-scrollbar { display: none; }
+  .article.immersive { padding-top: 48px; }
+  .article h2 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: calc(var(--fsize) * 1.45);
+    font-weight: 700; line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .article .byline {
+    font-size: 11px; font-weight: 500; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--sub);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 20px;
+  }
+  .article p {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: var(--fsize);
+    line-height: 1.78;
+    margin-bottom: 1.1em;
+    color: var(--ink);
+  }
+  .article.justified p { text-align: justify; hyphens: auto; }
+  .hl {
+    background: var(--hl);
+    border-radius: 2px;
+    padding: 0 1px;
+    cursor: pointer;
+    transition: background-color 200ms var(--ease-out);
+  }
+
+  /* ---------- 底部浮层共用:2dp 实墨顶线 ---------- */
+  .sheet {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    background: var(--paper);
+    border-top: 2px solid var(--ink);
+    z-index: 8;
+    transform: translateY(103%);
+    transition: transform 200ms var(--ease-out), background-color 200ms var(--ease-out);
+    display: flex; flex-direction: column;
+  }
+  .sheet.open { transform: translateY(0); }
+  .grab {
+    width: 32px; height: 3px; border-radius: 2px;
+    background: var(--faint);
+    margin: 8px auto 2px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  /* ---------- 查词面板 ---------- */
+  .wordpanel { max-height: 46%; }
+  .wordpanel .wp-body { overflow-y: auto; padding: 6px 16px 0; }
+  .wp-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .wp-word {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 22px; font-weight: 600; line-height: 1.2;
+  }
+  .wp-close {
+    background: none; border: none; cursor: pointer;
+    color: var(--sub); font-size: 15px; padding: 4px;
+    line-height: 1; border-radius: 4px;
+  }
+  .wp-meta {
+    margin-top: 4px;
+    font-size: 11px; font-weight: 500; letter-spacing: .12em;
+    color: var(--sub);
+  }
+  .wp-meta .pos { text-transform: uppercase; }
+  .wp-stars { margin-top: 6px; font-size: 12px; letter-spacing: .1em; color: var(--ink); }
+  .wp-rule { border: none; border-top: 1px solid var(--hair); margin: 12px 0; }
+  .wp-trans { font-size: 15px; line-height: 1.65; }
+  .wp-def { margin-top: 8px; font-size: 13px; line-height: 1.6; color: var(--sub); font-family: Georgia, serif; }
+  .wp-miss { margin-top: 8px; font-size: 13px; color: var(--faint); display: none; }
+  .wp-actions {
+    display: flex; gap: 10px; padding: 14px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+    flex-shrink: 0;
+  }
+  .btn {
+    flex: 1; height: 42px;
+    font-size: 14px; font-weight: 500;
+    border-radius: 4px; cursor: pointer;
+    font-family: inherit;
+    transition: opacity 120ms var(--ease-out), background-color 150ms var(--ease-out);
+  }
+  .btn:active { opacity: .85; }
+  .btn-primary { background: var(--ink); color: var(--paper); border: none; }
+  .btn-primary:disabled { opacity: .45; cursor: default; }
+  .btn-outline { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+
+  /* ---------- Aa / AI 底 sheet ---------- */
+  .topsheet { border-radius: 8px 8px 0 0; }
+  .sheet-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 16px 10px;
+    border-bottom: 1px solid var(--hair);
+    flex-shrink: 0;
+  }
+  .sheet-head .t { font-size: 15px; font-weight: 600; }
+  .sheet-head .x {
+    background: none; border: none; cursor: pointer;
+    color: var(--sub); font-size: 15px; padding: 4px; line-height: 1;
+  }
+
+  /* ---------- 阅读设置 ---------- */
+  .aasheet .aa-body { padding: 16px 16px 26px; display: grid; gap: 18px; }
+  .aa-group { display: grid; gap: 8px; }
+  .aa-label {
+    font-size: 11px; font-weight: 500; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--sub);
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .aa-label output { font-variant-numeric: tabular-nums; font-size: 12px; letter-spacing: 0; color: var(--ink); font-weight: 500; text-transform: none; }
+  .seg {
+    display: flex; border: 1px solid var(--hair); border-radius: 6px; overflow: hidden;
+  }
+  .seg button {
+    flex: 1; height: 38px;
+    background: transparent; border: none; cursor: pointer;
+    font-size: 13px; font-weight: 500; color: var(--sub);
+    font-family: inherit;
+    transition: background-color 150ms var(--ease-out), color 150ms var(--ease-out);
+  }
+  .seg button + button { border-left: 1px solid var(--hair); }
+  .seg button.on { background: var(--ink); color: var(--paper); }
+  input[type="range"] {
+    width: 100%; accent-color: var(--ink); height: 24px; cursor: pointer;
+  }
+
+  /* ---------- AI 面板 ---------- */
+  .aisheet { height: 62%; }
+  .ai-log { flex: 1; overflow-y: auto; padding: 14px 16px; display: grid; gap: 10px; align-content: start; }
+  .msg { max-width: 88%; font-size: 14px; line-height: 1.6; padding: 10px 12px; }
+  .msg.user { justify-self: end; background: var(--ink); color: var(--paper); border-radius: 4px; }
+  .msg.ai { justify-self: start; border: 1px solid var(--hair); border-radius: 4px; color: var(--ink); }
+  .msg.ai b { font-weight: 600; }
+  .ai-input {
+    display: flex; gap: 8px; padding: 10px 16px calc(14px + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--hair); flex-shrink: 0;
+  }
+  .ai-input .field {
+    flex: 1; height: 40px;
+    background: var(--paperAlt); border: none; border-radius: 4px;
+    padding: 0 12px; font-size: 14px; color: var(--ink);
+    font-family: inherit; outline: none;
+  }
+  .ai-input .field::placeholder { color: var(--faint); }
+  .ai-input .send {
+    width: 64px; height: 40px;
+    background: var(--ink); color: var(--paper);
+    border: none; border-radius: 4px;
+    font-size: 14px; font-weight: 500; cursor: pointer; font-family: inherit;
+  }
+
+  .bench-hints { font-size: 12px; color: #8a857c; text-align: center; line-height: 1.7; max-width: 390px; }
+  .bench-hints b { color: #6b6760; font-weight: 600; }
+
+  @media (max-width: 460px) {
+    body { padding: 0; }
+    .phone { width: 100vw; height: 100dvh; border-radius: 0; border: none; box-shadow: none; }
+    .bench-head, .bench-hints { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="bench">
+  <div class="bench-head">
+    <div class="kicker">Handypage · 阅读器样机</div>
+    <h1>编辑排印 · 阅读器延伸</h1>
+    <div class="note">效果样机,用于确认视觉与交互,不是最终 App;顶栏点按显隐 · Aa 底部面板 · 淡墨高亮</div>
+  </div>
+
+  <div class="phone">
+    <div class="reader" id="reader" data-theme="light">
+
+      <div class="statusbar">
+        <span>9:41</span>
+        <span class="sicons">
+          <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="0.5"/><rect x="4.5" y="4.5" width="3" height="6.5" rx="0.5"/><rect x="9" y="2" width="3" height="9" rx="0.5"/><rect x="13.5" y="0" width="2.5" height="11" rx="0.5" opacity=".35"/></svg>
+          <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="0.5" y="0.5" width="19" height="11" rx="2.5" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="14" height="8" rx="1.2" fill="currentColor"/><rect x="21" y="3.5" width="2.5" height="5" rx="1" fill="currentColor" opacity=".4"/></svg>
+        </span>
+      </div>
+
+      <div class="topbar" id="topbar">
+        <div class="row">
+          <div class="titles">
+            <div class="kicker">nature.com · news</div>
+            <div class="atitle">How plants learn to forget the drought</div>
+          </div>
+          <div class="actions">
+            <button class="iconbtn" id="btnAa" aria-label="阅读设置">Aa</button>
+            <button class="iconbtn" id="btnGuide" aria-label="导读">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5C5.6 4.7 7.6 4.5 12 5.8v13.4c-4.4-1.3-6.4-1.1-8-.3V5.5z"/><path d="M20 5.5c-1.6-.8-3.6-1-8 .3v13.4c4.4-1.3 6.4-1.1 8-.3V5.5z"/></svg>
+            </button>
+            <button class="iconbtn" id="btnAi" aria-label="AI 助手">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l1.9 5.6 5.6 1.9-5.6 1.9L12 17.5l-1.9-5.6-5.6-1.9 5.6-1.9L12 2.5z"/><path d="M18.5 14.5l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9.9-2.6z" opacity=".65"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="article" id="article">
+        <h2>How plants learn to forget the drought</h2>
+        <div class="byline">nature news · jul 29, 2026 · 4 min read</div>
+        <p>For decades, biologists assumed that a plant's memory of drought was a burden it could not afford to keep. New work from a team in Madrid suggests the opposite: forgetting, it turns out, is an active and surprisingly elegant process.</p>
+        <p>When water runs short, many plants enter a <span class="hl" data-word="dormant">dormant</span> state, folding their metabolic ambitions into a tight, protective knot. What remained unclear was how they decided when to unfold again — and how a seedling could stay <span class="hl" data-word="resilient">resilient</span> after repeated stress.</p>
+        <p>The team tracked more than four thousand seedlings across three dry seasons. They found that seeds which had experienced one mild drought were quicker to <span class="hl" data-word="germinate">germinate</span> the following spring, yet plants that remembered every dry spell grew more slowly, as if caution itself had a price.</p>
+        <p>The findings are not entirely reassuring. In <span class="hl" data-word="fragile">fragile</span> ecosystems, where rains arrive later each decade, a plant that forgets too quickly may spend its reserves on growth it cannot sustain. "There is a sweet spot," says lead author Marta Vidal, "between learning from the past and being imprisoned by it."</p>
+        <p>For farmers, the work hints at seed treatments that could tune this memory — priming crops to recall just enough hardship to survive, but not so much that they never thrive.</p>
+      </div>
+
+      <!-- 查词面板 -->
+      <div class="sheet wordpanel" id="wordpanel">
+        <div class="wp-body">
+          <div class="wp-head">
+            <div>
+              <div class="wp-word" id="wpWord">resilient</div>
+              <div class="wp-meta" id="wpMeta">/rɪˈzɪliənt/ · adj</div>
+            </div>
+            <button class="wp-close" id="wpClose" aria-label="关闭">✕</button>
+          </div>
+          <div class="wp-stars" id="wpStars">★★★★☆</div>
+          <hr class="wp-rule">
+          <div class="wp-trans" id="wpTrans">有复原力的;能迅速恢复的</div>
+          <div class="wp-def" id="wpDef">able to become strong, happy, or successful again after a difficult situation or event</div>
+          <div class="wp-miss" id="wpMiss">词典未收录,可交给 AI 结合上下文解释</div>
+        </div>
+        <div class="wp-actions">
+          <button class="btn btn-primary" id="wpSave">加入生词本</button>
+          <button class="btn btn-outline" id="wpAsk">问 AI</button>
+        </div>
+      </div>
+
+      <!-- 阅读设置 -->
+      <div class="sheet topsheet aasheet" id="aasheet">
+        <div class="grab" data-close="aasheet"></div>
+        <div class="sheet-head">
+          <span class="t">阅读设置</span>
+          <button class="x" data-close="aasheet" aria-label="关闭">✕</button>
+        </div>
+        <div class="aa-body">
+          <div class="aa-group">
+            <div class="aa-label">主题</div>
+            <div class="seg" id="segTheme">
+              <button data-val="light" class="on">亮色</button>
+              <button data-val="sepia">暖褐</button>
+              <button data-val="dark">暗色</button>
+            </div>
+          </div>
+          <div class="aa-group">
+            <div class="aa-label">对齐</div>
+            <div class="seg" id="segAlign">
+              <button data-val="left" class="on">左对齐</button>
+              <button data-val="justify">两端对齐</button>
+            </div>
+          </div>
+          <div class="aa-group">
+            <div class="aa-label">字号 <output id="fontOut">100%</output></div>
+            <input type="range" id="fontRange" min="60" max="160" value="100" step="5">
+          </div>
+          <div class="aa-group">
+            <div class="aa-label">页边距 <output id="marginOut">28px</output></div>
+            <input type="range" id="marginRange" min="12" max="56" value="28" step="2">
+          </div>
+        </div>
+      </div>
+
+      <!-- AI 面板 -->
+      <div class="sheet topsheet aisheet" id="aisheet">
+        <div class="grab" data-close="aisheet"></div>
+        <div class="sheet-head">
+          <span class="t">AI 助手</span>
+          <button class="x" data-close="aisheet" aria-label="关闭">✕</button>
+        </div>
+        <div class="ai-log" id="aiLog">
+          <div class="msg user">resilient 在这里怎么理解?</div>
+          <div class="msg ai">这里形容幼苗「经历反复干旱后仍能恢复生长」。<b>resilient</b> 的核心意象是「被压弯后弹回来」——文中 P3 的 quicker to germinate 就是它具体的表现。</div>
+          <div class="msg user">caution itself had a price 怎么翻?</div>
+          <div class="msg ai">直译:「谨慎本身是有代价的」。指记住每一次干旱的植物长得更慢——过度防御消耗了本可用于生长的能量。</div>
+        </div>
+        <div class="ai-input">
+          <input class="field" placeholder="问单词、句子或这篇文章…">
+          <button class="send">发送</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="bench-hints">
+    <b>点按正文</b> 顶栏显隐 · <b>点高亮词</b>(淡墨底) 查词面板 · <b>Aa</b> 阅读设置实时生效 · <b>✦</b> AI 面板
+  </div>
+</div>
+
+<script>
+  const $ = id => document.getElementById(id);
+  const reader = $('reader'), article = $('article'), topbar = $('topbar');
+  const panels = { wordpanel: $('wordpanel'), aasheet: $('aasheet'), aisheet: $('aisheet') };
+
+  const DICT = {
+    resilient: { ph: '/rɪˈzɪliənt/', pos: 'adj', stars: 4, trans: '有复原力的;能迅速恢复的', def: 'able to become strong, happy, or successful again after a difficult situation or event' },
+    dormant:   { ph: '/ˈdɔːrmənt/', pos: 'adj', stars: 3, trans: '休眠的;蛰伏的', def: 'not active or growing now, but able to become active again later' },
+    germinate: { ph: '/ˈdʒɜːrmɪneɪt/', pos: 'v', stars: 2, trans: '发芽;开始生长', def: '(of a seed) to begin to grow; to start developing' },
+    fragile:   { ph: '/ˈfrædʒaɪl/', pos: 'adj', stars: 4, trans: '脆弱的;易受损的', def: 'easily broken, damaged, or destroyed; needing careful treatment' },
+  };
+
+  function openOnly(name) {
+    Object.entries(panels).forEach(([k, el]) => el.classList.toggle('open', k === name));
+  }
+  function closeAll() { openOnly(null); }
+
+  // 点按正文:顶栏显隐(点在词上不触发)
+  let downPos = null;
+  article.addEventListener('pointerdown', e => { downPos = [e.clientX, e.clientY]; });
+  article.addEventListener('pointerup', e => {
+    if (!downPos) return;
+    const moved = Math.hypot(e.clientX - downPos[0], e.clientY - downPos[1]);
+    downPos = null;
+    if (moved > 8 || e.target.classList.contains('hl')) return;
+    const hiding = !topbar.classList.contains('hidden');
+    topbar.classList.toggle('hidden', hiding);
+    article.classList.toggle('immersive', hiding);
+  });
+
+  // 查词
+  document.querySelectorAll('.hl').forEach(el => {
+    el.addEventListener('click', () => {
+      const w = el.dataset.word, d = DICT[w];
+      $('wpWord').textContent = w;
+      if (d) {
+        $('wpMeta').innerHTML = d.ph + ' · <span class="pos">' + d.pos + '</span>';
+        $('wpStars').textContent = '★'.repeat(d.stars) + '☆'.repeat(5 - d.stars);
+        $('wpStars').style.display = '';
+        $('wpTrans').textContent = d.trans;
+        $('wpDef').textContent = d.def;
+        $('wpDef').style.display = '';
+        $('wpMiss').style.display = 'none';
+      } else {
+        $('wpMeta').textContent = ''; $('wpStars').style.display = 'none';
+        $('wpTrans').textContent = ''; $('wpDef').style.display = 'none';
+        $('wpMiss').style.display = '';
+      }
+      const save = $('wpSave');
+      save.disabled = false; save.textContent = '加入生词本';
+      openOnly('wordpanel');
+    });
+  });
+  $('wpClose').onclick = closeAll;
+  $('wpSave').onclick = () => { $('wpSave').disabled = true; $('wpSave').textContent = '已在生词本中'; };
+  $('wpAsk').onclick = () => openOnly('aisheet');
+
+  // 顶栏三按钮
+  $('btnAa').onclick = () => openOnly('aasheet');
+  $('btnAi').onclick = () => openOnly('aisheet');
+  $('btnGuide').onclick = () => openOnly('aisheet');
+  document.querySelectorAll('[data-close]').forEach(el => {
+    el.onclick = () => panels[el.dataset.close].classList.remove('open');
+  });
+
+  // 阅读设置实时生效
+  document.querySelectorAll('#segTheme button').forEach(b => {
+    b.onclick = () => {
+      document.querySelectorAll('#segTheme button').forEach(x => x.classList.toggle('on', x === b));
+      reader.dataset.theme = b.dataset.val;
+    };
+  });
+  document.querySelectorAll('#segAlign button').forEach(b => {
+    b.onclick = () => {
+      document.querySelectorAll('#segAlign button').forEach(x => x.classList.toggle('on', x === b));
+      article.classList.toggle('justified', b.dataset.val === 'justify');
+    };
+  });
+  $('fontRange').addEventListener('input', e => {
+    const v = Number(e.target.value);
+    $('fontOut').textContent = v + '%';
+    reader.style.setProperty('--fsize', (17 * v / 100) + 'px');
+  });
+  $('marginRange').addEventListener('input', e => {
+    const v = Number(e.target.value);
+    $('marginOut').textContent = v + 'px';
+    reader.style.setProperty('--pagepad', v + 'px');
+  });
+</script>
+</body>
+</html>

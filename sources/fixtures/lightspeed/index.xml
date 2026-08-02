@@ -1,0 +1,821 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+	>
+
+<channel>
+		<itunes:new-feed-url>
+	http://www.lightspeedmagazine.com/itunes-rss/
+	</itunes:new-feed-url>
+	<title>Lightspeed MagazineRSS - Lightspeed Magazine</title>
+	<atom:link href="https://www.lightspeedmagazine.com/rss-2/" rel="self" type="application/rss+xml" />
+	<link>https://www.lightspeedmagazine.com/</link>
+	<description>Science Fiction &#38; Fantasy</description>
+	<lastBuildDate>Sat, 01 Aug 2026 07:02:00 +0000</lastBuildDate>
+	
+	<language></language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	
+
+<image>
+	<url>https://www.lightspeedmagazine.com/wp-content/uploads/2022/10/cropped-LS_favicon2022-32x32.png</url>
+	<title>RSS - Lightspeed Magazine</title>
+	<link>https://www.lightspeedmagazine.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+<site xmlns="com-wordpress:feed-additions:1">195159120</site>		<item>
+		<title>Announcement: We&#8217;re Launching a New Kickstarter Soon. Sign up to be notified when it launches!</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/announcement-were-launching-a-new-kickstarter-soon-sign-up-to-be-notified-when-it-launches/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/announcement-were-launching-a-new-kickstarter-soon-sign-up-to-be-notified-when-it-launches/#respond</comments>
+		<pubDate>Sat, 01 Aug 2026 07:02:00 +0000</pubDate>
+		<dc:creator>John Joseph Adams</dc:creator>
+				<category><![CDATA[Editorials]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36581</guid>
+		<description><![CDATA[On September 15, 2026, we&#8217;ll be launching our first Kickstarter campaign in more than a decade, to fund Year 17 of Lightspeed and Year 15 of Nightmare. Join us for a year of new short fiction from some of the biggest stars in science fiction, fantasy, and horror, including: Travis Baldree Olivie Blake P. Djèlí [&#8230;]]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/announcement-were-launching-a-new-kickstarter-soon-sign-up-to-be-notified-when-it-launches/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36581</post-id>	</item>
+		<item>
+		<title>Book Review: We Interrupt This Program by Randee Dawn</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/book-review-we-interrupt-this-program-by-randee-dawn/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/book-review-we-interrupt-this-program-by-randee-dawn/#respond</comments>
+		<pubDate>Thu, 30 Jul 2026 10:05:39 +0000</pubDate>
+		<dc:creator>Chris Kluwe</dc:creator>
+				<category><![CDATA[Book Reviews]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36324</guid>
+		<description><![CDATA[Reviewer Chris Kluwe highly recommends this second entry in Randee Dawn’s Tune-iverse, <em>We interrupt This Program</em>.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/book-review-we-interrupt-this-program-by-randee-dawn/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36324</post-id>	</item>
+		<item>
+		<title>Author Spotlight: V.M. Ayala</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-v-m-ayala-3/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-v-m-ayala-3/#respond</comments>
+		<pubDate>Thu, 30 Jul 2026 10:02:35 +0000</pubDate>
+		<dc:creator>Robin Jeffrey</dc:creator>
+				<category><![CDATA[Author Spotlights]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36278</guid>
+		<description><![CDATA[“Discarded God” was partially inspired by a quiet moment when I turned thirty-five last year. I had been reflecting on how much I’d changed from the person I used to be, and how difficult things were in my twenties. I wasn’t out to myself back then, yet alone out to anyone else. I hadn’t realized I could simply use she/they pronouns and embrace being nonbinary. Now? Well, I’m queer as hell and happy with who I am.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-v-m-ayala-3/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36278</post-id>	</item>
+		<item>
+		<title>Concerto For Wartime</title>
+		<link>https://www.lightspeedmagazine.com/fiction/concerto-for-wartime/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/concerto-for-wartime/#respond</comments>
+		<pubDate>Thu, 30 Jul 2026 10:02:06 +0000</pubDate>
+		<dc:creator>Sean Williams</dc:creator>
+				<category><![CDATA[Fantasy]]></category>
+		<category><![CDATA[Fantasy Podcasts]]></category>
+		<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Flash Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36289</guid>
+		<description><![CDATA[The magician raises his wand.
+
+Initially, this commission seemed simple. One large country invading a much smaller one, a clear case of aggressor and victim—but nothing is ever so straightforward.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/concerto-for-wartime/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36289</post-id>	</item>
+		<item>
+		<title>If a Discarded God Can Change, So Can I</title>
+		<link>https://www.lightspeedmagazine.com/fiction/if-a-discarded-god-can-change-so-can-i/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/if-a-discarded-god-can-change-so-can-i/#respond</comments>
+		<pubDate>Thu, 30 Jul 2026 10:01:23 +0000</pubDate>
+		<dc:creator>V.M. Ayala</dc:creator>
+				<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+		<category><![CDATA[Science Fiction]]></category>
+		<category><![CDATA[Science Fiction Podcasts]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36299</guid>
+		<description><![CDATA[<p class="block-first"><i>Green Plumed Orbital Line A; viridis metamorphos A</i></p>
+<p class="block-middle"><i>Common sighting; Flies along the forty-fifth latitude every 12 minutes</i></p>
+<p class="block-last"><i>Traveler’s addendum: Last functional line along a northern latitude; southern latitudes TBD</i></p>
+My crawler runs out of energy as I reach the platform summit. I’m two minutes early.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/if-a-discarded-god-can-change-so-can-i/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36299</post-id>	</item>
+		<item>
+		<title>Book Review: The Winter Folk by Jen Julian</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/book-review-the-winter-folk-by-jen-julian/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/book-review-the-winter-folk-by-jen-julian/#respond</comments>
+		<pubDate>Thu, 23 Jul 2026 10:05:14 +0000</pubDate>
+		<dc:creator>Melissa A Watkins</dc:creator>
+				<category><![CDATA[Book Reviews]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36316</guid>
+		<description><![CDATA[Melissa A. Watkins recommends <em>The Winter Folk </em>for <span class="s1">fans of Charles De Lint’s <i>Newford</i> novels or Seanan McGuire’s <i>Wayward Children</i> series. </span>]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/book-review-the-winter-folk-by-jen-julian/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36316</post-id>	</item>
+		<item>
+		<title>Author Spotlight: B. Pladek</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-b-pladek-2/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-b-pladek-2/#respond</comments>
+		<pubDate>Thu, 23 Jul 2026 10:03:10 +0000</pubDate>
+		<dc:creator>Erik Grove</dc:creator>
+				<category><![CDATA[Author Spotlights]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36275</guid>
+		<description><![CDATA[This piece began as a challenge I set for myself to tell a story from at least three distinct perspectives. By the time it was finished, it also became a story exploring the different people we become in different relationships. Each section is named after a relationship between Swimmer and someone else in the story. “Son” and “Brother” are both from Swimmer’s perspective, but show who he becomes in his relationship with his father and Boater, who he sees as a sister.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-b-pladek-2/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36275</post-id>	</item>
+		<item>
+		<title>The Punishing Animal</title>
+		<link>https://www.lightspeedmagazine.com/fiction/the-punishing-animal/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/the-punishing-animal/#respond</comments>
+		<pubDate>Thu, 23 Jul 2026 10:02:28 +0000</pubDate>
+		<dc:creator>B. Pladek</dc:creator>
+				<category><![CDATA[Fantasy]]></category>
+		<category><![CDATA[Fantasy Podcasts]]></category>
+		<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36285</guid>
+		<description><![CDATA[He hates the birds. There are two, a breeding pair. Their eyes are red as devils’. On land they’re stupid, little feet pushed so far back on their bodies that they can’t escape by running. Yet they glide over the water, glossy mottled boats. Their chicks ride their backs. The adults protect them, tuck black wings up to shield them from wave and eagle. They are good parents.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/the-punishing-animal/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36285</post-id>	</item>
+		<item>
+		<title>FETSPACE</title>
+		<link>https://www.lightspeedmagazine.com/fiction/fetspace/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/fetspace/#respond</comments>
+		<pubDate>Thu, 23 Jul 2026 07:01:35 +0000</pubDate>
+		<dc:creator>Rhiannon Rasmussen</dc:creator>
+				<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Flash Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+		<category><![CDATA[Science Fiction]]></category>
+		<category><![CDATA[Science Fiction Podcasts]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36304</guid>
+		<description><![CDATA[LOGIN CREATE ACCOUNT username: squirglover46 password: **************** for security reasons your password must contain minimum 1 number, 1 diacritic, 1 universal babelkey and at least 8 distinct phonemes. password cannot contain your username, date of birth in any registered calendar system, or location. for augmented reality account access gesture here. Thanks for joining FetSpace! Remember: [&#8230;]]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/fetspace/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36304</post-id>	</item>
+		<item>
+		<title>Book Review: Back for Blood: Never Whistle at Night Part II by Shane Hawk and Theodore C. Van Alst Jr., eds.</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/book-review-back-for-blood-never-whistle-at-night-part-ii-by-shane-hawk-and-theodore-c-van-alst-jr-eds/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/book-review-back-for-blood-never-whistle-at-night-part-ii-by-shane-hawk-and-theodore-c-van-alst-jr-eds/#respond</comments>
+		<pubDate>Thu, 16 Jul 2026 10:05:30 +0000</pubDate>
+		<dc:creator>Arley Sorg</dc:creator>
+				<category><![CDATA[Book Reviews]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36313</guid>
+		<description><![CDATA[Arley Sorg is back to recommend the second installment of Shane Hawk and Theodore C. Van Alst Jr.'s horror anthology <em>Back for Blood: Never Whistle at Night Part II</em>.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/book-review-back-for-blood-never-whistle-at-night-part-ii-by-shane-hawk-and-theodore-c-van-alst-jr-eds/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36313</post-id>	</item>
+		<item>
+		<title>Author Spotlight: Max Gladstone</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-max-gladstone/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-max-gladstone/#respond</comments>
+		<pubDate>Thu, 16 Jul 2026 10:02:37 +0000</pubDate>
+		<dc:creator>Erik Grove</dc:creator>
+				<category><![CDATA[Author Spotlights]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36273</guid>
+		<description><![CDATA[Money and religion go way back: If you try to trace the origins of money, you find yourself in Sumerian temples, looking at cuneiform tax and granary records. Many religions discuss the question of “creation debt”—the question of what humans owe their divine creators (and whether this debt can ever be repaid). Sacrifices are often conceived as a kind of payment to God (which also has the benefit, from priests’ perspectives, of supporting the life of priests).]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-max-gladstone/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36273</post-id>	</item>
+		<item>
+		<title>Hungry Like The</title>
+		<link>https://www.lightspeedmagazine.com/fiction/hungry-like-the/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/hungry-like-the/#respond</comments>
+		<pubDate>Thu, 16 Jul 2026 10:02:23 +0000</pubDate>
+		<dc:creator>E. Catherine Tobler</dc:creator>
+				<category><![CDATA[Fantasy]]></category>
+		<category><![CDATA[Fantasy Podcasts]]></category>
+		<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Flash Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36283</guid>
+		<description><![CDATA[There’s a wolf where my brother used to be, a beast absolutely hellbent on ruining my life. He plunges his broad snoot into the Wednesday night spaghetti, and neither Mom nor Dad cares when half the bite slides off his nose and onto the table, to later be jostled to the floor by his grabbing, grubby paws. But if I came to the table without washing up first . . .]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/hungry-like-the/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36283</post-id>	</item>
+		<item>
+		<title>The Assumption of Maria</title>
+		<link>https://www.lightspeedmagazine.com/fiction/the-assumption-of-maria/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/the-assumption-of-maria/#respond</comments>
+		<pubDate>Thu, 16 Jul 2026 10:01:02 +0000</pubDate>
+		<dc:creator>Max Gladstone</dc:creator>
+				<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+		<category><![CDATA[Science Fiction]]></category>
+		<category><![CDATA[Science Fiction Podcasts]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36295</guid>
+		<description><![CDATA[Maria Haddid looked like she was screaming.
+
+I’ve heard singers say that’s all singing is deep down, but if you’ve seen enough screams you won’t often get them mixed up.
+
+The faithful gathered around her in the picture—the soccer mom, the children, the person with the ill-advised beard—on the bright green pews of the Church of the Redeemer’s main worship hall. They smiled.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/the-assumption-of-maria/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36295</post-id>	</item>
+		<item>
+		<title>Down in the Dim Kingdoms</title>
+		<link>https://www.lightspeedmagazine.com/fiction/down-in-the-dim-kingdoms/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/down-in-the-dim-kingdoms/#respond</comments>
+		<pubDate>Thu, 16 Jul 2026 09:55:46 +0000</pubDate>
+		<dc:creator>Tobias S. Buckell</dc:creator>
+				<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Science Fiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36440</guid>
+		<description><![CDATA[<p class="p">The airship’s spotlights played off the vast rocky sides of the shaft that plunged deep into the Earth’s core through the lithosphere and eventually to our destination: the Center of the Earth! I yawned. We fell so slowly, the sides of the shaft several hundred feet away, and it had been a long, boring day of this. There’d been a boy, earlier, that caught my eye. But now he was talking to Bridgette with the French accent and the big chest. Laughing at anything she said like it was the cleverest thing in the entire world. Or below it.</p>]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/down-in-the-dim-kingdoms/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36440</post-id>	</item>
+		<item>
+		<title>Editorial: July 2026</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/editorial-july-2026/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/editorial-july-2026/#respond</comments>
+		<pubDate>Thu, 09 Jul 2026 10:05:55 +0000</pubDate>
+		<dc:creator>John Joseph Adams</dc:creator>
+				<category><![CDATA[Editorials]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36319</guid>
+		<description><![CDATA[Be sure to check out the editorial for a rundown of this month's content and for all of John Joseph Adams's media and book recommendations!]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/editorial-july-2026/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36319</post-id>	</item>
+		<item>
+		<title>Author Spotlight: Ruth Joffre</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-ruth-joffre-3/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-ruth-joffre-3/#respond</comments>
+		<pubDate>Thu, 09 Jul 2026 10:03:18 +0000</pubDate>
+		<dc:creator>A Humphrey Lanham</dc:creator>
+				<category><![CDATA[Author Spotlights]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36270</guid>
+		<description><![CDATA[When I first read about the Andean agricultural practice waru waru, I knew I wanted to write a story that incorporated it, but I wasn’t sure how. It kicked around in the back of my brain for a couple years, trying to attach itself to some kind of story, until something terrible happened: My aunt had a stroke.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-ruth-joffre-3/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36270</post-id>	</item>
+		<item>
+		<title>Waru Waru</title>
+		<link>https://www.lightspeedmagazine.com/fiction/waru-waru/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/waru-waru/#respond</comments>
+		<pubDate>Thu, 09 Jul 2026 10:02:56 +0000</pubDate>
+		<dc:creator>Ruth Joffre</dc:creator>
+				<category><![CDATA[Fantasy]]></category>
+		<category><![CDATA[Fantasy Podcasts]]></category>
+		<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36281</guid>
+		<description><![CDATA[Abuelita has been feeding me her memories. Yesterday, it was the time she trudged up the mountain carrying a basketful of offerings for Pachamama (flowers, incense, a llama sculpted out of animal fat and adorned with gold leaf) in hopes the Earth Mother would alleviate the drought ruining the harvest. Today, it’s the time she visited Tío Roberto’s farm in Sapecho, how the smell of the cows made her eyes water and how at her uncle’s urging she coaxed one over to her with a big yellow carrot and let it eat out of her hand while she stroked its ears.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/waru-waru/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36281</post-id>	</item>
+		<item>
+		<title>You, Me, Us</title>
+		<link>https://www.lightspeedmagazine.com/fiction/you-me-us/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/you-me-us/#respond</comments>
+		<pubDate>Thu, 09 Jul 2026 10:01:22 +0000</pubDate>
+		<dc:creator>Oyedotun Damilola Muees</dc:creator>
+				<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Flash Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+		<category><![CDATA[Science Fiction]]></category>
+		<category><![CDATA[Science Fiction Podcasts]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36291</guid>
+		<description><![CDATA[You know you are fucked when you see fragments of the broken radio on the floor. Your damaged ship lay nose caked into the sand, and coupled with your sprained ankle that hums an excruciating pain, and slight concussion on your head—your chances of survival in this unknown territory has now drastically dropped. In your first year as a space cadet, you were taught to remain calm, breathe slowly, and call for help in the event of a crash.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/you-me-us/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36291</post-id>	</item>
+		<item>
+		<title>Book Review: Auntie Heroes by Rita Beeman, ed.</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/book-review-auntie-heroes-by-rita-beeman-ed/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/book-review-auntie-heroes-by-rita-beeman-ed/#respond</comments>
+		<pubDate>Thu, 25 Jun 2026 10:05:56 +0000</pubDate>
+		<dc:creator>Chris Kluwe</dc:creator>
+				<category><![CDATA[Book Reviews]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36212</guid>
+		<description><![CDATA[Looking for your next short story collection? Chris Kluwe recommends <em>Auntie Heroes</em>!]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/book-review-auntie-heroes-by-rita-beeman-ed/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36212</post-id>	</item>
+		<item>
+		<title>Author Spotlight: Beesan Odeh</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-beesan-odeh-2/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-beesan-odeh-2/#respond</comments>
+		<pubDate>Thu, 25 Jun 2026 10:03:56 +0000</pubDate>
+		<dc:creator>Delia Cullity</dc:creator>
+				<category><![CDATA[Author Spotlights]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36158</guid>
+		<description><![CDATA[I fought this story on and off for years, and it’s changed almost entirely, except for the two main characters. The very first draft dealt more with the westernized interpretation of genies and wishes that folks are familiar with. Still set in the same place but quite different than the end product. But the main idea I wanted to explore then and now was the dynamic between two characters like Nassim and Khaizaran amidst that setting.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-beesan-odeh-2/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36158</post-id>	</item>
+		<item>
+		<title>Ash-Shūrā; or, A Book, a Bowl, a Bag of Coins</title>
+		<link>https://www.lightspeedmagazine.com/fiction/ash-shura-or-a-book-a-bowl-a-bag-of-coins/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/ash-shura-or-a-book-a-bowl-a-bag-of-coins/#respond</comments>
+		<pubDate>Thu, 25 Jun 2026 10:02:51 +0000</pubDate>
+		<dc:creator>Beesan Odeh</dc:creator>
+				<category><![CDATA[Fantasy]]></category>
+		<category><![CDATA[Fantasy Podcasts]]></category>
+		<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36176</guid>
+		<description><![CDATA[There once lived a boy who paid for a fortune. Nassim wore carob hair and eyes severe like cardamom. He spent his days scouring the souk for unique trinkets he liked to collect or counting the uneven stones of Jerusalem’s cobbled streets as he passed Al-Aqsa Mosque or picking up groceries for his grandmother. He knew it was best to avoid attention and wise to steer clear of the soldiers clad in olive drab watching from the shadows of their field caps in Al-Quds, walled and on fire.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/ash-shura-or-a-book-a-bowl-a-bag-of-coins/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36176</post-id>	</item>
+		<item>
+		<title>The Sharing of Some Familiar Song</title>
+		<link>https://www.lightspeedmagazine.com/fiction/the-sharing-of-some-familiar-song/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/the-sharing-of-some-familiar-song/#respond</comments>
+		<pubDate>Thu, 25 Jun 2026 10:01:00 +0000</pubDate>
+		<dc:creator>Adam-Troy Castro</dc:creator>
+				<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Flash Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+		<category><![CDATA[Science Fiction]]></category>
+		<category><![CDATA[Science Fiction Podcasts]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36206</guid>
+		<description><![CDATA[The creatures who shared your art with us had to explain many things to make it minimally comprehensible. This by itself made sense. You are who and what you are, and we are who and what we are, and the physical differences between us are profound. We belong to different orders, and this means that our minds are also different, our philosophies are different, our ways of measuring and of comprehending the universe are different.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/the-sharing-of-some-familiar-song/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36206</post-id>	</item>
+		<item>
+		<title>Book Review: Goldenborn by Ama Ofosua Lieb</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/book-review-goldenborn-by-ama-ofosua-lieb/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/book-review-goldenborn-by-ama-ofosua-lieb/#respond</comments>
+		<pubDate>Thu, 18 Jun 2026 10:05:28 +0000</pubDate>
+		<dc:creator>Melissa A Watkins</dc:creator>
+				<category><![CDATA[Book Reviews]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36167</guid>
+		<description><![CDATA[Melissa A Watkins recommends <i>Goldenborn</i> for fans of LaDarrion Williams’s <i>Blood at the Root</i>, Tracy Deonn’s <i>Legendborn</i>, or Wole Talabi’s <i>Shigidi and the Brass Head of Obalufon</i>.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/book-review-goldenborn-by-ama-ofosua-lieb/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36167</post-id>	</item>
+		<item>
+		<title>Author Spotlight: David Marino</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-david-marino-2/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-david-marino-2/#respond</comments>
+		<pubDate>Thu, 18 Jun 2026 10:02:56 +0000</pubDate>
+		<dc:creator>Phoebe Barton</dc:creator>
+				<category><![CDATA[Author Spotlights]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36160</guid>
+		<description><![CDATA[Initially, I started with trying to envision a positive future. I came up with the Overview Initiative concept, then immediately realized all the reasons it is a terrible idea. That tension, as well as a tension I’ve been feeling around what the “point” of science fiction writing is more broadly (as if there is one singular point), drove this story.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-david-marino-2/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36160</post-id>	</item>
+		<item>
+		<title>I Cut Off a Monster’s Arm. AITA?</title>
+		<link>https://www.lightspeedmagazine.com/fiction/i-cut-off-a-monsters-arm-aita/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/i-cut-off-a-monsters-arm-aita/#respond</comments>
+		<pubDate>Thu, 18 Jun 2026 10:02:49 +0000</pubDate>
+		<dc:creator>Marie Brennan</dc:creator>
+				<category><![CDATA[Fantasy]]></category>
+		<category><![CDATA[Fantasy Podcasts]]></category>
+		<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Flash Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36183</guid>
+		<description><![CDATA[Look, it’s bad enough that my wife gets cat-called in the street and flashed on the train. There’s a lot of sickos out there who get their jollies by harassing women, and usually I try to shut them down without escalating it to a fight.
+
+But we moved a few months ago to a new place. (I don’t want to say where, but it’s in Ishikawa Prefecture.) Last week my wife went to the toilet one night—we have the traditional kind, rather than a Western-style seat—and a moment later I heard this godawful shriek.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/i-cut-off-a-monsters-arm-aita/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36183</post-id>	</item>
+		<item>
+		<title>The Overview Initiative</title>
+		<link>https://www.lightspeedmagazine.com/fiction/the-overview-initiative/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/the-overview-initiative/#respond</comments>
+		<pubDate>Thu, 18 Jun 2026 10:01:53 +0000</pubDate>
+		<dc:creator>David Marino</dc:creator>
+				<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+		<category><![CDATA[Science Fiction]]></category>
+		<category><![CDATA[Science Fiction Podcasts]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36185</guid>
+		<description><![CDATA[We’ll skip ahead. Say eight minutes in, so I’m not wasting your time. You’re in your chair, strapped tight, taking around eight Gs. Like this, they wouldn’t even feel that bad, all the force coming from front to back, pressing you down into your seat. Your eyes are starting to water. You might have trouble breathing. But you’re doing great. You’re looking out that window into the black of space, everything shaking. There’s some pinpricks of stars, light-years away, wobbling out there.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/the-overview-initiative/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36185</post-id>	</item>
+		<item>
+		<title>Book Review: My Dear You by Rachel Khong</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/book-review-my-dear-you-by-rachel-khong/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/book-review-my-dear-you-by-rachel-khong/#respond</comments>
+		<pubDate>Thu, 11 Jun 2026 10:05:35 +0000</pubDate>
+		<dc:creator>Arley Sorg</dc:creator>
+				<category><![CDATA[Book Reviews]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36164</guid>
+		<description><![CDATA[Arley Sorg recommends Rachel Khong’s new short story collection <i>My Dear You</i> for your next read.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/book-review-my-dear-you-by-rachel-khong/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36164</post-id>	</item>
+		<item>
+		<title>Author Spotlight: Alex Irvine</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-alex-irvine-4/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-alex-irvine-4/#respond</comments>
+		<pubDate>Thu, 11 Jun 2026 10:03:22 +0000</pubDate>
+		<dc:creator>A Humphrey Lanham</dc:creator>
+				<category><![CDATA[Author Spotlights]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36156</guid>
+		<description><![CDATA[The location is loosely based on the Round Table Foundation, an occult and psychic research facility that existed on the Maine coast in the mid-20th century. It was led by one Henry Puharić, who is well known in paranormal conspiracy circles, and a guy named Harry Stump, whose biography has to be read to be believed. Aldous Huxley used to stop by.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-alex-irvine-4/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36156</post-id>	</item>
+		<item>
+		<title>An Oral History of the Schooner Key Invasion</title>
+		<link>https://www.lightspeedmagazine.com/fiction/an-oral-history-of-the-schooner-key-invasion/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/an-oral-history-of-the-schooner-key-invasion/#respond</comments>
+		<pubDate>Thu, 11 Jun 2026 10:02:23 +0000</pubDate>
+		<dc:creator>Alex Irvine</dc:creator>
+				<category><![CDATA[Fantasy]]></category>
+		<category><![CDATA[Fantasy Podcasts]]></category>
+		<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36172</guid>
+		<description><![CDATA[When you look out from the garage doors of the corrugated steel warehouse where the Fort Springwell Community College soccer team made their heroic stand against the forces of darkness, the view at first seems . . . idyllic. A rocky shoreline, uncommon for Florida. Periodically the beam of a lighthouse sweeps across our field of view. Everything looks normal, except on its course across the little cove, the beam lights up magical sigils that form a barrier from the lighthouse point to the other side of the cove.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/an-oral-history-of-the-schooner-key-invasion/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36172</post-id>	</item>
+		<item>
+		<title>Memeostasis</title>
+		<link>https://www.lightspeedmagazine.com/fiction/memeostasis/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/memeostasis/#respond</comments>
+		<pubDate>Thu, 11 Jun 2026 10:01:02 +0000</pubDate>
+		<dc:creator>Benjamin Rosenbaum</dc:creator>
+				<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Flash Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+		<category><![CDATA[Science Fiction]]></category>
+		<category><![CDATA[Science Fiction Podcasts]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36200</guid>
+		<description><![CDATA[“They farm starlight.”
+
+“Bullshit.”
+
+“Okay, they’re <i>going</i> to farm starlight. For now they’re running fusion rigs. But that’s not their long-term plan.”
+
+“No one in the sunforsaken Oort has a long-term plan. Other than slow suicide. You know what they told me, when I was first coming out here? ‘There are warmer ways to die.’ That’s in the bloody <i>Kuiper</i>.”
+
+&#160;]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/memeostasis/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36200</post-id>	</item>
+		<item>
+		<title>Editorial: June 2026</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/editorial-june-2026/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/editorial-june-2026/#respond</comments>
+		<pubDate>Thu, 04 Jun 2026 10:05:22 +0000</pubDate>
+		<dc:creator>John Joseph Adams</dc:creator>
+				<category><![CDATA[Editorials]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36196</guid>
+		<description><![CDATA[Be sure to check out the editorial for a rundown of this month's content and for all of John Joseph Adams's media and book recommendations!]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/editorial-june-2026/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36196</post-id>	</item>
+		<item>
+		<title>The Best of Intentions</title>
+		<link>https://www.lightspeedmagazine.com/fiction/the-best-of-intentions/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/the-best-of-intentions/#respond</comments>
+		<pubDate>Thu, 04 Jun 2026 10:02:37 +0000</pubDate>
+		<dc:creator>Mari Ness</dc:creator>
+				<category><![CDATA[Fantasy]]></category>
+		<category><![CDATA[Fantasy Podcasts]]></category>
+		<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Flash Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36180</guid>
+		<description><![CDATA[She assures them, again and again, that she acted under the best—the very best—of intentions. Oh, yes, she can be a bit <i>dramatic</i> at times—she won’t deny that. And she <i>was</i> hurt—very hurt—by that mess with the invitations. She won’t deny that, either.
+
+But surely—surely—no one can think that she would respond by hurting an innocent child?]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/the-best-of-intentions/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36180</post-id>	</item>
+		<item>
+		<title>Author Spotlight: M.R. Robinson</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-m-r-robinson/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-m-r-robinson/#respond</comments>
+		<pubDate>Thu, 04 Jun 2026 10:02:01 +0000</pubDate>
+		<dc:creator>Erik Grove</dc:creator>
+				<category><![CDATA[Author Spotlights]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36152</guid>
+		<description><![CDATA[The story came directly out of two incidents around the same time last summer: a con released a panel description complaining about the existence of too many lesbian stories, and a couple of gaming websites started mass-censoring/banning queer games and creators. The way these events overlapped made both even more frustrating; looking back at my early handwritten notes for this story, the first line is “too many lesbians” in scare quotes.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-m-r-robinson/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36152</post-id>	</item>
+		<item>
+		<title>Ghost in the Tank</title>
+		<link>https://www.lightspeedmagazine.com/fiction/ghost-in-the-tank/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/ghost-in-the-tank/#respond</comments>
+		<pubDate>Thu, 04 Jun 2026 10:01:40 +0000</pubDate>
+		<dc:creator>M.R. Robinson</dc:creator>
+				<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+		<category><![CDATA[Science Fiction]]></category>
+		<category><![CDATA[Science Fiction Podcasts]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36188</guid>
+		<description><![CDATA[The first time you killed me, I cried like a baby.
+
+Stupid, stupid, to cry over something make-believe—stupid and ugly and pathetic, too, when already the only thing I wanted in the world was for you to find me pretty. I couldn’t help it. I hadn’t expected it to hurt so bad, dying in the sim. I hadn’t expected it to hurt at all.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/ghost-in-the-tank/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36188</post-id>	</item>
+		<item>
+		<title>Book Review: The Dorians by Nick Cutter</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/book-review-the-dorians-by-nick-cutter/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/book-review-the-dorians-by-nick-cutter/#respond</comments>
+		<pubDate>Thu, 28 May 2026 10:05:43 +0000</pubDate>
+		<dc:creator>Chris Kluwe</dc:creator>
+				<category><![CDATA[Book Reviews]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36088</guid>
+		<description><![CDATA[Reviewer Chris Kluwe says, "If you’re looking for an escape from the horrors of everyday life into the horrors of classic human hubris, you can’t go wrong with <i>The Dorians</i>."]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/book-review-the-dorians-by-nick-cutter/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36088</post-id>	</item>
+		<item>
+		<title>The Last Season of Your Life</title>
+		<link>https://www.lightspeedmagazine.com/fiction/the-last-season-of-your-life/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/the-last-season-of-your-life/#respond</comments>
+		<pubDate>Thu, 28 May 2026 10:02:34 +0000</pubDate>
+		<dc:creator>Christopher Barzak</dc:creator>
+				<category><![CDATA[Fantasy]]></category>
+		<category><![CDATA[Fantasy Podcasts]]></category>
+		<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Flash Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36055</guid>
+		<description><![CDATA[On a wooded hillside outside Pittsburgh, where the rivers braid together and the bridges flash yellow in the sun, there stands an old private school no one ever remembers enrolling in. Ivy grips its cracked bricks. Moss blurs the leaded windows. To almost anyone looking, it appears abandoned. Unless they are the newly dead. If that is the case, it is more of an inevitability.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/the-last-season-of-your-life/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36055</post-id>	</item>
+		<item>
+		<title>Author Spotlight: Kristine Kathryn Rusch</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-kristine-kathryn-rusch-4/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-kristine-kathryn-rusch-4/#respond</comments>
+		<pubDate>Thu, 28 May 2026 10:02:21 +0000</pubDate>
+		<dc:creator>Robin Jeffrey</dc:creator>
+				<category><![CDATA[Author Spotlights]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36047</guid>
+		<description><![CDATA[I have been a professional writer since I was sixteen—which is fifty years now. I have always wanted to write. I think it comes from being the youngest of four. One of my earliest memories is of five adults (my parents and siblings) sitting in the living room reading, while I went from person to person begging them to play. They were reading instead.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-kristine-kathryn-rusch-4/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36047</post-id>	</item>
+		<item>
+		<title>The Test of Time</title>
+		<link>https://www.lightspeedmagazine.com/fiction/the-test-of-time/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/the-test-of-time/#respond</comments>
+		<pubDate>Thu, 28 May 2026 10:01:12 +0000</pubDate>
+		<dc:creator>Kristine Kathryn Rusch</dc:creator>
+				<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+		<category><![CDATA[Science Fiction]]></category>
+		<category><![CDATA[Science Fiction Podcasts]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36069</guid>
+		<description><![CDATA[Jacey Watkins’s fingers were shaking as she stared at the five remaining questions on her Advanced Temporal Disruption Midterm. She was already exhausted from responding to ten “short” essay questions. Now she hit the “long” essay questions and as she read them, her heart sank. She hadn’t expected the damn midterm be so hard.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/the-test-of-time/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36069</post-id>	</item>
+		<item>
+		<title>Book Review: The Republic of Memory by Mahmud El Sayed</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/book-review-the-republic-of-memory-by-mahmud-el-sayed/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/book-review-the-republic-of-memory-by-mahmud-el-sayed/#respond</comments>
+		<pubDate>Thu, 21 May 2026 10:05:01 +0000</pubDate>
+		<dc:creator>Melissa A Watkins</dc:creator>
+				<category><![CDATA[Book Reviews]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36080</guid>
+		<description><![CDATA[Melissa A Watkins recommends <em>The Republic of Memory</em>, a SF novel full of twists and turns and detailed world-building.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/book-review-the-republic-of-memory-by-mahmud-el-sayed/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36080</post-id>	</item>
+		<item>
+		<title>Author Spotlight: Ada Hoffman</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-ada-hoffman-2/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-ada-hoffman-2/#respond</comments>
+		<pubDate>Thu, 21 May 2026 10:03:33 +0000</pubDate>
+		<dc:creator>Phoebe Barton</dc:creator>
+				<category><![CDATA[Author Spotlights]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36045</guid>
+		<description><![CDATA[“Ten Unsent Letters to the Dark Lord” originated at Can*Con 2024. There was a masterclass workshop at the convention called “Write a Story in a Weekend,” hosted by Brandon Butler and David Schultz of the Toronto SFF Writers Group. I like writing challenges, and I like deadlines, and I decided that writing the first draft of a whole short story in forty-eight hours while also attending a convention sounded like exactly the kind of bad idea I would enjoy.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-ada-hoffman-2/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36045</post-id>	</item>
+		<item>
+		<title>Ten Unsent Letters to the Dark Lord</title>
+		<link>https://www.lightspeedmagazine.com/fiction/ten-unsent-letters-to-the-dark-lord/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/ten-unsent-letters-to-the-dark-lord/#respond</comments>
+		<pubDate>Thu, 21 May 2026 10:02:00 +0000</pubDate>
+		<dc:creator>Ada Hoffmann</dc:creator>
+				<category><![CDATA[Fantasy]]></category>
+		<category><![CDATA[Fantasy Podcasts]]></category>
+		<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Flash Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36053</guid>
+		<description><![CDATA[1. I’m sorry, my lord.
+
+2. I miss the sound of your voice, deep enough to shake the mountain fortress’s stones. I miss feeling it rumble in the soles of my feet. I miss the glow of your eyes while you paced the Chamber of Mysteries, lava burning in the pools below and the pointed arc of your throne at your back.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/ten-unsent-letters-to-the-dark-lord/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36053</post-id>	</item>
+		<item>
+		<title>The Stars Look Away From This Vessel</title>
+		<link>https://www.lightspeedmagazine.com/fiction/the-stars-look-away-from-this-vessel/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/the-stars-look-away-from-this-vessel/#respond</comments>
+		<pubDate>Thu, 21 May 2026 10:01:40 +0000</pubDate>
+		<dc:creator>dave ring</dc:creator>
+				<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Flash Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+		<category><![CDATA[Science Fiction]]></category>
+		<category><![CDATA[Science Fiction Podcasts]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36067</guid>
+		<description><![CDATA[Draw a rectangular shape. Put a cylinder around it. Add a few small rectangles to any lines, such that they straddle them. At least one on the rectangle, and another on the cylinder. These are airlocks. The engine should look like a lighter stacked on top of a pack of cigarettes; don’t take too long drawing it, but make sure you color it in red, and then draw over it with a black marker.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/the-stars-look-away-from-this-vessel/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36067</post-id>	</item>
+		<item>
+		<title>Book Review: The Quarter Queen by Kayla Hardy</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/book-review-the-quarter-queen-by-kayla-hardy/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/book-review-the-quarter-queen-by-kayla-hardy/#respond</comments>
+		<pubDate>Thu, 14 May 2026 10:05:22 +0000</pubDate>
+		<dc:creator>Arley Sorg</dc:creator>
+				<category><![CDATA[Book Reviews]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36075</guid>
+		<description><![CDATA[Reviewer Arley Sorg recommends <em>The Quarter Queen</em> for fans of <em>Sinners</em> and <em>American Horror Story: Coven</em>.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/book-review-the-quarter-queen-by-kayla-hardy/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36075</post-id>	</item>
+		<item>
+		<title>The Aerialist</title>
+		<link>https://www.lightspeedmagazine.com/fiction/the-aerialist/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/the-aerialist/#respond</comments>
+		<pubDate>Thu, 14 May 2026 10:02:47 +0000</pubDate>
+		<dc:creator>Yoon Ha Lee</dc:creator>
+				<category><![CDATA[Fantasy]]></category>
+		<category><![CDATA[Fantasy Podcasts]]></category>
+		<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Flash Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36050</guid>
+		<description><![CDATA[The typewriter proved, at first glance, to be a poor investment for a daring aerial escape. Kallista had been drawn to the typewriter from the moment she viewed it languishing in a Museum of Curioddities, a pun that 3% of Pennon City’s citizens might appreciate, if one rounded to the nearest human. The jury was out as to whether the placard’s sententious overview of Strange Olde Anti-Fae Percussive Instruments was someone’s idea of trolling or, equally likely, an exercise in mellifluous snake oil.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/the-aerialist/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36050</post-id>	</item>
+		<item>
+		<title>Author Spotlight: Sam W. Pisciotta</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-sam-w-pisciotta/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-sam-w-pisciotta/#respond</comments>
+		<pubDate>Thu, 14 May 2026 10:02:44 +0000</pubDate>
+		<dc:creator>Robin Jeffrey</dc:creator>
+				<category><![CDATA[Author Spotlights]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36042</guid>
+		<description><![CDATA[This story very much started from its opening paragraphs, which spilled easily onto the page. It followed pretty quickly that the narrator had been dreaming about his dog and mother, even though he knew that he never had a dog and couldn’t remember his mother. At that point, I thought, Oh my gosh! What’s going on here? What is this story about?]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-sam-w-pisciotta/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36042</post-id>	</item>
+		<item>
+		<title>The Star Where We Meet</title>
+		<link>https://www.lightspeedmagazine.com/fiction/the-star-where-we-meet/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/the-star-where-we-meet/#respond</comments>
+		<pubDate>Thu, 14 May 2026 10:01:53 +0000</pubDate>
+		<dc:creator>Sam W. Pisciotta</dc:creator>
+				<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+		<category><![CDATA[Science Fiction]]></category>
+		<category><![CDATA[Science Fiction Podcasts]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36059</guid>
+		<description><![CDATA[The most surprising thing about my journey (well, the first most surprising thing) is that the dream I experienced while traveling lasted a thousand years, a single dream stretching all the way to the Iota star in the Gemini constellation. I dreamt of Bindi, my childhood dog, a heeler and pointer mix who used to follow me everywhere; now it seems, she’s even followed me to this distant star.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/the-star-where-we-meet/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36059</post-id>	</item>
+		<item>
+		<title>Author Spotlight: Melissa A Watkins</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-melissa-a-watkins-2/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-melissa-a-watkins-2/#respond</comments>
+		<pubDate>Thu, 07 May 2026 10:03:06 +0000</pubDate>
+		<dc:creator>A Humphrey Lanham</dc:creator>
+				<category><![CDATA[Author Spotlights]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36037</guid>
+		<description><![CDATA[Like a lot of people, my head is buried in news and social media and talks with my neighbors. I’m always in the center of the most politically awkward conversation at the con bar, but I can’t point to too many specific references that inspired this story. It kind of came out of the subconscious soup that paying attention to the world cooks up.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/author-spotlight-melissa-a-watkins-2/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36037</post-id>	</item>
+		<item>
+		<title>Sarah’s Laugh</title>
+		<link>https://www.lightspeedmagazine.com/fiction/sarahs-laugh/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/sarahs-laugh/#respond</comments>
+		<pubDate>Thu, 07 May 2026 10:02:54 +0000</pubDate>
+		<dc:creator>Melissa A Watkins</dc:creator>
+				<category><![CDATA[Fantasy]]></category>
+		<category><![CDATA[Fantasy Podcasts]]></category>
+		<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36040</guid>
+		<description><![CDATA[Everyone knows the Walls around the cities fell. What some people don’t remember is that the first one fell because of a laugh. It sounded like a ringing bell. Not like it came out of a baby at all. That was the first thing I told the scholar boy. He was a grown man, a researcher. He looked it, too. Big round glasses, chubby cheeks, curly hair.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/sarahs-laugh/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36040</post-id>	</item>
+		<item>
+		<title>The Knacker Man</title>
+		<link>https://www.lightspeedmagazine.com/fiction/the-knacker-man/</link>
+		<comments>https://www.lightspeedmagazine.com/fiction/the-knacker-man/#respond</comments>
+		<pubDate>Thu, 07 May 2026 10:01:01 +0000</pubDate>
+		<dc:creator>Scott Dalrymple</dc:creator>
+				<category><![CDATA[Fiction]]></category>
+		<category><![CDATA[Flash Fiction]]></category>
+		<category><![CDATA[Podcast]]></category>
+		<category><![CDATA[Science Fiction]]></category>
+		<category><![CDATA[Science Fiction Podcasts]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36057</guid>
+		<description><![CDATA[A year of living in the ground had not accustomed Moyer to the smell. He wondered how the French, who’d been at this business so much longer, could stand it. But if the officers who had trained his unit in the intricacies of trench life were any indication, they were so weary and battered as to scarcely notice the world around them any longer.]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/fiction/the-knacker-man/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36057</post-id>	</item>
+		<item>
+		<title>Editorial: May 2026</title>
+		<link>https://www.lightspeedmagazine.com/nonfiction/editorial-may-2026/</link>
+		<comments>https://www.lightspeedmagazine.com/nonfiction/editorial-may-2026/#respond</comments>
+		<pubDate>Fri, 01 May 2026 10:05:41 +0000</pubDate>
+		<dc:creator>John Joseph Adams</dc:creator>
+				<category><![CDATA[Editorials]]></category>
+		<category><![CDATA[Nonfiction]]></category>
+
+		<guid isPermaLink="false">https://www.lightspeedmagazine.com/?p=36071</guid>
+		<description><![CDATA[Be sure to check out the editorial for a rundown of this month's content and for all of John Joseph Adams's media and book recommendations!]]></description>
+		<wfw:commentRss>https://www.lightspeedmagazine.com/nonfiction/editorial-may-2026/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+	<post-id xmlns="com-wordpress:feed-additions:1">36071</post-id>	</item>
+	</channel>
+</rss>

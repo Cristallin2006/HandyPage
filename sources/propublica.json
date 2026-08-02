@@ -1,0 +1,33 @@
+{
+  "id": "propublica",
+  "name": "ProPublica",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://www.propublica.org/",
+  "needs_proxy": false,
+  "category": "news",
+  "origin": {
+    "type": "calibre_recipe",
+    "id": "propublica"
+  },
+  "index": {
+    "type": "rss",
+    "url": "https://feeds.propublica.org/propublica/main",
+    "max": 20
+  },
+  "article": {
+    "content": "article",
+    "title": "h1",
+    "remove": [],
+    "encoding": null
+  },
+  "request": {
+    "delay_seconds": 1,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "非营利调查报道,长文,正式书面语。2026-07-25 直连探测:feed 20 items,article 约 12600 字符。",
+  "test": {
+    "fixture": "fixtures/propublica/"
+  }
+}

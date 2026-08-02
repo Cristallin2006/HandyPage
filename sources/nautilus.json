@@ -1,0 +1,37 @@
+{
+  "id": "nautilus",
+  "name": "Nautilus",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://nautil.us/",
+  "needs_proxy": false,
+  "category": "science",
+  "origin": {
+    "type": "calibre_recipe",
+    "id": "nautilus"
+  },
+  "index": {
+    "type": "rss",
+    "url": "https://nautil.us/feed/",
+    "max": 20
+  },
+  "article": {
+    "content": "main",
+    "title": "h1",
+    "remove": [
+      "form",
+      "[class*=AscendiumAdUnit]",
+      "div[data-aaad]"
+    ],
+    "encoding": null
+  },
+  "request": {
+    "delay_seconds": 1,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "科学长文随笔,写作质量极高,适合精读+AI 拆解。2026-07-31 直连探测:feed 10 items,main 约 4000-5000 字符;main 内含 NewsletterSignup 表单,remove form 剔除。",
+  "test": {
+    "fixture": "fixtures/nautilus/"
+  }
+}

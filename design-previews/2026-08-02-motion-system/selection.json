@@ -1,0 +1,14 @@
+{
+  "id": "B",
+  "label": "B: 墨线轴线 · M3 纵轴推进",
+  "name": "墨线轴线 · M3 纵轴推进",
+  "notes": "",
+  "dials": {
+    "variance": 5,
+    "motion": 5,
+    "density": 6
+  },
+  "adjustments": "",
+  "source": "click",
+  "receivedAt": "2026-08-02T08:57:22.044Z"
+}

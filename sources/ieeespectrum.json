@@ -1,0 +1,33 @@
+{
+  "id": "ieeespectrum",
+  "name": "IEEE Spectrum",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://spectrum.ieee.org/",
+  "needs_proxy": false,
+  "category": "tech",
+  "origin": {
+    "type": "calibre_recipe",
+    "id": "ieeespectrum"
+  },
+  "index": {
+    "type": "rss",
+    "url": "https://spectrum.ieee.org/rss/fulltext",
+    "max": 20
+  },
+  "article": {
+    "content": "article",
+    "title": "h1",
+    "remove": [],
+    "encoding": null
+  },
+  "request": {
+    "delay_seconds": 1,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "IEEE 工程杂志,技术词汇。2026-07-31 直连探测:feed 30 items;article 容器稳定(长文 2 万字符);feed 内混入 podcast/视频短 stub 页(约 300 字符),属源站内容形态非解析问题。",
+  "test": {
+    "fixture": "fixtures/ieeespectrum/"
+  }
+}

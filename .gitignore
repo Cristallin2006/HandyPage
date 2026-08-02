@@ -1,0 +1,32 @@
+# Gradle / Android
+.gradle/
+build/
+*/build/
+local.properties
+.cxx/
+.externalNativeBuild/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 本地产物（日志、截图、拉取的数据库、临时脚本输出）
+tmp/
+
+# Python 工具环境
+.venv/
+__pycache__/
+
+# 本地 Gradle 发行包（构建工具，不入库）
+tools/gradle/
+
+# 词库构建数据（上游源数据与中间产物，可经 tools/dict/csv_to_sqlite.py 重新生成）
+tools/dict/ECDICT-master/ecdict.csv
+tools/dict/ecdict-repo.zip
+tools/dict/handypage_dict.db
+tools/dict/handypage_dict.db.zip

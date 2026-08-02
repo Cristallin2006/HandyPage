@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Handypage 底栏图标气质 · 四方向预览</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&text=RLASrlas&display=swap');
+
+:root{
+  --paper:#fbfaf7; --ink:#141414; --sub:#5c5c58; --faint:#a39e98;
+  --hairline:rgba(0,0,0,.10); --red:#b3352b;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;background:#efece6;color:var(--ink);padding:24px 16px 96px}
+.shell-head{max-width:1080px;margin:0 auto 18px}
+.shell-head h1{font-family:'Fraunces',serif;font-size:26px;font-weight:700}
+.shell-head .note{font-size:12px;color:var(--sub);margin-top:6px;line-height:1.6}
+.dials{max-width:1080px;margin:0 auto 22px;display:grid;grid-template-columns:repeat(3,minmax(160px,1fr));gap:14px}
+.dial{display:grid;gap:6px;font-size:13px}
+.dial b{font-weight:650}
+.dial output{font-variant-numeric:tabular-nums;color:var(--red);font-weight:700}
+.dial input{width:100%;accent-color:var(--ink)}
+.grid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.card{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.mock{position:relative;display:grid;place-items:center;padding:34px 12px;min-height:230px;background:
+  repeating-linear-gradient(0deg,transparent 0 27px,rgba(0,0,0,.025) 27px 28px)}
+.proto{position:absolute;top:8px;left:10px;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.meta{padding:14px 16px 10px;display:grid;gap:8px;border-top:.5px solid var(--hairline)}
+.meta-head{display:flex;align-items:baseline;gap:10px}
+.meta-head .letter{font-family:'Fraunces',serif;font-size:20px;font-weight:700}
+.meta-head strong{font-size:15px;font-weight:600}
+.meta-head .rec{margin-left:auto;font-size:11px;font-weight:600;color:var(--red);border:1px solid rgba(179,53,43,.35);background:rgba(179,53,43,.08);border-radius:999px;padding:2px 10px}
+.tag{font-size:12px;color:var(--sub);line-height:1.55;width:100%;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pickrow{padding:2px 16px 16px}
+.pickrow .qmdp-pick-button{width:100%;min-height:44px;border:1px solid var(--ink);border-radius:8px;background:var(--ink);color:var(--paper);font-size:14px;font-weight:650;cursor:pointer;font-family:inherit}
+.notes{max-width:1080px;margin:28px auto 0}
+.notes h2{font-family:'Fraunces',serif;font-size:18px;font-weight:700;margin-bottom:12px}
+.note-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.note{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:14px 16px;font-size:12px;line-height:1.7;color:var(--sub)}
+.note h3{font-size:13px;font-weight:650;color:var(--ink);margin-bottom:6px}
+.note p+p{margin-top:4px}
+.note b{color:var(--ink)}
+.mix{margin-top:14px;font-size:13px;line-height:1.7;color:var(--ink);background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:14px 16px}
+@media (max-width:860px){
+  .grid{grid-template-columns:1fr}
+  .note-grid{grid-template-columns:1fr}
+  .dials{grid-template-columns:1fr}
+}
+
+/* ===== 底栏样机共享骨架：2dp 墨顶线 + 四项 + 墨短线选中态 ===== */
+.bar-mock{width:min(360px,100%);background:var(--paper);border-top:2px solid var(--ink);display:flex;box-shadow:0 12px 32px rgba(20,20,20,.10)}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 0 8px;color:var(--sub)}
+.tab .ico{display:grid;place-items:center;width:28px;height:28px}
+.tab .lbl{font-size:12px;margin-top:3px}
+.tab .dash{width:24px;border-top:2px solid transparent;margin-top:3px}
+.tab.on{color:var(--ink)}
+.tab.on .lbl{font-weight:600}
+.tab.on .dash{border-top-color:var(--ink)}
+
+/* A · 衬线首字母：Fraunces 600，与刊头/monogram 同族 */
+.dirA .ico{font-family:'Fraunces',serif;font-weight:600;font-size:25px;line-height:1}
+/* B · 花体手书：Pinyon Script（设备落子集 TTF） */
+.dirB .ico{font-family:'Pinyon Script',cursive;font-size:27px;line-height:1}
+/* C · 印刷符号：pilcrow/section/fleuron，禁字母 */
+.dirC .ico{font-family:'Fraunces',serif;font-size:23px;line-height:1}
+/* D · 细线图形：1.5px stroke，禁文字 */
+.dirD .ico svg{width:25px;height:25px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body>
+<header class="shell-head">
+  <h1>Handypage 底栏图标气质 · 方向样机</h1>
+  <p class="note">四个方向只换图标气质，选中态（600 + 墨短线）、中文标签、底栏结构不变，<b>不是最终 App</b>；点选方向或按 1-4，确认后才进入正式实现。</p>
+</header>
+<div class="dials" data-qmdp-dials aria-label="设计拨盘">
+  <label class="dial"><b>视觉冒险度 <output data-qmdp-output="variance">6</output></b><input data-qmdp-dial="variance" type="range" min="1" max="10" value="6"></label>
+  <label class="dial"><b>动效强度 <output data-qmdp-output="motion">5</output></b><input data-qmdp-dial="motion" type="range" min="1" max="10" value="5"></label>
+  <label class="dial"><b>信息密度 <output data-qmdp-output="density">4</output></b><input data-qmdp-dial="density" type="range" min="1" max="10" value="4"></label>
+</div>
+<main class="grid">
+
+  <article class="card" data-design-option="A" data-name="衬线首字母 · Fraunces monogram">
+    <div class="mock"><span class="proto">方向样机</span>
+      <div class="bar-mock dirA">
+        <div class="tab on"><span class="ico">R</span><span class="lbl">阅读</span><i class="dash"></i></div>
+        <div class="tab"><span class="ico">L</span><span class="lbl">本机</span><i class="dash"></i></div>
+        <div class="tab"><span class="ico">A</span><span class="lbl">Agent</span><i class="dash"></i></div>
+        <div class="tab"><span class="ico">S</span><span class="lbl">设置</span><i class="dash"></i></div>
+      </div>
+    </div>
+    <div class="meta"><div class="meta-head"><span class="letter">A</span><strong>衬线首字母</strong><span class="rec">推荐</span></div>
+      <p class="tag">Fraunces 600 大写 R/L/A/S · 与刊头、SourceRow monogram 同族 · 零新资产，最连贯</p></div>
+    <div class="pickrow"><button type="button" class="qmdp-pick-button">选择 A · 衬线首字母</button></div>
+  </article>
+
+  <article class="card" data-design-option="B" data-name="花体手书 · Pinyon Script">
+    <div class="mock"><span class="proto">方向样机</span>
+      <div class="bar-mock dirB">
+        <div class="tab on"><span class="ico">R</span><span class="lbl">阅读</span><i class="dash"></i></div>
+        <div class="tab"><span class="ico">L</span><span class="lbl">本机</span><i class="dash"></i></div>
+        <div class="tab"><span class="ico">A</span><span class="lbl">Agent</span><i class="dash"></i></div>
+        <div class="tab"><span class="ico">S</span><span class="lbl">设置</span><i class="dash"></i></div>
+      </div>
+    </div>
+    <div class="meta"><div class="meta-head"><span class="letter">B</span><strong>花体手书</strong></div>
+      <p class="tag">Pinyon Script 花体大写 · 铜板手写气，四个字母四种姿态 · 需打包 ~30KB 子集 TTF</p></div>
+    <div class="pickrow"><button type="button" class="qmdp-pick-button">选择 B · 花体手书</button></div>
+  </article>
+
+  <article class="card" data-design-option="C" data-name="印刷符号 · Typographer's marks">
+    <div class="mock"><span class="proto">方向样机</span>
+      <div class="bar-mock dirC">
+        <div class="tab on"><span class="ico">¶</span><span class="lbl">阅读</span><i class="dash"></i></div>
+        <div class="tab"><span class="ico">§</span><span class="lbl">本机</span><i class="dash"></i></div>
+        <div class="tab"><span class="ico">❦</span><span class="lbl">Agent</span><i class="dash"></i></div>
+        <div class="tab"><span class="ico">❧</span><span class="lbl">设置</span><i class="dash"></i></div>
+      </div>
+    </div>
+    <div class="meta"><div class="meta-head"><span class="letter">C</span><strong>印刷符号</strong></div>
+      <p class="tag">¶ 段落 / § 章节 / ❦ 花饰 / ❧ 叶饰 · 无字母，活版印刷的编辑梗 · 设备字形覆盖需验</p></div>
+    <div class="pickrow"><button type="button" class="qmdp-pick-button">选择 C · 印刷符号</button></div>
+  </article>
+
+  <article class="card" data-design-option="D" data-name="细线图形 · Hairline glyphs">
+    <div class="mock"><span class="proto">方向样机</span>
+      <div class="bar-mock dirD">
+        <div class="tab on"><span class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="1"/><line x1="7" y1="8" width="10" x2="17" y2="8"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="7" y1="16" x2="13" y2="16"/></svg></span><span class="lbl">阅读</span><i class="dash"></i></div>
+        <div class="tab"><span class="ico"><svg viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><line x1="10" y1="18" x2="14" y2="18"/></svg></span><span class="lbl">本机</span><i class="dash"></i></div>
+        <div class="tab"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 4l1.8 4.7L18.5 10l-4.7 1.8L12 16.5l-1.8-4.7L5.5 10l4.7-1.3z"/><path d="M18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></svg></span><span class="lbl">Agent</span><i class="dash"></i></div>
+        <div class="tab"><span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 3.5v3M12 17.5v3M3.5 12h3M17.5 12h3M6 6l2.1 2.1M15.9 15.9L18 18M18 6l-2.1 2.1M8.1 15.9L6 18"/></svg></span><span class="lbl">设置</span><i class="dash"></i></div>
+      </div>
+    </div>
+    <div class="meta"><div class="meta-head"><span class="letter">D</span><strong>细线图形</strong></div>
+      <p class="tag">1.5px 线重自绘图形，无文字 · 现行方案的去填充提纯版 · 最安静但最少记忆点</p></div>
+    <div class="pickrow"><button type="button" class="qmdp-pick-button">选择 D · 细线图形</button></div>
+  </article>
+
+</main>
+
+<section class="notes">
+  <h2>方向说明（字体策略 / 设备落地 / 风险）</h2>
+  <div class="note-grid">
+    <div class="note"><h3>A · 衬线首字母（推荐）</h3>
+      <p>气质：和刊头 34sp Fraunces、SourceRow 衬线 monogram 是同一套语言——底栏 icon 换成字母后，全 App 的「图形」统一成一种：衬线字形。</p>
+      <p>落地：<b>零新资产</b>——FrauncesFamily 已在打包，EditorialNavBar 把 Icon 换成 Text(字母, Fraunces 600)。语义：R=Reading / L=Library / A=Agent / S=Settings，与刊头英文小字一致。</p>
+      <p>代价：四个字母都直愣愣，个性靠字体本身；不如 B 有味道。</p></div>
+    <div class="note"><h3>B · 花体手书</h3>
+      <p>气质：铜板手写（copperplate）——四个字母各带飞白和游丝，底栏立刻有了「签名感」，是你提的方向里最浪漫的读法。</p>
+      <p>落地：Google Fonts 裁 R/L/A/S 子集 TTF（~30KB, 含 OFL 许可）入 res/font,同样替 Text。</p>
+      <p>代价：花体小字号下笔画细，<b>24dp 可读性要在真机上验</b>（尤其 L 和 S）；与 Fraunces 刊头是两种书法，混搭看接受度。</p></div>
+    <div class="note"><h3>C · 印刷符号</h3>
+      <p>气质：活版印刷的行话——¶（段落=阅读）、§（章节=文库）、❦（花饰=Agent 的「点缀智能」）、❧（叶饰=设置）。编辑梗最深，同好一眼懂。</p>
+      <p>落地：¶ § 是拉丁-1 基本符号，系统字体必有；<b>❦ ❧ 在 Android 系统字体的覆盖要真机先验</b>，缺字形就退回只打包含这几个符号的 Fraunces/字体子集。</p>
+      <p>代价：语义有门槛，新用户要猜；❦ 和 ❧ 造型偏近，扫读区分度一般。</p></div>
+    <div class="note"><h3>D · 细线图形</h3>
+      <p>气质：现行 Material 填充图标太「安卓默认」，细线化是最保守的提纯——还是那四个图形，但呼吸感对齐 hairline 体系。</p>
+      <p>落地：Material Symbols Outlined(weight 200)或自绘 SVG vector,零字体资产。</p>
+      <p>代价：最没性格，「任何一个阅读 App 都长这样」；与其这样不如不动。</p></div>
+  </div>
+  <p class="mix">推荐 <b>A · 衬线首字母</b>：零新资产、与 monogram 体系同源，是「本来就长这样」的连贯；但如果你想要底栏一眼有性格，选 <b>B</b>——它是你灵感的正解，代价只是 30KB 和一次真机可读性验收。混搭也可以：A 的骨架 + Agent 单独用花体 A（写进确认框）。</p>
+</section>
+
+<script>
+(function(){
+  document.querySelectorAll('[data-qmdp-dial]').forEach(function(input){
+    input.addEventListener('input', function(){
+      document.querySelectorAll('[data-qmdp-output="' + input.dataset.qmdpDial + '"]').forEach(function(o){
+        o.value = input.value; o.textContent = input.value;
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

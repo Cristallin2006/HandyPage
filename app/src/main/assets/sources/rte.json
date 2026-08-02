@@ -1,0 +1,33 @@
+{
+  "id": "rte",
+  "name": "RTE News",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://www.rte.ie/news/",
+  "needs_proxy": false,
+  "category": "news",
+  "origin": {
+    "type": "calibre_recipe",
+    "id": "rte"
+  },
+  "index": {
+    "type": "rss",
+    "url": "https://www.rte.ie/rss/news.xml",
+    "max": 20
+  },
+  "article": {
+    "content": "article",
+    "title": "h1",
+    "remove": [],
+    "encoding": null
+  },
+  "request": {
+    "delay_seconds": 1,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "爱尔兰国家广电,国际+爱尔兰新闻,用词平实适合学习者。2026-07-25 直连探测:feed 20 items,article 选择器约 5400 字符正文。",
+  "test": {
+    "fixture": "fixtures/rte/"
+  }
+}

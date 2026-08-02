@@ -1,0 +1,33 @@
+{
+  "id": "techcrunch",
+  "name": "TechCrunch",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://techcrunch.com/",
+  "needs_proxy": false,
+  "category": "tech",
+  "origin": {
+    "type": "calibre_recipe",
+    "id": "techcrunch"
+  },
+  "index": {
+    "type": "rss",
+    "url": "https://techcrunch.com/feed/",
+    "max": 20
+  },
+  "article": {
+    "content": ".entry-content",
+    "title": "h1",
+    "remove": [],
+    "encoding": null
+  },
+  "request": {
+    "delay_seconds": 1,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "科技创业新闻。2026-07-25 直连探测:feed 20 items,.entry-content 约 4300 字符,比 main(5560,含推荐流)更干净。",
+  "test": {
+    "fixture": "fixtures/techcrunch/"
+  }
+}

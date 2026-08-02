@@ -1,0 +1,23 @@
+{
+  "id": "arxiv",
+  "name": "arXiv 论文",
+  "language": "en",
+  "version": 1,
+  "homepage": "https://arxiv.org/",
+  "needs_proxy": false,
+  "category": "papers",
+  "categories": ["cs.CL", "cs.LG", "cs.CV", "cs.AI", "stat.ML"],
+  "index": {
+    "type": "arxiv",
+    "url": "https://export.arxiv.org/api/query"
+  },
+  "article": {
+    "content": "article"
+  },
+  "request": {
+    "delay_seconds": 3,
+    "user_agent": null
+  },
+  "reader_css": null,
+  "notes": "arXiv 论文源:索引/正文由 arxiv.ArxivApi + pdf.PdfToArticle 提供,index/article 字段仅为占位。"
+}

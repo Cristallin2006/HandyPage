@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	xmlns:media="http://search.yahoo.com/mrss/"
+>
+
+<channel>
+	<title>News news, articles, and features | New Scientist</title>
+	<atom:link href="https://www.newscientist.com/section/news/feed/" rel="self" type="application/rss+xml" />
+	<link>https://www.newscientist.com/section/news/</link>
+	<description>Science news and science articles from New Scientist</description>
+	<lastBuildDate>Fri, 24 Jul 2026 21:30:01 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=7.0.2</generator>
+<site xmlns="com-wordpress:feed-additions:1">242057827</site>	<item>
+		<title>One of NASA’s crucial links to deep space is at risk of burning down</title>
+		<link>https://www.newscientist.com/article/2581311-one-of-nasas-crucial-links-to-deep-space-is-at-risk-of-burning-down/?utm_campaign=RSS|NSNS&#038;utm_content=news&#038;utm_medium=RSS&#038;utm_source=NSNS</link>
+		
+		<dc:creator><![CDATA[Leah Crane]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 21:30:01 +0000</pubDate>
+				<category><![CDATA[Space]]></category>
+		<category><![CDATA[Space exploration]]></category>
+		<category><![CDATA[NASA]]></category>
+		<category><![CDATA[wildfires]]></category>
+		<guid isPermaLink="false">https://www.newscientist.com/article/2581311-auto-draft/</guid>
+
+					<description><![CDATA[The Deep Space Network is our best way to communicate with spacecraft beyond Earth’s orbit, and one of its three stations around the world is in the middle of a wildfire]]></description>
+		
+		
+		
+		
+		<media:thumbnail url="https://www.newscientist.com/wp-content/uploads/2026/07/Canberra-DSN.webp" width="2000" height="1414" />
+<post-id xmlns="com-wordpress:feed-additions:1">2581311</post-id>	</item>
+		<item>
+		<title>Clothes made from living fungi can clean and repair themselves</title>
+		<link>https://www.newscientist.com/article/2581227-clothes-made-from-living-fungi-can-clean-and-repair-themselves/?utm_campaign=RSS|NSNS&#038;utm_content=news&#038;utm_medium=RSS&#038;utm_source=NSNS</link>
+		
+		<dc:creator><![CDATA[James Woodford]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 18:01:00 +0000</pubDate>
+				<category><![CDATA[Life]]></category>
+		<category><![CDATA[fungi]]></category>
+		<guid isPermaLink="false">https://www.newscientist.com/article/2581227-auto-draft/</guid>
+
+					<description><![CDATA[Researchers have created a textile made from the parasitic fungus Cordyceps militaris, which is biodegradable and can be adapted for different purposes with various microbes]]></description>
+										<content:encoded><![CDATA[
+
+
+<figure class="wp-block-image size-full"><img fetchpriority="high" decoding="async" width="1350" height="900" src="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306130565.jpg" alt="" class="wp-image-2581232" srcset="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306130565.jpg 1350w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306130565.jpg?resize=150,100 150w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306130565.jpg?resize=300,200 300w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306130565.jpg?resize=768,512 768w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306130565.jpg?resize=600,400 600w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306130565.jpg?resize=400,267 400w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306130565.jpg?resize=900,600 900w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306130565.jpg?resize=1200,800 1200w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306130565.jpg?resize=196,131 196w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306130565.jpg?resize=301,201 301w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306130565.jpg?resize=415,277 415w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306130565.jpg?resize=602,401 602w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306130565.jpg?resize=830,553 830w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306130565.jpg?resize=105,70 105w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306130565.jpg?resize=210,140 210w" sizes="(max-width: 1350px) 100vw, 1350px"><figcaption class="wp-element-caption"><div class="wp-image__caption--icon"><svg width="15" height="15" viewbox="0 0 15 15"><use href="https://www.newscientist.com/wp-content/themes/newscientist/images/icon-circle-chevron.svg#icon-circle-chevron"></use></svg></div><div class="wp-image__caption--text">A dress made from living fungi</div><div class="wp-image__caption--credit">Ke Li</div></figcaption></figure>
+
+
+
+<p class="wp-block-paragraph">A <a href="https://www.newscientist.com/article/2515984-weird-and-wonderful-fungi-should-be-so-much-more-than-sci-fi-villains/">parasitic fungus that grows on caterpillars</a> has been turned into a dress designed to be able to repair itself if damaged.</p>
+
+
+
+<p class="wp-block-paragraph">In the video game and <a href="https://www.newscientist.com/article/2354883-the-last-of-us-review-an-excellent-example-of-fungal-horror/">TV series <em>The Last of Us</em>,</a> <em>Cordyceps</em> fungi evolve to infect humans and turn them into zombies, but in reality they are harmless to humans.</p>
+
+
+
+	<div class="read-more__standard wp-block-newscientist-read-more">
+		<a class="read-more__standard--wrapper no-animation" href="https://www.newscientist.com/article/2516720-how-our-ancestors-used-mushrooms-to-change-the-course-of-human-history/">
+			<strong>Read more</strong>
+			<p>How our ancestors used mushrooms to change the course of human history</p>
+		</a>
+	</div>
+
+
+
+<p class="wp-block-paragraph">Using the fungus <em>Cordyceps militaris</em> as a base, <a href="https://isynbio.siat.ac.cn/cxqjzx/zhonglab/team/index.html">Ke Li</a> at the Chinese Academy of Sciences and her colleagues created a living textile that can be “programmed” with different properties using various microbial components.</p>
+<div class="advert-wrapper advert__mid-article">
+	<div class="advert">
+		<div class="advert__inner">
+							<p class="advert__copy">
+					Advertisement				</p>
+						<div class="advert__slot" id="mid-article-slot">
+				<script>
+					if( window?.adverts?.addToArray ) {
+						window.adverts.addToArray( {
+							"pos": "mid-article-slot"
+						} );
+					}
+				</script>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<p class="wp-block-paragraph">It feels denser and less fibrous than cotton, says Li, and is closer to a soft, non-woven sheet or a flexible leather-like material.</p>
+
+
+
+<p class="wp-block-paragraph">“After washing and processing, the material does not have a strong mushroom-like smell,” she says. “A slight biological or fermentation-related odour may be detectable in freshly prepared samples, but this can be greatly reduced through cleaning, drying and post-treatment.”</p>
+
+
+
+<div class="wp-block-newscientist-newsletter-promotion">
+	<div class="newsletter-promotion__content">
+		<p class="newsletter-promotion__tagline">Free newsletter</p>
+		<h4 class="newsletter-promotion__title">
+			Sign up to The Earth Edition		</h4>
+		<p class="newsletter-promotion__excerpt">
+					</p>
+		<div class="newsletter-promotion__actions">
+			<a class="button button--secondary button--has-icon" href="https://www.newscientist.com/sign-up/the-earth-edition/">
+				<span>Sign up to newsletter</span>
+				<svg width="18" height="18" viewbox="0 0 24 24" style="--fill-color: #000">
+					<use href="https://www.newscientist.com/wp-content/themes/newscientist/images/icon-arrow-right.svg#icon-arrow-right"></use>
+				</svg>
+			</a>
+		</div>
+	</div>
+	<div class="newsletter-promotion__background">
+		<span class="newsletter-promotion__gradient"></span>
+		<div class="newsletter-promotion__image__wrapper">
+			<div class="image__wrapper">
+				<img decoding="async" width="600" height="450" src="https://www.newscientist.com/wp-content/uploads/2025/06/16102103/the_earth_edition_2025_ed_newsletter_landingtiles_2400px.jpg?w=600&amp;h=450&amp;crop=1" class="attachment-4x3-sm size-4x3-sm wp-post-image" alt="" sizes="(min-width: 432px) 412px, (min-width: 300px) 373px, 100vw" srcset="https://www.newscientist.com/wp-content/uploads/2025/06/16102103/the_earth_edition_2025_ed_newsletter_landingtiles_2400px.jpg?resize=300,225 300w, https://www.newscientist.com/wp-content/uploads/2025/06/16102103/the_earth_edition_2025_ed_newsletter_landingtiles_2400px.jpg?resize=400,300 400w, https://www.newscientist.com/wp-content/uploads/2025/06/16102103/the_earth_edition_2025_ed_newsletter_landingtiles_2400px.jpg?resize=600,450 600w, https://www.newscientist.com/wp-content/uploads/2025/06/16102103/the_earth_edition_2025_ed_newsletter_landingtiles_2400px.jpg?resize=800,600 800w, https://www.newscientist.com/wp-content/uploads/2025/06/16102103/the_earth_edition_2025_ed_newsletter_landingtiles_2400px.jpg?resize=1024,768 1024w, https://www.newscientist.com/wp-content/uploads/2025/06/16102103/the_earth_edition_2025_ed_newsletter_landingtiles_2400px.jpg?resize=1920,1440 1920w">			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<p class="wp-block-paragraph">The fungus is made up of thin filaments known as hyphae. Li and her colleagues first grew the fungus as small, spherical pellets in liquid culture, then washed them and placed them into moulds where they formed a sheet.</p>
+
+
+
+<p class="wp-block-paragraph">To prevent the resulting textile from becoming brittle, it was soaked in glycerol, which acts as a “plasticiser”, making the naturally rigid fungal structure softer and more flexible.</p>
+
+
+
+<p class="wp-block-paragraph">“We do not use a conventional fabric, polymer mesh or other external supporting scaffold,” says Li. “The <em>Cordyceps militaris</em> mycelial pellets themselves serve as the structural building blocks, and their intertwined hyphae form a continuous, self-supporting sheet.”</p>
+
+
+
+<p class="wp-block-paragraph">To add colour to the material, the team introduced yeast cells that were engineered to produce orange, blue and purple pigments. “These cells can be applied to the fungal textile so that the colour is generated biologically, rather than through conventional synthetic dyes,” says Li.</p>
+
+
+
+<p class="wp-block-paragraph">The researchers also showed they could change the properties of the textile by adding other fungi, for example making it clean itself by repelling water droplets. For UV protection, they added <em>Aspergillus niger</em>, a mould that commonly grows on fruit and vegetables. This forms a dark layer on the surface of the material containing melanin pigment, which absorbs ultraviolet radiation.</p>
+
+
+
+	<div class="read-more__standard wp-block-newscientist-read-more">
+		<a class="read-more__standard--wrapper no-animation" href="https://www.newscientist.com/article/2465647-how-our-ancestors-invented-clothing-and-transformed-it-into-fashion/">
+			<strong>Read more</strong>
+			<p>How our ancestors invented clothing and transformed it into fashion</p>
+		</a>
+	</div>
+
+
+
+<p class="wp-block-paragraph">If the textile is damaged, then fresh, wet fungal pellets can be applied to the area that needs repair and the fungus simply grows over the breach.</p>
+
+
+
+<p class="wp-block-paragraph">Under dry conditions, most biological activity is greatly reduced, and the cells may remain inactive or dormant, says Li.</p>
+
+
+
+<p class="wp-block-paragraph">But under humid conditions with nutrients present, some cells can become active again. This latent biological capacity is what enables functions such as regrowth and repair, and also means that the material is readily biodegradable, showing near-complete visible degradation in soil after just over 40 days.</p>
+
+
+
+<p class="wp-block-paragraph">Li and her colleagues created a dress out of their fungal material, but so far no one has worn it. “We’ve treated it as a rather precious display piece, and it was made in a small size,” she says. “Perhaps next time we should find a few petite and adventurous volunteers to try it on and see how it looks in motion.”</p>
+
+
+
+<p class="wp-block-paragraph"><a href="https://profiles.sydney.edu.au/justin.beardsley">Justin Beardsley</a> at the University of Sydney, Australia, says the biodegradability of the dress is amazing compared with what we currently have in terms of getting rid of waste from fast fashion.</p>
+
+
+
+<p class="wp-block-paragraph">But that is also a drawback because you don’t really want to be wearing something that is too easily biodegradable, as “it’ll break down while you’re wearing it”, he says.</p>
+
+
+
+<p class="wp-block-paragraph">As the textile is alive, Beardsley envisages one day being able to change its qualities in real time. “If there was some way that you can make it water-repellent for a while, becoming less breathable during rain, that would be fantastic, and then you can revert to the more breathable, less water-repellent version afterward,” he says.</p>
+
+
+<div class="journal-reference__wrapper wp-block-newscientist-read-more">
+	<strong>Journal reference:</strong>
+	<p>
+		<em>Science Advances:</em>
+				<a class="journal-reference__link no-animation" href="http://www.science.org/doi/10.1126/sciadv.aed6937">DOI: 10.1126/sciadv.aed6937</a>
+			</p>
+</div>
+
+
+
+<p class="wp-block-paragraph"></p>
+]]></content:encoded>
+					
+		
+		
+		
+		<media:thumbnail url="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306130565.jpg" width="1350" height="900" />
+<post-id xmlns="com-wordpress:feed-additions:1">2581227</post-id>	</item>
+		<item>
+		<title>Having a young biological age could help with weight loss</title>
+		<link>https://www.newscientist.com/article/2581243-having-a-young-biological-age-could-help-with-weight-loss/?utm_campaign=RSS|NSNS&#038;utm_content=news&#038;utm_medium=RSS&#038;utm_source=NSNS</link>
+		
+		<dc:creator><![CDATA[Emma Young]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 12:57:26 +0000</pubDate>
+				<category><![CDATA[Diet]]></category>
+		<category><![CDATA[Health]]></category>
+		<category><![CDATA[ageing]]></category>
+		<guid isPermaLink="false">https://www.newscientist.com/article/2581243-auto-draft/</guid>
+
+					<description><![CDATA[In a small study, restricting calories led to greater weight loss among people with a biological age younger than their chronological age]]></description>
+		
+		
+		
+		
+		<media:thumbnail url="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306239118.jpg" width="1350" height="900" />
+<post-id xmlns="com-wordpress:feed-additions:1">2581243</post-id>	</item>
+		<item>
+		<title>10 of the best pictures of solar eclipses throughout history</title>
+		<link>https://www.newscientist.com/article/2580240-10-of-the-best-pictures-of-solar-eclipses-throughout-history/?utm_campaign=RSS|NSNS&#038;utm_content=news&#038;utm_medium=RSS&#038;utm_source=NSNS</link>
+		
+		<dc:creator><![CDATA[Leah Crane]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 11:00:00 +0000</pubDate>
+				<category><![CDATA[Astronomy]]></category>
+		<category><![CDATA[Space]]></category>
+		<category><![CDATA[solar eclipse 2026]]></category>
+		<guid isPermaLink="false">https://www.newscientist.com/article/2580240-auto-draft/</guid>
+
+					<description><![CDATA[Humans have been observing solar eclipses for millennia – carving, painting, sketching and finally photographing as the moon blocks out the disc of the sun]]></description>
+										<content:encoded><![CDATA[
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="1348" height="900" src="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg" alt="Solar eclipse as seen from the La Silla European Southern Observatory (ESO) in La Higuera, Coquimbo Region, Chile, on July 02, 2019" class="wp-image-2580255" srcset="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg 1348w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=150,100 150w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=300,200 300w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=768,513 768w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=600,400 600w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=400,267 400w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=900,600 900w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=1200,800 1200w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=196,131 196w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=301,201 301w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=415,277 415w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=602,402 602w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=830,554 830w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=105,70 105w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=210,140 210w" sizes="(max-width: 1348px) 100vw, 1348px"><figcaption class="wp-element-caption"><div class="wp-image__caption--icon"><svg width="15" height="15" viewbox="0 0 15 15"><use href="https://www.newscientist.com/wp-content/themes/newscientist/images/icon-circle-chevron.svg#icon-circle-chevron"></use></svg></div><div class="wp-image__caption--text">A solar eclipse as seen from the La Silla European Southern Observatory in Chile</div><div class="wp-image__caption--credit">MARTIN BERNETTI/AFP via Getty Images</div></figcaption></figure>
+
+
+
+<p class="wp-block-paragraph">A total eclipse occurs somewhere in the world about once every 18 months on average, and that has been the case for all of human history. For millennia, humans have been documenting their views as the moon moved between Earth and the sun, blocking out the sun’s light and revealing its swirling outer layers.</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="1350" height="900" src="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304496410.jpg" alt="Chaco Culture National Historical Park Petroglyph Petroglyph located in Chaco Canyon" class="wp-image-2580242" srcset="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304496410.jpg 1350w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304496410.jpg?resize=150,100 150w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304496410.jpg?resize=300,200 300w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304496410.jpg?resize=768,512 768w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304496410.jpg?resize=600,400 600w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304496410.jpg?resize=400,267 400w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304496410.jpg?resize=900,600 900w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304496410.jpg?resize=1200,800 1200w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304496410.jpg?resize=196,131 196w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304496410.jpg?resize=301,201 301w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304496410.jpg?resize=415,277 415w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304496410.jpg?resize=602,401 602w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304496410.jpg?resize=830,553 830w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304496410.jpg?resize=105,70 105w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304496410.jpg?resize=210,140 210w" sizes="auto, (max-width: 1350px) 100vw, 1350px"><figcaption class="wp-element-caption wp-element-caption--credit-only"><div class="wp-image__caption--credit">National Park Service</div></figcaption></figure>
+
+
+
+<p class="wp-block-paragraph">The earliest confirmed written record of a solar eclipse comes from the 13th century BC, when scribes in China wrote that the sun had been “eaten”. Scientific and religious texts continued to document eclipses up until the present day, and researchers now use these texts to study both how eclipses have changed in the intervening centuries and how human views of them have evolved throughout time. This particular petroglyph, carved into stone by the early Pueblo people in New Mexico, is thought to represent a total solar eclipse that occurred on 11 July 1097. The swirls around its perimeter bear a resemblance to the corona of the sun, which is only visible when the moon hides the rest of the solar disc.</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="1350" height="1188" src="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495573.jpg" alt="Solar eclipse observed by party of French Jesuits, Siam, now Thailand, April 1688, watercolour, France, late 17th century Art " class="wp-image-2580244" srcset="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495573.jpg 1350w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495573.jpg?resize=114,100 114w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495573.jpg?resize=227,200 227w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495573.jpg?resize=768,676 768w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495573.jpg?resize=455,400 455w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495573.jpg?resize=196,172 196w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495573.jpg?resize=301,265 301w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495573.jpg?resize=415,365 415w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495573.jpg?resize=602,530 602w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495573.jpg?resize=830,730 830w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495573.jpg?resize=80,70 80w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495573.jpg?resize=159,140 159w" sizes="auto, (max-width: 1350px) 100vw, 1350px"><figcaption class="wp-element-caption wp-element-caption--credit-only"><div class="wp-image__caption--credit">Cci/Shutterstock</div></figcaption></figure>
+
+
+
+<p class="wp-block-paragraph">More recent art depicts religious and scientific figures observing eclipses directly. This watercolour from the late 17th century shows a group of French missionaries observing a solar eclipse with King Narai of Siam and his court in April 1688. They can be seen using the projection method to avoid looking directly at the sun: the light passes through a telescope and projects the shape of the eclipse on a screen beneath it. This technique is <a href="https://www.newscientist.com/article/2423973-how-to-make-an-eclipse-viewer/">still commonly used</a> today, with pinhole cameras or even just the gaps between shadows cast by leaves on the ground.</p>
+<div class="advert-wrapper advert__mid-article">
+	<div class="advert">
+		<div class="advert__inner">
+							<p class="advert__copy">
+					Advertisement				</p>
+						<div class="advert__slot" id="mid-article-slot">
+				<script>
+					if( window?.adverts?.addToArray ) {
+						window.adverts.addToArray( {
+							"pos": "mid-article-slot"
+						} );
+					}
+				</script>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="1350" height="1232" src="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304494966.jpg" alt="A sketch depicts the solar atmosphere during a June 16, 1806, total solar eclipse" class="wp-image-2580256" srcset="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304494966.jpg 1350w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304494966.jpg?resize=110,100 110w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304494966.jpg?resize=219,200 219w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304494966.jpg?resize=768,701 768w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304494966.jpg?resize=438,400 438w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304494966.jpg?resize=196,179 196w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304494966.jpg?resize=301,275 301w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304494966.jpg?resize=415,379 415w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304494966.jpg?resize=602,549 602w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304494966.jpg?resize=830,757 830w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304494966.jpg?resize=77,70 77w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304494966.jpg?resize=153,140 153w" sizes="auto, (max-width: 1350px) 100vw, 1350px"><figcaption class="wp-element-caption wp-element-caption--credit-only"><div class="wp-image__caption--credit">José Joaquin de Ferrer</div></figcaption></figure>
+
+
+
+<p class="wp-block-paragraph">Scientific sketches of eclipses proliferated as science became more of a formal, professionalised pursuit. This drawing, by astronomer José Joaquín de Ferrer, depicts an eclipse that occurred over New York on 16 June 1806. Watching this event led de Ferrer to give the outermost layer of the sun, <a href="https://www.newscientist.com/article/2144347-solar-eclipse-will-reveal-the-roiling-fog-of-plasma-we-call-home/">the corona</a>, its name. He was among the first people reported to have hypothesised that the corona must be part of the sun, not the moon, because of its incredible size – it can stretch to as much as 20 times the width of the main disc of the sun, as he sketched here.</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="1350" height="1282" src="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495253.jpg" alt="Johann Julius Friedrich Berkowski made the first solar eclipse photograph on July 28, 1851" class="wp-image-2580247" srcset="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495253.jpg 1350w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495253.jpg?resize=105,100 105w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495253.jpg?resize=211,200 211w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495253.jpg?resize=768,729 768w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495253.jpg?resize=421,400 421w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495253.jpg?resize=196,186 196w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495253.jpg?resize=301,286 301w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495253.jpg?resize=415,394 415w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495253.jpg?resize=602,572 602w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495253.jpg?resize=830,788 830w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495253.jpg?resize=74,70 74w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495253.jpg?resize=147,140 147w" sizes="auto, (max-width: 1350px) 100vw, 1350px"><figcaption class="wp-element-caption wp-element-caption--credit-only"><div class="wp-image__caption--credit">Johann Julius Friedrich Berkowski</div></figcaption></figure>
+
+
+
+<p class="wp-block-paragraph">The first photograph of a total solar eclipse with enough detail on the corona to be scientifically useful was taken on 28 July 1851 by Julius Berkowski at the Royal Observatory in Königsberg, Prussia. With help from the astronomers at the observatory, he attached a small telescope to a device called a heliometer, a specialised instrument for measuring the sun. This daguerreotype was an 84-second exposure taken through the telescope. Not only is the corona visible, but several eruptions can be seen blasting from the sides of the sun over the edge of the moon.</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="1350" height="468" src="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495632.jpg" alt="" class="wp-image-2580248" srcset="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495632.jpg 1350w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495632.jpg?resize=150,52 150w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495632.jpg?resize=300,104 300w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495632.jpg?resize=768,266 768w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495632.jpg?resize=600,208 600w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495632.jpg?resize=196,68 196w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495632.jpg?resize=301,104 301w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495632.jpg?resize=415,144 415w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495632.jpg?resize=602,209 602w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495632.jpg?resize=830,288 830w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495632.jpg?resize=200,70 200w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495632.jpg?resize=400,140 400w" sizes="auto, (max-width: 1350px) 100vw, 1350px"><figcaption class="wp-element-caption wp-element-caption--credit-only"><div class="wp-image__caption--credit">William Langenheim; The Metropolitan Museum of Art</div></figcaption></figure>
+
+
+
+<p class="wp-block-paragraph">After Berkowski’s image, the ability to take photographs of eclipses became more widespread around the world. These images were taken by William and Frederick Langenheim on 26 May 1854 in Philadelphia, Pennsylvania. Without access to the scientific tools Berkowski used to magnify the light from the eclipse, they were forced to use small cameras to create these miniature daguerreotypes, the largest of which is just 7.2 centimetres tall and the smallest less than half that size.</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="1350" height="900" src="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_302861293.jpg" alt="bThis is a negative from a set of images, taken by the British astronomer Arthur Eddington that confirmed Einstein's theory of general relativity" class="wp-image-2580249" srcset="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_302861293.jpg 1350w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_302861293.jpg?resize=150,100 150w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_302861293.jpg?resize=300,200 300w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_302861293.jpg?resize=768,512 768w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_302861293.jpg?resize=600,400 600w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_302861293.jpg?resize=400,267 400w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_302861293.jpg?resize=900,600 900w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_302861293.jpg?resize=1200,800 1200w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_302861293.jpg?resize=196,131 196w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_302861293.jpg?resize=301,201 301w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_302861293.jpg?resize=415,277 415w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_302861293.jpg?resize=602,401 602w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_302861293.jpg?resize=830,553 830w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_302861293.jpg?resize=105,70 105w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_302861293.jpg?resize=210,140 210w" sizes="auto, (max-width: 1350px) 100vw, 1350px"><figcaption class="wp-element-caption wp-element-caption--credit-only"><div class="wp-image__caption--credit">ROYAL ASTRONOMICAL SOCIETY/SCIENCE PHOTO LIBRARY</div></figcaption></figure>
+
+
+
+<p class="wp-block-paragraph">The total solar eclipse that swept over parts of Africa and South America on 29 May 1919 proved to be one of the most important eclipses ever observed. This image comes from the expedition that astronomer Arthur Eddington made to the African island of Principe. He and his team photographed several stars located close to the sun to compare their apparent positions in the sky before and then during the eclipse. In this image, the stars are marked with horizontal lines. The comparison proved that the gravity of the sun bent the light coming from those stars, providing some of the first evidence for Albert Einstein’s <a href="https://www.newscientist.com/definition/general-relativity/">theory of general relativity</a> and creating a new understanding of the workings of the universe.</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="1350" height="1842" src="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495363.jpg" alt="Diamond ring of the solar eclipse" class="wp-image-2580251" srcset="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495363.jpg 1350w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495363.jpg?resize=73,100 73w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495363.jpg?resize=147,200 147w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495363.jpg?resize=768,1048 768w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495363.jpg?resize=293,400 293w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495363.jpg?resize=1126,1536 1126w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495363.jpg?resize=189,258 189w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495363.jpg?resize=290,396 290w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495363.jpg?resize=400,546 400w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495363.jpg?resize=580,791 580w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495363.jpg?resize=800,1091 800w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495363.jpg?resize=51,70 51w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495363.jpg?resize=103,140 103w" sizes="auto, (max-width: 1350px) 100vw, 1350px"><figcaption class="wp-element-caption wp-element-caption--credit-only"><div class="wp-image__caption--credit">Library of Congress</div></figcaption></figure>
+
+
+
+<p class="wp-block-paragraph">Eclipses became popular photographic targets for scientists and non-scientific photographers alike. This image, taken by Frederick Goetz on 24 January 1925, shows an effect called the diamond ring, or Baily’s beads. This effect occurs just at the beginning and end of totality, when the edge of the moon is nearly, but not quite, covering the entire disc of the sun. Ridges and craters on <a href="https://www.newscientist.com/article/mg25734240-300-how-to-identify-moon-craters-and-mountains-on-the-lunar-surface/">the moon’s surface</a> let through only a few rays of sunlight, creating the glare that earned Goetz’s inscription of “Signs and Wonders”.</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="1350" height="900" src="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600322.jpg" alt="The sun from Baja California during an eclipse on July 11, 1991" class="wp-image-2580253" srcset="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600322.jpg 1350w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600322.jpg?resize=150,100 150w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600322.jpg?resize=300,200 300w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600322.jpg?resize=768,512 768w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600322.jpg?resize=600,400 600w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600322.jpg?resize=400,267 400w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600322.jpg?resize=900,600 900w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600322.jpg?resize=1200,800 1200w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600322.jpg?resize=196,131 196w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600322.jpg?resize=301,201 301w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600322.jpg?resize=415,277 415w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600322.jpg?resize=602,401 602w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600322.jpg?resize=830,553 830w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600322.jpg?resize=105,70 105w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600322.jpg?resize=210,140 210w" sizes="auto, (max-width: 1350px) 100vw, 1350px"><figcaption class="wp-element-caption wp-element-caption--credit-only"><div class="wp-image__caption--credit">Universal History Archive/Universal Images Group via Getty Images</div></figcaption></figure>
+
+
+
+<p class="wp-block-paragraph">Modern images of solar eclipses, such as this one taken in California on 11 July 1991, display the corona in much more detail than has ever been achievable before. Past observations revealed an astonishing mystery: the corona is about 300 times hotter than the sun’s surface. Eclipses provide prime opportunities to try to figure out how and why it gets so hot, plus research how we might be able to <a href="https://www.newscientist.com/article/2251150-maps-of-the-suns-corona-could-help-us-predict-dangerous-solar-storms/">predict solar activity</a> someday to mitigate its potential effects on satellites, astronauts and even electrical grids on Earth.</p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="1348" height="900" src="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg" alt="Solar eclipse as seen from the La Silla European Southern Observatory (ESO) in La Higuera, Coquimbo Region, Chile, on July 02, 2019" class="wp-image-2580255" srcset="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg 1348w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=150,100 150w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=300,200 300w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=768,513 768w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=600,400 600w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=400,267 400w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=900,600 900w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=1200,800 1200w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=196,131 196w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=301,201 301w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=415,277 415w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=602,402 602w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=830,554 830w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=105,70 105w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_303600213.jpg?resize=210,140 210w" sizes="(max-width: 1348px) 100vw, 1348px"><figcaption class="wp-element-caption wp-element-caption--credit-only"><div class="wp-image__caption--credit">MARTIN BERNETTI/AFP via Getty Images</div></figcaption></figure>
+
+
+
+<p class="wp-block-paragraph">The sun itself is, of course, not the only thing that researchers study during eclipses. As seen in this image taken in Chile on 2 July 2019, during a total solar eclipse the sky darkens almost completely. Temperatures drop precipitously. Birdsong ceases almost entirely. Through studying <a href="https://www.newscientist.com/article/2421020-the-surprising-ways-animals-react-to-a-total-solar-eclipse/">how animals react</a>, researchers try to decipher what they may be feeling and thinking, and how they perceive the unexpected darkness.</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="800" height="450" src="https://www.newscientist.com/wp-content/uploads/2026/07/totalsolareclipse-epc-20240408-1080p-ezgif.com-optimize.gif" alt="" class="wp-image-2580257"><figcaption class="wp-element-caption wp-element-caption--credit-only"><div class="wp-image__caption--credit">NASA</div></figcaption></figure>
+
+
+
+<p class="wp-block-paragraph">When viewing an eclipse from the ground, it can be hard to imagine the scale of it. These images of an 8 April 2024 eclipse, taken by NASA’s Deep Space Climate Observatory (DSCOVR) satellite, show that handily. The dark spot moving across the planet in these pictures is the shadow of the moon. People standing within that spot witness totality, and those along the edges see only partial eclipses. </p>
+
+
+
+<p class="wp-block-paragraph">Our ability to image and understand these phenomena has come a long way since petroglyphs in stone walls – imagine what we’ll be able to see in another few thousand years.</p>
+
+
+
+<p class="wp-block-paragraph"></p>
+]]></content:encoded>
+					
+		
+		
+		
+		<media:thumbnail url="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_304495601.jpg" width="1350" height="901" />
+<post-id xmlns="com-wordpress:feed-additions:1">2580240</post-id>	</item>
+		<item>
+		<title>Most neurons seem to be jacks-of-all-trades, not specialists</title>
+		<link>https://www.newscientist.com/article/2581104-most-neurons-seem-to-be-jacks-of-all-trades-not-specialists/?utm_campaign=RSS|NSNS&#038;utm_content=news&#038;utm_medium=RSS&#038;utm_source=NSNS</link>
+		
+		<dc:creator><![CDATA[Nora Bradford]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 10:00:00 +0000</pubDate>
+				<category><![CDATA[Mind]]></category>
+		<category><![CDATA[Neuroscience]]></category>
+		<category><![CDATA[Brain]]></category>
+		<guid isPermaLink="false">https://www.newscientist.com/article/2581104-auto-draft/</guid>
+
+					<description><![CDATA[We tend to think of the brain as being made up of highly specialised cells, but a study in mice suggests that most neurons are generalists]]></description>
+		
+		
+		
+		
+		<media:thumbnail url="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306158636.jpg" width="1350" height="899" />
+<post-id xmlns="com-wordpress:feed-additions:1">2581104</post-id>	</item>
+		<item>
+		<title>We now know how a black hole can be flung across the universe</title>
+		<link>https://www.newscientist.com/article/2580928-we-now-know-how-a-black-hole-can-be-flung-across-the-universe/?utm_campaign=RSS|NSNS&#038;utm_content=news&#038;utm_medium=RSS&#038;utm_source=NSNS</link>
+		
+		<dc:creator><![CDATA[Karmela Padavic-Callaghan]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 09:00:00 +0000</pubDate>
+				<category><![CDATA[Black holes]]></category>
+		<category><![CDATA[Space]]></category>
+		<category><![CDATA[Astrophysics]]></category>
+		<guid isPermaLink="false">https://www.newscientist.com/article/2580928-auto-draft/</guid>
+
+					<description><![CDATA[When researchers found evidence of a black hole flying out of its galaxy, nobody knew how that could happen. Now we have an explanation]]></description>
+		
+		
+		
+		
+		<media:thumbnail url="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306151194.jpg" width="1350" height="900" />
+<post-id xmlns="com-wordpress:feed-additions:1">2580928</post-id>	</item>
+		<item>
+		<title>This El Niño will be the hottest by a huge margin</title>
+		<link>https://www.newscientist.com/article/2581151-this-el-nino-will-be-the-hottest-by-a-huge-margin/?utm_campaign=RSS|NSNS&#038;utm_content=news&#038;utm_medium=RSS&#038;utm_source=NSNS</link>
+		
+		<dc:creator><![CDATA[Alec Luhn]]></dc:creator>
+		<pubDate>Thu, 23 Jul 2026 18:00:39 +0000</pubDate>
+				<category><![CDATA[Climate change]]></category>
+		<category><![CDATA[Environment]]></category>
+		<category><![CDATA[extreme weather]]></category>
+		<guid isPermaLink="false">https://www.newscientist.com/article/2581151-auto-draft/</guid>
+
+					<description><![CDATA[The super El Niño now developing in the tropical Pacific has a 90 per cent chance of becoming the strongest in 150 years, breaking global temperature records and unleashing extreme weather]]></description>
+		
+		
+		
+		
+		<media:thumbnail url="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306225296.jpg" width="1350" height="900" />
+<post-id xmlns="com-wordpress:feed-additions:1">2581151</post-id>	</item>
+		<item>
+		<title>Extremely basic AI prompt cracks decades-old maths problem</title>
+		<link>https://www.newscientist.com/article/2580932-extremely-basic-ai-prompt-cracks-decades-old-maths-problem/?utm_campaign=RSS|NSNS&#038;utm_content=news&#038;utm_medium=RSS&#038;utm_source=NSNS</link>
+		
+		<dc:creator><![CDATA[Matthew Sparkes]]></dc:creator>
+		<pubDate>Thu, 23 Jul 2026 15:32:55 +0000</pubDate>
+				<category><![CDATA[Mathematics]]></category>
+		<category><![CDATA[AI]]></category>
+		<guid isPermaLink="false">https://www.newscientist.com/article/2580932-auto-draft/</guid>
+
+					<description><![CDATA[For the second time in a week, a long-standing conjecture has been disproved by artificial intelligence, highlighting the advanced mathematical capabilities of ChatGPT and its ilk]]></description>
+		
+		
+		
+		
+		<media:thumbnail url="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_306155806.jpg" width="1350" height="899" />
+<post-id xmlns="com-wordpress:feed-additions:1">2580932</post-id>	</item>
+		<item>
+		<title>Can sounds make plants grow bigger? A start-up says they can</title>
+		<link>https://www.newscientist.com/article/2581022-can-sounds-make-plants-grow-bigger-a-start-up-says-they-can/?utm_campaign=RSS|NSNS&#038;utm_content=news&#038;utm_medium=RSS&#038;utm_source=NSNS</link>
+		
+		<dc:creator><![CDATA[Vanessa Bates Ramirez]]></dc:creator>
+		<pubDate>Thu, 23 Jul 2026 15:00:00 +0000</pubDate>
+				<category><![CDATA[Life]]></category>
+		<category><![CDATA[Plants]]></category>
+		<category><![CDATA[Agriculture]]></category>
+		<guid isPermaLink="false">https://www.newscientist.com/article/2581022-auto-draft/</guid>
+
+					<description><![CDATA[Haivya has developed acoustic signals designed to influence plant development, and its trials reportedly show large yield increases in soybean, pepper and cannabis crops]]></description>
+		
+		
+		
+		
+		<media:thumbnail url="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_305960378.jpg" width="1350" height="900" />
+<post-id xmlns="com-wordpress:feed-additions:1">2581022</post-id>	</item>
+		<item>
+		<title>Fields medal 2026: Work on unifying laws of physics wins maths prize</title>
+		<link>https://www.newscientist.com/article/2580296-fields-medal-2026-work-on-unifying-laws-of-physics-wins-maths-prize/?utm_campaign=RSS|NSNS&#038;utm_content=news&#038;utm_medium=RSS&#038;utm_source=NSNS</link>
+		
+		<dc:creator><![CDATA[Karmela Padavic-Callaghan]]></dc:creator>
+		<pubDate>Thu, 23 Jul 2026 13:32:00 +0000</pubDate>
+				<category><![CDATA[Mathematics]]></category>
+		<guid isPermaLink="false">https://www.newscientist.com/article/2580296-auto-draft/</guid>
+
+					<description><![CDATA[Mathematicians who helped unify laws of physics and cracked decades-old problems in geometry are among this year's recipients of the Fields medal]]></description>
+										<content:encoded><![CDATA[
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="1350" height="900" src="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_305883935.jpg" alt="" class="wp-image-2580425" srcset="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_305883935.jpg 1350w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_305883935.jpg?resize=150,100 150w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_305883935.jpg?resize=300,200 300w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_305883935.jpg?resize=768,512 768w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_305883935.jpg?resize=600,400 600w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_305883935.jpg?resize=400,267 400w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_305883935.jpg?resize=900,600 900w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_305883935.jpg?resize=1200,800 1200w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_305883935.jpg?resize=196,131 196w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_305883935.jpg?resize=301,201 301w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_305883935.jpg?resize=415,277 415w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_305883935.jpg?resize=602,401 602w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_305883935.jpg?resize=830,553 830w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_305883935.jpg?resize=105,70 105w, https://www.newscientist.com/wp-content/uploads/2026/07/SEI_305883935.jpg?resize=210,140 210w" sizes="auto, (max-width: 1350px) 100vw, 1350px"><figcaption class="wp-element-caption"><div class="wp-image__caption--icon"><svg width="15" height="15" viewbox="0 0 15 15"><use href="https://www.newscientist.com/wp-content/themes/newscientist/images/icon-circle-chevron.svg#icon-circle-chevron"></use></svg></div><div class="wp-image__caption--text">Clockwise from top left: Yu Deng, John Pardon, Hong Wang and Jacob Tsimerman</div><div class="wp-image__caption--credit">Simons Foundation</div></figcaption></figure>
+
+
+
+<p class="wp-block-paragraph">Needles rotating in midair, knots wrapped around doughnuts, numbers related to complex shapes and unifying the laws of physics: these are among the areas of focus of this year’s Fields medal winners, one of the most prestigious awards in mathematics.</p>
+
+
+
+<p class="wp-block-paragraph">The winners for 2026 are <a href="https://mathematics.uchicago.edu/people/profile/yu-deng/">Yu Deng</a> at the University of Chicago in Illinois, <a href="https://www.math.stonybrook.edu/~jpardon/">John Pardon</a> at Stony Brook University in New York, <a href="https://sites.google.com/view/hongwang/home">Hong Wang</a> at New York University and <a href="https://www.math.utoronto.ca/~jacobt/">Jacob Tsimerman</a> at the University of Toronto in Canada. Wang is the third woman to win the Fields medal in the nearly 90-year period that the award has existed. The prize is given to between two and four mathematicians under the age of 40 every four years.</p>
+
+
+
+	<div class="read-more__standard wp-block-newscientist-read-more">
+		<a class="read-more__standard--wrapper no-animation" href="https://www.newscientist.com/article/2580374-ais-solution-to-87-year-old-riddle-takes-mathematicians-by-surprise/">
+			<strong>Read more</strong>
+			<p>AI’s solution to 87-year-old riddle takes mathematicians by surprise</p>
+		</a>
+	</div>
+
+
+
+<p class="wp-block-paragraph">Wang solved the Kakeya conjecture, which baffled mathematicians for five decades. This involved working out the minimum space that a needle in midair would need for it to be able to point in every direction. She and her colleagues found that, if all of the needle’s movements are viewed like a series of tubes, then there is a special relationship between their thickness and the total volume needed.</p>
+<div class="advert-wrapper advert__mid-article">
+	<div class="advert">
+		<div class="advert__inner">
+							<p class="advert__copy">
+					Advertisement				</p>
+						<div class="advert__slot" id="mid-article-slot">
+				<script>
+					if( window?.adverts?.addToArray ) {
+						window.adverts.addToArray( {
+							"pos": "mid-article-slot"
+						} );
+					}
+				</script>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<p class="wp-block-paragraph">The two-dimensional version of this problem, where a needle rotates on a surface, had previously been solved, but extending it to three dimensions was lauded as <a href="https://www.quantamagazine.org/once-in-a-century-proof-settles-maths-kakeya-conjecture-20250314/">the biggest breakthrough of the century</a> by mathematicians.</p>
+
+
+
+<p class="wp-block-paragraph">Deng’s work radically improved our understanding of how macroscopic behaviour arises from behaviour on much smaller scales. </p>
+
+
+
+<p class="wp-block-paragraph">He and his collaborators focused on the Boltzmann equation, which has been used to describe the macroscopic behaviour of gases since the late 1800s, but they derived it from a detailed, microscopic model of a tiny, hard sphere, similar to building up the gas one particle at a time. In this way, they unified two fundamentally different scales of physics, connecting the motion of each sphere to the motion of the whole gas. This feat of mathematics <a href="https://www.newscientist.com/article/2472399-mathematicians-solve-125-year-old-problem-to-unite-key-laws-of-physics-2/">resolved a question</a> put forward by mathematician David Hilbert in 1900 as part of a programme to make physics more consistent and rigorous.</p>
+
+
+
+<p class="wp-block-paragraph">Pardon and his collaborators are responsible for cracking decades-old problems in the fields of topology and geometry. In one notable example, Pardon analysed knots wrapped around toruses, or doughnut-like shapes with a central hole, ultimately answering a question that mathematician Mikhael Gromov posed in the 1980s.</p>
+
+
+
+<div class="wp-block-newscientist-newsletter-promotion">
+	<div class="newsletter-promotion__content">
+		<p class="newsletter-promotion__tagline">Subscriber-only newsletter</p>
+		<h4 class="newsletter-promotion__title">
+			Sign up to Lost in Space-Time		</h4>
+		<p class="newsletter-promotion__excerpt">
+					</p>
+		<div class="newsletter-promotion__actions">
+			<a class="button button--secondary button--has-icon" href="https://www.newscientist.com/sign-up/lost-in-space-time/">
+				<span>Sign up to newsletter</span>
+				<svg width="18" height="18" viewbox="0 0 24 24" style="--fill-color: #000">
+					<use href="https://www.newscientist.com/wp-content/themes/newscientist/images/icon-arrow-right.svg#icon-arrow-right"></use>
+				</svg>
+			</a>
+		</div>
+	</div>
+	<div class="newsletter-promotion__background">
+		<span class="newsletter-promotion__gradient"></span>
+		<div class="newsletter-promotion__image__wrapper">
+			<div class="image__wrapper">
+				<img loading="lazy" decoding="async" width="600" height="450" src="https://www.newscientist.com/wp-content/uploads/2025/06/16102053/lost_in_space-time_2025_ed_newsletter_landingtiles_2400px3.jpg?w=600&amp;h=450&amp;crop=1" class="attachment-4x3-sm size-4x3-sm wp-post-image" alt="" sizes="(min-width: 432px) 412px, (min-width: 300px) 373px, 100vw" srcset="https://www.newscientist.com/wp-content/uploads/2025/06/16102053/lost_in_space-time_2025_ed_newsletter_landingtiles_2400px3.jpg?resize=300,225 300w, https://www.newscientist.com/wp-content/uploads/2025/06/16102053/lost_in_space-time_2025_ed_newsletter_landingtiles_2400px3.jpg?resize=400,300 400w, https://www.newscientist.com/wp-content/uploads/2025/06/16102053/lost_in_space-time_2025_ed_newsletter_landingtiles_2400px3.jpg?resize=600,450 600w, https://www.newscientist.com/wp-content/uploads/2025/06/16102053/lost_in_space-time_2025_ed_newsletter_landingtiles_2400px3.jpg?resize=800,600 800w, https://www.newscientist.com/wp-content/uploads/2025/06/16102053/lost_in_space-time_2025_ed_newsletter_landingtiles_2400px3.jpg?resize=1024,768 1024w, https://www.newscientist.com/wp-content/uploads/2025/06/16102053/lost_in_space-time_2025_ed_newsletter_landingtiles_2400px3.jpg?resize=1920,1440 1920w">			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<p class="wp-block-paragraph">Pardon showed that the distortion of a knot, which assigns a number to how distant two points on a knot are compared with their straight-line distance, constrains how complex the knot can be. “It’s hard to know at the time how much significance a given solution will have,” said Pardon in a pre-recorded video ahead of the announcement. “Certainly, finding the solution was not proportional to the interest it’s generated.”</p>
+
+
+
+<p class="wp-block-paragraph">Additionally, he proved the MNOP conjecture, which had challenged mathematicians for 20 years and counts curves on a specific set of geometrical shapes. This is important as some of those shapes feature in one of the prominent quantum theories of our universe, where physical reality is built from quantum strings.</p>
+
+
+
+<p class="wp-block-paragraph">Tsimerman’s hallmark work was to introduce the concept of “o-minimality” into algebraic geometry, where properties of numbers are uncovered by studying shapes. O-minimality originates in mathematical logic and is a very abstract tool for reducing models full of different sets and operations to models where the only operation is comparison. Tsimerman has repeatedly used it tackle big open questions about numbers with remarkable results.</p>
+
+
+
+<p class="wp-block-paragraph">A notable example is his work on the Hodge conjecture, which is one of the seven <a href="https://www.newscientist.com/article/2478926-what-7-fiendishly-hard-puzzles-tell-us-about-the-nature-of-mathematics/">Millennium Prize Problems</a>, each of which comes with a million-dollar reward. The conjecture asserts that complicated shapes can be understood by studying less mathematically troublesome shapes within it. Tsimerman helped build a bridge between topology and algebra that inches the field closer to proving this conjecture.</p>
+
+
+
+<p class="wp-block-paragraph">This year’s awards were presented at the <a href="https://www.icm2026.org/">International Congress of Mathematicians</a> on 23 July in Philadelphia, Pennsylvania.</p>
+
+
+
+<p class="wp-block-paragraph"></p>
+]]></content:encoded>
+					
+		
+		
+		
+		<media:thumbnail url="https://www.newscientist.com/wp-content/uploads/2026/07/SEI_305883935.jpg" width="1350" height="900" />
+<post-id xmlns="com-wordpress:feed-additions:1">2580296</post-id>	</item>
+	</channel>
+</rss>

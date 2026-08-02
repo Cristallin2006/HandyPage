@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- M5 agent UI strings (DESIGN.md §4.9). Kept in a separate file from
+     strings.xml to avoid churn while both evolve in parallel. -->
+<resources>
+    <string name="agent_panel_title">问 AI</string>
+    <string name="agent_input_hint">追问这篇文章…</string>
+    <string name="agent_input_hint_global">向你的英语老师提问…</string>
+    <string name="agent_thinking">思考中…</string>
+    <string name="agent_tool_running">正在调用工具：%1$s</string>
+    <string name="agent_tool_limit">本轮对话的工具调用次数已达上限</string>
+    <string name="agent_budget_exhausted">达到日 token 预算上限</string>
+    <string name="agent_quick_guide">导读</string>
+    <string name="agent_quick_explain">讲句子</string>
+    <string name="agent_send">发送</string>
+    <string name="agent_stop">停止</string>
+    <string name="agent_retry">重试</string>
+    <string name="agent_generating">生成中…</string>
+    <string name="agent_no_key">未配置 API key，请先在设置中填写</string>
+    <string name="agent_go_settings">去设置</string>
+    <string name="agent_display_guide">导读这篇文章</string>
+    <!-- M17: history conversation -->
+    <string name="history_title">历史对话</string>
+    <string name="history_empty_title">暂无对话记录</string>
+    <string name="history_empty_hint">和 Agent 聊过的内容会出现在这里。试试问它一个问题。</string>
+    <string name="history_new_chat">＋ 新对话</string>
+    <string name="history_delete_hint">长按对话可删除</string>
+    <string name="history_delete_title">删除对话</string>
+    <string name="history_delete_confirm">确定删除「%1$s」？此操作不可撤销。</string>
+    <!-- M16: recommendation quick-action chips -->
+    <string name="agent_chip_recommend">今日推荐</string>
+    <string name="agent_chip_papers">最新论文</string>
+    <string name="agent_chip_preference">设置偏好</string>
+</resources>

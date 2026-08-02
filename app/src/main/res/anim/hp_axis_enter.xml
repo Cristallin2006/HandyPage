@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Entering activity: 3% up-push + fade, 240ms decel (HpMotion.axisEnter twin) -->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@interpolator/hp_decel"
+    android:duration="240">
+    <alpha android:fromAlpha="0" android:toAlpha="1" />
+    <translate android:fromYDelta="3%" android:toYDelta="0" />
+</set>

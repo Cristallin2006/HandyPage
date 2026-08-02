@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Closing activity: sinks 3% + fade, 180ms accel (HpMotion.axisPopExit twin, asymmetric — out faster) -->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@interpolator/hp_accel"
+    android:duration="180">
+    <alpha android:fromAlpha="1" android:toAlpha="0" />
+    <translate android:fromYDelta="0" android:toYDelta="3%" />
+</set>

@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>TechCrunch</title>
+	<atom:link href="https://techcrunch.com/feed/" rel="self" type="application/rss+xml" />
+	<link>https://techcrunch.com/</link>
+	<description>Startup and Technology News</description>
+	<lastBuildDate>Sat, 25 Jul 2026 10:33:36 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.9.5</generator>
+
+<image>
+	<url>https://techcrunch.com/wp-content/uploads/2015/02/cropped-cropped-favicon-gradient.png?w=32</url>
+	<title>TechCrunch</title>
+	<link>https://techcrunch.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>I tried out OpenAI&#8217;s new AI keypad — which will be fun for some coders and slightly mystifying to everyone else</title>
+		<link>https://techcrunch.com/2026/07/24/i-tried-out-openais-new-ai-keypad-which-will-be-fun-for-coders-and-slightly-mystifying-to-everyone-else/</link>
+		
+		<dc:creator><![CDATA[Lucas Ropek]]></dc:creator>
+		<pubDate>Sat, 25 Jul 2026 00:23:11 +0000</pubDate>
+				<category><![CDATA[AI]]></category>
+		<category><![CDATA[ChatGPT]]></category>
+		<category><![CDATA[codex]]></category>
+		<category><![CDATA[micro]]></category>
+		<category><![CDATA[OpenAI]]></category>
+		<guid isPermaLink="false">https://techcrunch.com/?p=3144285</guid>
+
+					<description><![CDATA[OpenAI's fancy new AI keypad will be a lot of fun for some, while many others are probably not going to touch it. ]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>SpaceX launches new V3 Starlink satellites but suffers another booster failure</title>
+		<link>https://techcrunch.com/2026/07/24/spacex-launches-new-v3-starlink-satellites-but-suffers-another-booster-failure/</link>
+		
+		<dc:creator><![CDATA[Sean O'Kane]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 23:25:47 +0000</pubDate>
+				<category><![CDATA[Space]]></category>
+		<category><![CDATA[Transportation]]></category>
+		<category><![CDATA[SpaceX]]></category>
+		<category><![CDATA[Starship]]></category>
+		<guid isPermaLink="false">https://techcrunch.com/?p=3146675</guid>
+
+					<description><![CDATA[The company ticked off a few more boxes on the second Starship V3 flight, but appears to have had another issue relighting the booster's rocket engines.]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>Prentis, new AI lab co-founded by Reid Hoffman, Mark Pincus in talks to raise $100M</title>
+		<link>https://techcrunch.com/2026/07/24/prentis-new-ai-lab-co-founded-by-reid-hoffman-mark-pincus-in-talks-to-raise-100m/</link>
+		
+		<dc:creator><![CDATA[Marina Temkin]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 22:25:58 +0000</pubDate>
+				<category><![CDATA[AI]]></category>
+		<category><![CDATA[Startups]]></category>
+		<category><![CDATA[Exclusive]]></category>
+		<category><![CDATA[mark pincus]]></category>
+		<category><![CDATA[Reid Hoffman]]></category>
+		<guid isPermaLink="false">https://techcrunch.com/?p=3146619</guid>
+
+					<description><![CDATA[The neolab is betting that automating routine computer tasks will soon outpace coding as AI's biggest use case. ]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>TechCrunch Disrupt 2026’s new Smart Money Stage explores fintech, payments, AI, and everything between </title>
+		<link>https://techcrunch.com/2026/07/24/techcrunch-disrupt-2026s-new-smart-money-stage-explores-fintech-payments-ai-and-everything-between/</link>
+		
+		<dc:creator><![CDATA[TechCrunch Events]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 22:10:00 +0000</pubDate>
+				<category><![CDATA[Startups]]></category>
+		<category><![CDATA[Fintech]]></category>
+		<category><![CDATA[TechCrunch Disrupt]]></category>
+		<category><![CDATA[Robinhood]]></category>
+		<category><![CDATA[Plaid]]></category>
+		<guid isPermaLink="false">https://techcrunch.com/?p=3146498</guid>
+
+					<description><![CDATA[Money has evolved into far more than the cash in your wallet or your bank account. And at TechCrunch Disrupt 2026, we’re devoting an entire stage to that progression. ]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>Vietnam is looking to restrict social media for kids; here are the growing number of other countries doing the same</title>
+		<link>https://techcrunch.com/2026/07/24/social-media-ban-children-countries-list/</link>
+		
+		<dc:creator><![CDATA[Aisha Malik]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 21:15:00 +0000</pubDate>
+				<category><![CDATA[Apps]]></category>
+		<category><![CDATA[Government & Policy]]></category>
+		<category><![CDATA[Social]]></category>
+		<category><![CDATA[evergreens]]></category>
+		<category><![CDATA[social media bans]]></category>
+		<guid isPermaLink="false">https://techcrunch.com/?p=3092894</guid>
+
+					<description><![CDATA[Australia was the first country to issue a ban in late 2025, aiming to reduce the pressures and risks that young users may face on social media, including cyberbullying, social media addiction, and exposure to predators.]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>Waymo reportedly mulling a breakup with Uber</title>
+		<link>https://techcrunch.com/2026/07/24/waymo-reportedly-mulling-a-breakup-with-uber/</link>
+		
+		<dc:creator><![CDATA[Sean O'Kane]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 20:43:35 +0000</pubDate>
+				<category><![CDATA[Transportation]]></category>
+		<category><![CDATA[In Brief]]></category>
+		<category><![CDATA[Uber]]></category>
+		<category><![CDATA[Waymo]]></category>
+		<guid isPermaLink="false">https://techcrunch.com/?p=3146592</guid>
+
+					<description><![CDATA[The contract between the two companies ends in May 2028, Uber told TechCrunch.]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>Volkswagen engineers charged with insider trading tied to Rivian joint venture</title>
+		<link>https://techcrunch.com/2026/07/24/volkswagen-engineers-charged-with-insider-trading-tied-to-rivian-joint-venture/</link>
+		
+		<dc:creator><![CDATA[Kirsten Korosec]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 19:56:23 +0000</pubDate>
+				<category><![CDATA[Transportation]]></category>
+		<category><![CDATA[insider trading]]></category>
+		<category><![CDATA[Rivian]]></category>
+		<category><![CDATA[volkswagen]]></category>
+		<guid isPermaLink="false">https://techcrunch.com/?p=3146558</guid>
+
+					<description><![CDATA[The indictment, which was unsealed Friday, alleges the Volkswagen engineers used confidential insider information to buy stock in Rivian. ]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>Why Cognition bought Poke: AI personality is becoming a competitive advantage</title>
+		<link>https://techcrunch.com/2026/07/24/why-cognition-bought-poke-ai-personality-is-becoming-a-competitive-advantage/</link>
+		
+		<dc:creator><![CDATA[Sarah Perez]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 18:07:32 +0000</pubDate>
+				<category><![CDATA[AI]]></category>
+		<category><![CDATA[Apps]]></category>
+		<category><![CDATA[cognition]]></category>
+		<guid isPermaLink="false">https://techcrunch.com/?p=3146380</guid>
+
+					<description><![CDATA[The acquisition brings Poke’s conversational style and interaction model to Cognition’s coding agent Devin, reflecting a growing belief that how AI assistants interact with users is as important as the models powering them.]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>US accuses American of allegedly wiping his phone using a &#8216;duress&#8217; password during border search</title>
+		<link>https://techcrunch.com/2026/07/24/us-accuses-american-of-allegedly-wiping-his-phone-using-a-duress-password-during-border-search/</link>
+		
+		<dc:creator><![CDATA[Zack Whittaker]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 17:53:30 +0000</pubDate>
+				<category><![CDATA[Government & Policy]]></category>
+		<category><![CDATA[Security]]></category>
+		<category><![CDATA[cybersecurity]]></category>
+		<category><![CDATA[us border]]></category>
+		<guid isPermaLink="false">https://techcrunch.com/?p=3146437</guid>
+
+					<description><![CDATA[A U.S. citizen has asked a court to throw out the government's claim that he gave over a passcode to border authorities that wiped his phone's data, opening up fresh questions about a person's constitutional rights at the U.S. border.]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>Anduril reportedly in talks to raise funding at $100B valuation, more than 3x last year&#8217;s mark</title>
+		<link>https://techcrunch.com/2026/07/24/anduril-reportedly-in-talks-to-raise-funding-at-100b-valuation-more-than-3x-last-years-mark/</link>
+		
+		<dc:creator><![CDATA[Ram Iyer]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 17:33:19 +0000</pubDate>
+				<category><![CDATA[Fundraising]]></category>
+		<category><![CDATA[anduril]]></category>
+		<category><![CDATA[defense tech]]></category>
+		<category><![CDATA[Palmer Luckey]]></category>
+		<guid isPermaLink="false">https://techcrunch.com/?p=3146409</guid>
+
+					<description><![CDATA[Anduril is said to be raising a new round of funding that may push its valuation up to about $100 billion, per Reuters. ]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>Build in public, fail in public: what it’s like to be a founder under 20 right now </title>
+		<link>https://techcrunch.com/2026/07/24/build-in-public-fail-in-public-what-its-like-to-be-a-founder-under-20-right-now/</link>
+		
+		<dc:creator><![CDATA[Dominic-Madori Davis]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 17:00:00 +0000</pubDate>
+				<category><![CDATA[Startups]]></category>
+		<guid isPermaLink="false">https://techcrunch.com/?p=3145635</guid>
+
+					<description><![CDATA[AI tools have democratized the opportunity to build, shortening the timelines of success and enabling more young people to start successful companies without stepping foot inside a Big Tech company. ]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>Anthropic launches Opus 5</title>
+		<link>https://techcrunch.com/2026/07/24/anthropic-launches-opus-5/</link>
+		
+		<dc:creator><![CDATA[Russell Brandom]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 17:00:00 +0000</pubDate>
+				<category><![CDATA[AI]]></category>
+		<category><![CDATA[Anthropic]]></category>
+		<category><![CDATA[Opus]]></category>
+		<guid isPermaLink="false">https://techcrunch.com/?p=3146446</guid>
+
+					<description><![CDATA[Opus 5 will be both cheaper and less restrictive than Fable, likely making it preferable in most use cases.]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>India&#8217;s move against Jack Dorsey&#8217;s Bitchat sparks legal debate</title>
+		<link>https://techcrunch.com/2026/07/24/indias-move-against-jack-dorseys-bitchat-sparks-legal-debate/</link>
+		
+		<dc:creator><![CDATA[Jagmeet Singh]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 16:54:58 +0000</pubDate>
+				<category><![CDATA[Apps]]></category>
+		<category><![CDATA[Government & Policy]]></category>
+		<category><![CDATA[Social]]></category>
+		<category><![CDATA[Bitchat]]></category>
+		<category><![CDATA[jack dorsey]]></category>
+		<guid isPermaLink="false">https://techcrunch.com/?p=3146410</guid>
+
+					<description><![CDATA[The offline messaging app surged in popularity in India amid protests in New Delhi.]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>OpenAI&#8217;s own model went rogue before Kimi had Wall Street sweating</title>
+		<link>https://techcrunch.com/video/openais-own-model-went-rogue-before-kimi-had-wall-street-sweating/</link>
+		
+		<dc:creator><![CDATA[Theresa Loconsolo]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 16:50:08 +0000</pubDate>
+				<guid isPermaLink="false">https://techcrunch.com/?post_type=tc_video&#038;p=3146454</guid>
+
+					<description><![CDATA[Chinese AI lab Moonshot&#8217;s&#160;open model Kimi went viral this week&#160;for reasons that had less to do with the model itself and more to do with&#160;how the U.S. AI industry reacted to it. Meanwhile, an unreleased OpenAI model wandered outside its test environment and ended up connected to a real&#160;security breach at Hugging Face&#160;— a reminder [&#8230;]]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>Sam Altman&#8217;s biometric startup World raises $52.5M via crypto sale</title>
+		<link>https://techcrunch.com/2026/07/24/sam-altmans-biometric-startup-world-raises-52-5-million-via-crypto-sale/</link>
+		
+		<dc:creator><![CDATA[Lucas Ropek]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 16:11:56 +0000</pubDate>
+				<category><![CDATA[Crypto]]></category>
+		<category><![CDATA[World]]></category>
+		<category><![CDATA[sam altman]]></category>
+		<guid isPermaLink="false">https://techcrunch.com/?p=3145750</guid>
+
+					<description><![CDATA[Sam Altman's side project — which seeks to scan the world's eyeballs and turn them into unique digital identifiers — has raised some fresh cash through a crypto sale. ]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>As US weighs response to Chinese AI, industry urges against broad open-weight restrictions</title>
+		<link>https://techcrunch.com/2026/07/24/as-us-weighs-response-to-chinese-ai-industry-urges-against-broad-open-weight-restrictions/</link>
+		
+		<dc:creator><![CDATA[Rebecca Bellan]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 15:51:49 +0000</pubDate>
+				<category><![CDATA[AI]]></category>
+		<category><![CDATA[Government & Policy]]></category>
+		<category><![CDATA[Microsoft]]></category>
+		<category><![CDATA[nvidia]]></category>
+		<category><![CDATA[OpenAI]]></category>
+		<category><![CDATA[Hugging Face]]></category>
+		<category><![CDATA[mistral]]></category>
+		<guid isPermaLink="false">https://techcrunch.com/?p=3146372</guid>
+
+					<description><![CDATA[AI companies, including Nvidia and Mistral, urge policymakers to avoid broad restrictions on open-weight AI models as Washington debates responses to Chinese AI and alleged model distillation.]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>Rivian sues the US government for &#8216;full refund&#8217; of Trump tariffs</title>
+		<link>https://techcrunch.com/2026/07/24/rivian-sues-the-us-government-for-full-refund-of-trump-tariffs/</link>
+		
+		<dc:creator><![CDATA[Sean O'Kane]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 15:16:31 +0000</pubDate>
+				<category><![CDATA[Transportation]]></category>
+		<category><![CDATA[Exclusive]]></category>
+		<category><![CDATA[Rivian]]></category>
+		<guid isPermaLink="false">https://techcrunch.com/?p=3146315</guid>
+
+					<description><![CDATA[The automaker joins a long line of companies seeking such refunds. In April, Rivian CFO Claire McDonough said she expected the company stood to reap a refund in the "tens of millions of dollars."]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>Bluesky’s AI assistant Attie expands into an open social research tool</title>
+		<link>https://techcrunch.com/2026/07/24/blueskys-ai-assistant-attie-expands-into-an-open-social-research-tool/</link>
+		
+		<dc:creator><![CDATA[Sarah Perez]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 15:13:57 +0000</pubDate>
+				<category><![CDATA[AI]]></category>
+		<category><![CDATA[Apps]]></category>
+		<category><![CDATA[Social]]></category>
+		<category><![CDATA[Bluesky]]></category>
+		<guid isPermaLink="false">https://techcrunch.com/?p=3146304</guid>
+
+					<description><![CDATA[Users can now ask Attie questions about news, trends, and conversations on Bluesky and other apps on the AT Protocol.]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>Midjourney acquired the astrology app Co-Star</title>
+		<link>https://techcrunch.com/2026/07/24/midjourney-acquired-the-astrology-app-co-star/</link>
+		
+		<dc:creator><![CDATA[Amanda Silberling]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 15:09:55 +0000</pubDate>
+				<category><![CDATA[AI]]></category>
+		<category><![CDATA[MidJourney]]></category>
+		<category><![CDATA[In Brief]]></category>
+		<guid isPermaLink="false">https://techcrunch.com/?p=3146313</guid>
+
+					<description><![CDATA[The AI lab Midjourney continues to expand its purview beyond image and video generation.]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>OpenAI&#8217;s new voice mode makes it to the ChatGPT desktop app</title>
+		<link>https://techcrunch.com/2026/07/24/openais-new-voice-mode-makes-it-to-the-chatgpt-desktop-app/</link>
+		
+		<dc:creator><![CDATA[Ivan Mehta]]></dc:creator>
+		<pubDate>Fri, 24 Jul 2026 13:36:42 +0000</pubDate>
+				<category><![CDATA[AI]]></category>
+		<category><![CDATA[ChatGPT]]></category>
+		<category><![CDATA[voice mode]]></category>
+		<category><![CDATA[In Brief]]></category>
+		<category><![CDATA[OpenAI]]></category>
+		<guid isPermaLink="false">https://techcrunch.com/?p=3146199</guid>
+
+					<description><![CDATA[ChatGPT Voice on desktop can work with both ChatGPT Work and Codex to complete tasks and control agents.]]></description>
+		
+		
+		
+			</item>
+	</channel>
+</rss>
