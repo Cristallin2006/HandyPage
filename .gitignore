@@ -30,3 +30,7 @@ tools/dict/ECDICT-master/ecdict.csv
 tools/dict/ecdict-repo.zip
 tools/dict/handypage_dict.db
 tools/dict/handypage_dict.db.zip
+
+# 签名密码（本地保留，永不推送；handypage-release.keystore 本身入库）
+keystore.properties
+keystore.md
