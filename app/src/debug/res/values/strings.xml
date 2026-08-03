@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Debug builds get a distinct launcher name so the dev install
+     (dev.handypage.app.debug) is distinguishable from the release app. -->
+<resources>
+    <string name="app_name">HandyPage Dev</string>
+</resources>

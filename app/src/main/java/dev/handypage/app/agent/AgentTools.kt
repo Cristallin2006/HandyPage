@@ -273,7 +273,7 @@ class SearchArticlesTool(
  * keyword search and/or subject category. Falls back to the user's saved
  * topic preferences when neither is provided.
  *
- * Observes arXiv's 3-second etiquette delay internally.
+ * Rate limiting is handled by ArxivApi’s app-global gate (M25).
  */
 class SearchPapersTool(
     private val api: dev.handypage.app.arxiv.ArxivApi,
@@ -322,9 +322,7 @@ class SearchPapersTool(
             if (query.isEmpty()) return "请提供搜索关键词或 arXiv 分类码"
         }
 
-        // arXiv etiquette: at least 3 s between API calls.
-        kotlinx.coroutines.delay(3000)
-
+        // M25: rate limiting lives inside ArxivApi’s app-global gate now.
         val entries = try {
             when {
                 query.isNotEmpty() && category.isNotEmpty() ->

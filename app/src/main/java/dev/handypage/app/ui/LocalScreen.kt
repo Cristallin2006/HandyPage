@@ -108,7 +108,6 @@ fun LocalScreen() {
             ?.firstOrNull { it.id == "arxiv" }
     }
     val opener = rememberPaperOpener(
-        delaySeconds = arxivCfg?.delaySeconds ?: 3.0,
         sourceId = arxivCfg?.id ?: "arxiv",
         sourceName = arxivCfg?.name ?: "arXiv",
     )

@@ -32,6 +32,15 @@ android {
         release {
             signingConfig = signingConfigs.getByName("release")
         }
+        debug {
+            // M25: coexist with the installed release build. Once the release
+            // APK is on the daily phone, its signature can no longer be
+            // overwritten by debug installs (INSTALL_FAILED_UPDATE_INCOMPATIBLE)
+            // — a distinct applicationId lets the two live side by side, each
+            // with its own data.
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+        }
     }
 
     buildFeatures {

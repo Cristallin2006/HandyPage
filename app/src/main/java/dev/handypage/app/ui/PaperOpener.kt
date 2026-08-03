@@ -43,11 +43,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.NonCancellable
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
 /**
@@ -57,22 +54,20 @@ import kotlinx.coroutines.withContext
  * cancel, ".part" cleanup, reading-record write, background reflow-EPUB
  * conversion, and a failure snackbar offering 「浏览器打开」.
  *
- * Also owns the [ArxivApi] instance plus the serialising [apiMutex]/[throttle]
- * pair (arXiv etiquette: one request per [delaySeconds]), shared with the
- * list screen's fetch path.
+ * Also owns the shared [ArxivApi] instance. Rate limiting is NOT here: since
+ * M25 the app-global [dev.handypage.app.arxiv.ArxivGate] lives inside
+ * ArxivApi itself and covers every caller (this class used to keep a local
+ * apiMutex/throttle pair, one of three competing throttles).
  */
 class PaperOpener(
     private val context: Context,
     private val app: HandypageApp,
     private val scope: CoroutineScope,
     val snackbarHostState: SnackbarHostState,
-    private val delaySeconds: Double,
     private val sourceId: String,
     private val sourceName: String,
 ) {
     val api: ArxivApi = ArxivApi(handypageHttpClient())
-    val apiMutex = Mutex()
-    private var lastApiCallAt = 0L
 
     /** Non-null while a paper download+parse is in flight; shows the dialog. */
     var openProgress by mutableStateOf<OpenProgress?>(null)
@@ -81,13 +76,6 @@ class PaperOpener(
     /** absUrl of the paper being opened, for cancel-time ".part" cleanup. */
     private var openingUrl: String? = null
     private var openJob: Job? = null
-
-    suspend fun throttle() {
-        val waitMs = lastApiCallAt + (delaySeconds * 1000).toLong() -
-            System.currentTimeMillis()
-        if (waitMs > 0) delay(waitMs)
-        lastApiCallAt = System.currentTimeMillis()
-    }
 
     fun open(entry: ArxivEntry) {
         openJob?.cancel()
@@ -98,12 +86,9 @@ class PaperOpener(
             try {
                 if (!paperFile.isFile) {
                     openProgress = OpenProgress(OpenStage.DOWNLOADING, 0f)
-                    apiMutex.withLock {
-                        throttle()
-                        withContext(Dispatchers.IO) {
-                            api.downloadPdf(entry.pdfUrl, paperFile) { p ->
-                                openProgress = OpenProgress(OpenStage.DOWNLOADING, p)
-                            }
+                    withContext(Dispatchers.IO) {
+                        api.downloadPdf(entry.pdfUrl, paperFile) { p ->
+                            openProgress = OpenProgress(OpenStage.DOWNLOADING, p)
                         }
                     }
                     ensureActive()
@@ -226,7 +211,6 @@ class PaperOpener(
 /** Creates a [PaperOpener] bound to the current composition's scope/context. */
 @Composable
 fun rememberPaperOpener(
-    delaySeconds: Double,
     sourceId: String,
     sourceName: String,
 ): PaperOpener {
@@ -242,7 +226,6 @@ fun rememberPaperOpener(
             app = app,
             scope = scope,
             snackbarHostState = snackbarHostState,
-            delaySeconds = delaySeconds,
             sourceId = sourceId,
             sourceName = sourceName,
         )

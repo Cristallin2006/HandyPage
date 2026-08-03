@@ -1,5 +1,6 @@
-﻿package dev.handypage.app.arxiv
+package dev.handypage.app.arxiv
 
+import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -7,6 +8,8 @@ import org.jsoup.Jsoup
 import org.jsoup.parser.Parser
 import java.io.File
 import java.io.IOException
+import java.io.InterruptedIOException
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
 
 /** One arXiv Atom `<entry>` flattened for the reader UI. */
@@ -22,14 +25,78 @@ data class ArxivEntry(
     val primaryCategory: String,
 )
 
+/** HTTP failure carrying the status code and the optional Retry-After header (seconds). */
+class HttpStatusException(
+    val statusCode: Int,
+    val retryAfterSeconds: Long?,
+    url: String,
+) : IOException("HTTP $statusCode for $url")
+
+/**
+ * M25: app-global arXiv request gate — at most one request every
+ * [minIntervalMs] across EVERY caller (list UI, Agent tools, PDF downloads,
+ * HTML-version fetches). Blocking by design: callers run on Dispatchers.IO,
+ * and the monitor both serialises and spaces requests, so fan-in from
+ * several features can never burst past arXiv's one-request-per-3s etiquette.
+ *
+ * This replaces the pre-M25 "throttling is the caller's job" split, where
+ * the list screen, the Agent's search_papers tool and downloads each kept
+ * their own (or no) throttle and stacked into an IP ban.
+ */
+class ArxivGate(
+    private val minIntervalMs: Long = 3000,
+    private val sleeper: (Long) -> Unit = { Thread.sleep(it) },
+    private val nowMs: () -> Long = System::currentTimeMillis,
+) {
+    private var lastRequestAt = 0L
+
+    /** Blocks until this caller may fire the next request, then takes the slot. */
+    @Synchronized
+    fun awaitTurn() {
+        val wait = minIntervalMs - (nowMs() - lastRequestAt)
+        if (wait > 0) sleeper(wait)
+        lastRequestAt = nowMs()
+    }
+}
+
+/**
+ * M25: TTL cache for identical feed queries. Repeat searches, back-and-forth
+ * navigation and category re-taps within [ttlMs] cost zero network requests;
+ * together with the per-key single-flight in [ArxivApi.queryFeed] an
+ * identical concurrent query collapses into one request.
+ */
+class FeedCache(
+    private val ttlMs: Long = 10 * 60_000L,
+    private val nowMs: () -> Long = System::currentTimeMillis,
+) {
+    private val entries = HashMap<String, Pair<Long, List<ArxivEntry>>>()
+
+    @Synchronized
+    fun get(key: String): List<ArxivEntry>? {
+        val (at, value) = entries[key] ?: return null
+        if (nowMs() - at > ttlMs) {
+            entries.remove(key)
+            return null
+        }
+        return value
+    }
+
+    @Synchronized
+    fun put(key: String, value: List<ArxivEntry>) {
+        entries[key] = nowMs() to value
+    }
+}
+
 /**
  * Minimal arXiv API client (https://info.arxiv.org/help/api): queries the Atom
  * search feed and downloads PDFs.
  *
- * arXiv API etiquette asks for an identifiable User-Agent and at most one
- * request every 3 seconds. This class does NOT sleep or serialise itself:
- * throttling is the caller's job (the UI layer issues calls sequentially with
- * its own delay).
+ * Rate limiting, retries and caching live INSIDE this class (M25), shared
+ * app-wide via [sharedGate]/[sharedFeedCache]:
+ * - every request takes a slot from the gate (≥3 s between requests);
+ * - 429/5xx and socket timeouts retry up to 3 attempts with 3s→9s→27s
+ *   exponential backoff (plus jitter), honouring the Retry-After header;
+ * - identical feed queries are served from a 10-minute TTL cache.
  *
  * Android-free (OkHttp/Jsoup/java.io only), so it runs under plain JVM tests.
  */
@@ -39,11 +106,27 @@ class ArxivApi(
     // The official HTML version is only served on the main site, not on the
     // export mirror that hosts the API feed.
     private val htmlBaseUrl: String = "https://arxiv.org",
+    private val gate: ArxivGate = sharedGate,
+    private val cache: FeedCache = sharedFeedCache,
+    // Test hooks: production sleeps on the calling (IO) thread.
+    private val sleeper: (Long) -> Unit = { Thread.sleep(it) },
+    private val jitterMs: () -> Long = { kotlin.random.Random.nextLong(0, 1000) },
 ) {
     companion object {
         private const val USER_AGENT = "Handypage/1.0 (arxiv reader; contact: github.com/handypage)"
-        private const val CALL_TIMEOUT_SECONDS = 15L
+        /** M18 lesson: CN slow links need ~24 s for a big feed; aligned with the engine's 45 s. */
+        private const val QUERY_TIMEOUT_SECONDS = 45L
+        /** HTML-version fetch has a PDF fallback, so it fails faster and retries less. */
+        private const val HTML_TIMEOUT_SECONDS = 30L
+        private const val MAX_ATTEMPTS = 3
+        private const val MAX_RETRY_AFTER_MS = 120_000L
+        private val RETRYABLE_CODES = setOf(429, 500, 502, 503, 504)
         private val WS_RUN = Regex("\\s+")
+
+        /** App-wide single gate/cache shared by every ArxivApi instance. */
+        val sharedGate = ArxivGate()
+        val sharedFeedCache = FeedCache()
+        private val sharedFlightLocks = ConcurrentHashMap<String, Any>()
     }
 
     /** Full-text relevance search: `search_query=all:"<query>"`, most relevant first. */
@@ -58,26 +141,71 @@ class ArxivApi(
     fun searchAndCategory(query: String, category: String, start: Int = 0, maxResults: Int = 25): List<ArxivEntry> =
         queryFeed(searchQuery = "all:\"$query\" AND cat:$category", start = start, maxResults = maxResults, sortBy = "relevance")
 
-
     private fun queryFeed(searchQuery: String, start: Int, maxResults: Int, sortBy: String): List<ArxivEntry> {
-        val url = baseUrl.toHttpUrl().newBuilder()
-            .addPathSegments("api/query")
-            .addQueryParameter("search_query", searchQuery)
-            .addQueryParameter("start", start.toString())
-            .addQueryParameter("max_results", maxResults.toString())
-            .addQueryParameter("sortBy", sortBy)
-            .addQueryParameter("sortOrder", "descending")
-            .build()
+        val cacheKey = "$searchQuery|$start|$maxResults|$sortBy"
+        cache.get(cacheKey)?.let { return it }
+        // Single-flight: concurrent identical queries collapse into one request.
+        val lock = sharedFlightLocks.getOrPut(cacheKey) { Any() }
+        return synchronized(lock) {
+            cache.get(cacheKey) ?: run {
+                val url = baseUrl.toHttpUrl().newBuilder()
+                    .addPathSegments("api/query")
+                    .addQueryParameter("search_query", searchQuery)
+                    .addQueryParameter("start", start.toString())
+                    .addQueryParameter("max_results", maxResults.toString())
+                    .addQueryParameter("sortBy", sortBy)
+                    .addQueryParameter("sortOrder", "descending")
+                    .build()
+                val body = withRetry { httpGet(url, QUERY_TIMEOUT_SECONDS) }
+                parseFeed(body).also { cache.put(cacheKey, it) }
+            }
+        }
+    }
+
+    /** GETs [url] as a string; throws [HttpStatusException] on non-2xx. */
+    private fun httpGet(url: HttpUrl, timeoutSeconds: Long): String {
         val request = Request.Builder().url(url).header("User-Agent", USER_AGENT).build()
-        val body = client.newBuilder()
-            .callTimeout(CALL_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+        return client.newBuilder()
+            .callTimeout(timeoutSeconds, TimeUnit.SECONDS)
             .build()
             .newCall(request)
             .execute().use { resp ->
-                if (!resp.isSuccessful) throw IOException("HTTP ${resp.code} for $url")
+                if (!resp.isSuccessful) {
+                    throw HttpStatusException(resp.code, resp.header("Retry-After")?.toLongOrNull(), url.toString())
+                }
                 resp.body.string()
             }
-        return parseFeed(body)
+    }
+
+    /**
+     * Runs [block] through the gate, retrying retryable HTTP statuses and
+     * socket timeouts with 3s→9s→27s exponential backoff (+ jitter); a
+     * Retry-After header wins over the computed backoff. OkHttp's own
+     * cancellation ("Canceled") is never retried — only genuine timeouts are.
+     */
+    private fun <T> withRetry(maxAttempts: Int = MAX_ATTEMPTS, block: () -> T): T {
+        var backoffMs = 3000L
+        var attempt = 0
+        while (true) {
+            attempt++
+            gate.awaitTurn()
+            try {
+                return block()
+            } catch (e: HttpStatusException) {
+                if (e.statusCode !in RETRYABLE_CODES || attempt >= maxAttempts) throw e
+                val waitMs = e.retryAfterSeconds
+                    ?.let { (it * 1000).coerceAtMost(MAX_RETRY_AFTER_MS) }
+                    ?: (backoffMs + jitterMs())
+                if (waitMs > 0) sleeper(waitMs)
+                backoffMs *= 3
+            } catch (e: InterruptedIOException) {
+                val isTimeout = e.message?.lowercase()
+                    ?.let { it == "timeout" || "timed out" in it } == true
+                if (!isTimeout || attempt >= maxAttempts) throw e
+                sleeper(backoffMs + jitterMs())
+                backoffMs *= 3
+            }
+        }
     }
 
     /** Parses the Atom response; entries without an id URL are skipped. */
@@ -109,39 +237,54 @@ class ArxivApi(
      * success, so an interrupted download never leaves a truncated file at the
      * final name. [onProgress] receives the fraction 0..1 of contentLength, or
      * -1f when the length is unknown. Non-2xx and IO failures raise IOException.
+     *
+     * M25: goes through the shared gate and retry loop like every other arXiv
+     * request; per-attempt timeouts are connect 15 s / read 30 s with no
+     * overall cap, so multi-MB PDFs on slow links finish instead of dying at
+     * OkHttp's 10 s defaults. A retried attempt restarts the download.
      */
     fun downloadPdf(url: String, dest: File, onProgress: (Float) -> Unit) {
-        val request = Request.Builder().url(url).header("User-Agent", USER_AGENT).build()
-        client.newCall(request).execute().use { resp ->
-            if (!resp.isSuccessful) throw IOException("HTTP ${resp.code} for $url")
-            val total = resp.body.contentLength()
-            val part = File(dest.absoluteFile.parentFile, dest.name + ".part")
-            try {
-                resp.body.byteStream().use { input ->
-                    part.outputStream().use { output ->
-                        val buf = ByteArray(64 * 1024)
-                        var read = 0L
-                        while (true) {
-                            val n = input.read(buf)
-                            if (n < 0) break
-                            output.write(buf, 0, n)
-                            read += n
-                            onProgress(if (total > 0) read.toFloat() / total else -1f)
+        val downloadClient = client.newBuilder()
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .callTimeout(0, TimeUnit.SECONDS)
+            .build()
+        withRetry {
+            val request = Request.Builder().url(url).header("User-Agent", USER_AGENT).build()
+            downloadClient.newCall(request).execute().use { resp ->
+                if (!resp.isSuccessful) {
+                    throw HttpStatusException(resp.code, resp.header("Retry-After")?.toLongOrNull(), url)
+                }
+                val total = resp.body.contentLength()
+                val part = File(dest.absoluteFile.parentFile, dest.name + ".part")
+                try {
+                    resp.body.byteStream().use { input ->
+                        part.outputStream().use { output ->
+                            val buf = ByteArray(64 * 1024)
+                            var read = 0L
+                            while (true) {
+                                val n = input.read(buf)
+                                if (n < 0) break
+                                output.write(buf, 0, n)
+                                read += n
+                                onProgress(if (total > 0) read.toFloat() / total else -1f)
+                            }
                         }
                     }
+                } catch (e: Exception) {
+                    part.delete()
+                    throw e
                 }
-            } catch (e: Exception) {
-                part.delete()
-                throw e
-            }
-            // File.renameTo fails on Windows when dest already exists (re-download).
-            if (dest.exists() && !dest.delete()) {
-                part.delete()
-                throw IOException("failed to replace existing ${dest.name}")
-            }
-            if (!part.renameTo(dest)) {
-                part.delete()
-                throw IOException("failed to rename ${part.name} to ${dest.name}")
+                // File.renameTo fails on Windows when dest already exists (re-download).
+                if (dest.exists() && !dest.delete()) {
+                    part.delete()
+                    throw IOException("failed to replace existing ${dest.name}")
+                }
+                if (!part.renameTo(dest)) {
+                    part.delete()
+                    throw IOException("failed to rename ${part.name} to ${dest.name}")
+                }
             }
         }
     }
@@ -152,25 +295,33 @@ class ArxivApi(
      * redirects to the latest `/html/<id>vN`, which OkHttp follows).
      *
      * Returns the body on a 200 with an HTML content type; null on 404, any
-     * other non-2xx, or an IO failure 鈥?callers fall back to PDF extraction,
-     * so a flaky network must not break the reflow pipeline.
+     * other non-2xx, or an IO failure — callers fall back to PDF extraction,
+     * so a flaky network must not break the reflow pipeline. Retries at most
+     * once: the fallback keeps this fetch cheap to abandon.
      */
     fun fetchHtmlVersion(arxivId: String): String? {
         val url = htmlBaseUrl.toHttpUrl().newBuilder()
             .addPathSegments("html/$arxivId")
             .build()
-        val request = Request.Builder().url(url).header("User-Agent", USER_AGENT).build()
         return try {
-            client.newBuilder()
-                .callTimeout(CALL_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-                .build()
-                .newCall(request)
-                .execute().use { resp ->
-                    if (!resp.isSuccessful) return@use null
-                    val contentType = resp.header("Content-Type").orEmpty().lowercase()
-                    if ("html" !in contentType) return@use null
-                    resp.body.string()
-                }
+            withRetry(maxAttempts = 2) {
+                val request = Request.Builder().url(url).header("User-Agent", USER_AGENT).build()
+                client.newBuilder()
+                    .callTimeout(HTML_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+                    .build()
+                    .newCall(request)
+                    .execute().use { resp ->
+                        if (!resp.isSuccessful) {
+                            if (resp.code in RETRYABLE_CODES) {
+                                throw HttpStatusException(resp.code, resp.header("Retry-After")?.toLongOrNull(), url.toString())
+                            }
+                            return@use null
+                        }
+                        val contentType = resp.header("Content-Type").orEmpty().lowercase()
+                        if ("html" !in contentType) return@use null
+                        resp.body.string()
+                    }
+            }
         } catch (e: IOException) {
             null
         }
@@ -180,4 +331,3 @@ class ArxivApi(
     private fun collapseWs(s: String?): String =
         s?.replace(WS_RUN, " ")?.trim().orEmpty()
 }
-

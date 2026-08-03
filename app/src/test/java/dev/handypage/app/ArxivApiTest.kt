@@ -1,8 +1,13 @@
 package dev.handypage.app
 
 import dev.handypage.app.arxiv.ArxivApi
+import dev.handypage.app.arxiv.ArxivEntry
+import dev.handypage.app.arxiv.ArxivGate
+import dev.handypage.app.arxiv.FeedCache
 import mockwebserver3.MockResponse
 import mockwebserver3.MockWebServer
+import mockwebserver3.Dispatcher
+import mockwebserver3.RecordedRequest
 import okhttp3.OkHttpClient
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -14,17 +19,26 @@ import org.junit.Before
 import org.junit.Test
 import java.io.File
 import java.io.IOException
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+import kotlin.concurrent.thread
 
 /**
  * JVM tests for the arXiv API client against MockWebServer: Atom feed parsing
  * (multi-author, whitespace folding, pdf-link derivation from the abs URL),
  * query URL shape for both search modes, the HTTP-error path, and the
  * .part-then-rename PDF download with progress callbacks.
+ *
+ * M25 additions: gate spacing, retry-with-backoff on 429/5xx, Retry-After
+ * precedence, non-retryable 4xx, TTL feed cache and single-flight coalescing.
+ * Tests pass a zero-interval gate, a no-op sleeper and zero jitter so nothing
+ * ever really sleeps; the recording sleeper captures the backoff schedule.
  */
 class ArxivApiTest {
 
     private lateinit var server: MockWebServer
     private lateinit var api: ArxivApi
+    private lateinit var sleeps: MutableList<Long>
 
     /**
      * Two-entry Atom feed. Entry 1: explicit pdf link, two authors, title and
@@ -67,12 +81,23 @@ class ArxivApiTest {
     fun setUp() {
         server = MockWebServer()
         server.start()
-        api = ArxivApi(
-            OkHttpClient(),
-            baseUrl = server.url("/").toString(),
-            htmlBaseUrl = server.url("/").toString(),
-        )
+        sleeps = mutableListOf()
+        api = newApi()
     }
+
+    /** API wired for tests: zero gate interval, recording sleeper, no jitter. */
+    private fun newApi(
+        gate: ArxivGate = ArxivGate(minIntervalMs = 0),
+        cache: FeedCache = FeedCache(),
+    ): ArxivApi = ArxivApi(
+        OkHttpClient(),
+        baseUrl = server.url("/").toString(),
+        htmlBaseUrl = server.url("/").toString(),
+        gate = gate,
+        cache = cache,
+        sleeper = { sleeps += it },
+        jitterMs = { 0 },
+    )
 
     @After
     fun tearDown() {
@@ -137,8 +162,8 @@ class ArxivApiTest {
     }
 
     @Test
-    fun `HTTP 503 fails with an IOException carrying the status`() {
-        server.enqueue(MockResponse.Builder().code(503).body("retry later").build())
+    fun `HTTP 503 exhausts three attempts then fails with the status`() {
+        repeat(3) { server.enqueue(MockResponse.Builder().code(503).body("retry later").build()) }
 
         try {
             api.search("anything")
@@ -146,6 +171,149 @@ class ArxivApiTest {
         } catch (e: IOException) {
             assertTrue(e.message.orEmpty().contains("503"))
         }
+        assertEquals(3, server.requestCount)
+        assertEquals(listOf(3000L, 9000L), sleeps)
+    }
+
+    @Test
+    fun `503 is retried with backoff and then succeeds`() {
+        server.enqueue(MockResponse.Builder().code(503).body("busy").build())
+        enqueueFeed()
+
+        val entries = api.search("attention")
+
+        assertEquals(2, entries.size)
+        assertEquals(2, server.requestCount)
+        assertEquals(listOf(3000L), sleeps)
+    }
+
+    @Test
+    fun `Retry-After header overrides the computed backoff`() {
+        server.enqueue(
+            MockResponse.Builder()
+                .code(503)
+                .addHeader("Retry-After", "17")
+                .body("busy")
+                .build(),
+        )
+        enqueueFeed()
+
+        api.search("attention")
+
+        assertEquals(listOf(17_000L), sleeps)
+    }
+
+    @Test
+    fun `429 gives up after three attempts`() {
+        repeat(3) { server.enqueue(MockResponse.Builder().code(429).body("slow down").build()) }
+
+        try {
+            api.search("spam")
+            fail("expected IOException")
+        } catch (e: IOException) {
+            assertTrue(e.message.orEmpty().contains("429"))
+        }
+        assertEquals(3, server.requestCount)
+        assertEquals(listOf(3000L, 9000L), sleeps)
+    }
+
+    @Test
+    fun `400 bad query fails immediately without retries`() {
+        server.enqueue(MockResponse.Builder().code(400).body("malformed").build())
+
+        try {
+            api.search("broken")
+            fail("expected IOException")
+        } catch (e: IOException) {
+            assertTrue(e.message.orEmpty().contains("400"))
+        }
+        assertEquals(1, server.requestCount)
+        assertTrue(sleeps.isEmpty())
+    }
+
+    @Test
+    fun `identical queries hit the network once and the second is served from cache`() {
+        enqueueFeed()
+
+        val first = api.search("attention")
+        val second = api.search("attention")
+
+        assertEquals(1, server.requestCount)
+        assertEquals(first, second)
+    }
+
+    @Test
+    fun `cache entry expires after the ttl`() {
+        var now = 1_000_000L
+        val ttlCache = FeedCache(ttlMs = 1000, nowMs = { now })
+        api = newApi(cache = ttlCache)
+        enqueueFeed()
+        enqueueFeed()
+
+        api.byCategory("cs.CL")
+        assertEquals(1, server.requestCount)
+        now += 2000
+        api.byCategory("cs.CL")
+        assertEquals(2, server.requestCount)
+    }
+
+    @Test
+    fun `concurrent identical queries collapse into one request`() {
+        // Hold the feed response for 500 ms so thread B reaches the
+        // single-flight lock while thread A's request is still in flight.
+        server.dispatcher = object : Dispatcher() {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                Thread.sleep(500)
+                return MockResponse.Builder()
+                    .code(200)
+                    .addHeader("Content-Type", "application/atom+xml; charset=utf-8")
+                    .body(feed)
+                    .build()
+            }
+        }
+        val results = arrayOfNulls<List<ArxivEntry>>(2)
+        val errors = arrayOfNulls<Throwable>(2)
+        val start = CountDownLatch(1)
+
+        val a = thread {
+            start.await()
+            try {
+                results[0] = api.search("attention")
+            } catch (t: Throwable) {
+                errors[0] = t
+            }
+        }
+        val b = thread {
+            start.await()
+            try {
+                results[1] = api.search("attention")
+            } catch (t: Throwable) {
+                errors[1] = t
+            }
+        }
+        start.countDown()
+        a.join(10_000)
+        b.join(10_000)
+
+        assertNull(errors[0])
+        assertNull(errors[1])
+        assertEquals(2, results[0]?.size)
+        assertEquals(2, results[1]?.size)
+        assertEquals(1, server.requestCount)
+    }
+
+    @Test
+    fun `gate spaces request slots by the minimum interval`() {
+        var now = 100_000L
+        val gateSleeps = mutableListOf<Long>()
+        val gate = ArxivGate(minIntervalMs = 3000, sleeper = { gateSleeps += it }, nowMs = { now })
+
+        gate.awaitTurn() // first ever request: no wait
+        gate.awaitTurn()
+        now += 1000     // only 1 s has passed
+        gate.awaitTurn()
+
+        assertEquals(listOf(3000L, 2000L), gateSleeps)
     }
 
     @Test
@@ -168,6 +336,27 @@ class ArxivApiTest {
         assertFalse("leftover .part file", File(dest.parentFile, dest.name + ".part").exists())
         assertTrue("no progress callbacks", progress.isNotEmpty())
         assertEquals(1f, progress.last())
+    }
+
+    @Test
+    fun `downloadPdf retries a 503 and completes on the second attempt`() {
+        val payload = "%PDF-1.7 fake body\n".repeat(1024)
+        server.enqueue(MockResponse.Builder().code(503).body("busy").build())
+        server.enqueue(
+            MockResponse.Builder()
+                .code(200)
+                .addHeader("Content-Type", "application/pdf")
+                .body(payload)
+                .build(),
+        )
+        val dest = File.createTempFile("arxiv", ".pdf")
+        dest.deleteOnExit()
+
+        api.downloadPdf(server.url("/pdf/x").toString(), dest) { }
+
+        assertEquals(payload, dest.readText())
+        assertEquals(2, server.requestCount)
+        assertEquals(listOf(3000L), sleeps)
     }
 
     @Test
@@ -218,5 +407,21 @@ class ArxivApiTest {
         assertEquals(page, html)
         assertEquals("/html/1706.03762", server.takeRequest().url.encodedPath)
         assertEquals("/html/1706.03762v2", server.takeRequest().url.encodedPath)
+    }
+
+    @Test
+    fun `fetchHtmlVersion retries a 503 once and returns the body`() {
+        val page = "<html><body>paper</body></html>"
+        server.enqueue(MockResponse.Builder().code(503).body("busy").build())
+        server.enqueue(
+            MockResponse.Builder()
+                .code(200)
+                .addHeader("Content-Type", "text/html; charset=utf-8")
+                .body(page)
+                .build(),
+        )
+
+        assertEquals(page, api.fetchHtmlVersion("1706.03762v5"))
+        assertEquals(2, server.requestCount)
     }
 }

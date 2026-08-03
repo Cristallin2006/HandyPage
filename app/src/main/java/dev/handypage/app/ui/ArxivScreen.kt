@@ -52,6 +52,7 @@ import dev.handypage.app.HandypageApp
 import dev.handypage.app.R
 import dev.handypage.app.arxiv.ArxivCategories
 import dev.handypage.app.arxiv.ArxivEntry
+import dev.handypage.app.arxiv.HttpStatusException
 import dev.handypage.app.engine.SourceConfig
 import dev.handypage.app.vocab.PaperStar
 import kotlinx.coroutines.CancellationException
@@ -59,7 +60,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
 /**
@@ -72,9 +72,8 @@ import kotlinx.coroutines.withContext
  * Tapping a card runs the shared [PaperOpener] "download → open" flow; each
  * card's tail star toggles the paper in the 收藏 book (paper_stars table).
  *
- * arXiv API etiquette (one request per [SourceConfig.delaySeconds]) is
- * honoured by serialising every network call through the opener's Mutex with
- * a throttle in front; ArxivApi itself does not throttle.
+ * arXiv rate limiting (one request per 3 s, retries, feed caching) lives
+ * inside ArxivApi's app-global gate since M25 — this screen simply calls it.
  */
 @Composable
 fun ArxivArticleListScreen(cfg: SourceConfig, onBack: () -> Unit) {
@@ -82,7 +81,6 @@ fun ArxivArticleListScreen(cfg: SourceConfig, onBack: () -> Unit) {
     val app = context.applicationContext as HandypageApp
     val scope = rememberCoroutineScope()
     val opener = rememberPaperOpener(
-        delaySeconds = cfg.delaySeconds,
         sourceId = cfg.id,
         sourceName = cfg.name,
     )
@@ -120,12 +118,9 @@ fun ArxivArticleListScreen(cfg: SourceConfig, onBack: () -> Unit) {
             listError = null
             entries = null
             try {
-                val fetched = opener.apiMutex.withLock {
-                    opener.throttle()
-                    withContext(Dispatchers.IO) {
-                        if (search) opener.api.search(query.trim())
-                        else opener.api.byCategory(selectedCategory)
-                    }
+                val fetched = withContext(Dispatchers.IO) {
+                    if (search) opener.api.search(query.trim())
+                    else opener.api.byCategory(selectedCategory)
                 }
                 ensureActive()
                 entries = fetched
@@ -133,7 +128,13 @@ fun ArxivArticleListScreen(cfg: SourceConfig, onBack: () -> Unit) {
                 throw e
             } catch (e: Exception) {
                 ensureActive()
-                val msg = e.message ?: e.toString()
+                // M25: after the in-API retries are exhausted, a 429 means the
+                // IP is throttled — say so instead of dumping "HTTP 429".
+                val msg = if ((e as? HttpStatusException)?.statusCode == 429) {
+                    context.getString(R.string.arxiv_rate_limited)
+                } else {
+                    e.message ?: e.toString()
+                }
                 listError = msg
                 snackbarHostState.showSnackbar(msg)
             } finally {

@@ -88,7 +88,6 @@ fun AgentScreen(
     val aiConfig = remember { AISettingsStore(context).selectedConfig() }
 
     val paperOpener = rememberPaperOpener(
-        delaySeconds = 3.0,
         sourceId = "arxiv",
         sourceName = "arXiv",
     )
