@@ -116,6 +116,8 @@ data class ArticleContent(
     val title: String,
     val bodyHtml: String,
     val sourceUrl: String,
+    /** M28: images to embed in the EPUB package — package-relative path ("images/img-…​.png") → bytes. */
+    val images: Map<String, ByteArray> = emptyMap(),
 )
 
 /** Failure at a known pipeline stage; [stage] is e.g. "index_fetch", "article_parse". */

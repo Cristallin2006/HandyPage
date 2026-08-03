@@ -29,7 +29,9 @@ class SourceEngineFixtureTest {
     fun setUp() {
         server = MockWebServer()
         server.start()
-        engine = SourceEngine(OkHttpClient(), enforceDelays = false)
+        // M28: imageEmbedder = null — fixture img srcs point at real CDNs;
+        // embedding must not hit the network in tests.
+        engine = SourceEngine(OkHttpClient(), enforceDelays = false, imageEmbedder = null)
     }
 
     @After

@@ -44,6 +44,7 @@ object EpubPackager {
   <manifest>
     <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
     <item id="ch1" href="ch1.xhtml" media-type="application/xhtml+xml"/>
+%6${'$'}s
   </manifest>
   <spine>
     <itemref idref="ch1"/>
@@ -77,6 +78,17 @@ object EpubPackager {
             "h1 { font-size: 1.4em; line-height: 1.3; text-align: left; }\n" +
             "img { max-width: 100%; height: auto; }"
 
+    /** M28: OPF manifest media-type per embedded-image file extension. */
+    private val IMAGE_MEDIA_TYPES = mapOf(
+        "png" to "image/png",
+        "jpg" to "image/jpeg",
+        "jpeg" to "image/jpeg",
+        "gif" to "image/gif",
+        "webp" to "image/webp",
+        "svg" to "image/svg+xml",
+        "avif" to "image/avif",
+    )
+
     // lang="en" lets CSS `hyphens: auto` (Readium justify preference, M9)
     // find the right hyphenation dictionary — without it justification
     // falls back to stretched word spacing.
@@ -105,10 +117,18 @@ object EpubPackager {
             .format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"))
         val uid = "urn:sha256:" + sha256Hex(article.sourceUrl).substring(0, 32)
 
+        // M28: embedded images are declared in the manifest (media-type from
+        // the package-path extension) and written under OEBPS/ below.
+        val imageItems = article.images.keys.mapIndexed { i, path ->
+            val media = IMAGE_MEDIA_TYPES[path.substringAfterLast('.').lowercase()]
+                ?: "application/octet-stream"
+            "    <item id=\"img$i\" href=\"$path\" media-type=\"$media\"/>"
+        }.joinToString("\n")
+
         val files = linkedMapOf(
             "META-INF/container.xml" to CONTAINER_XML,
             "OEBPS/content.opf" to OPF_TEMPLATE.format(
-                uid, esc(article.title), esc(sourceName), esc(article.sourceUrl), now,
+                uid, esc(article.title), esc(sourceName), esc(article.sourceUrl), now, imageItems,
             ),
             "OEBPS/nav.xhtml" to NAV_TEMPLATE.format(esc(article.title)),
             "OEBPS/ch1.xhtml" to XHTML_TEMPLATE.format(
@@ -134,6 +154,17 @@ object EpubPackager {
                 val bytes = content.toByteArray(Charsets.UTF_8)
                 z.putNextEntry(
                     ZipEntry(name).apply {
+                        method = ZipEntry.DEFLATED
+                        time = FIXED_ENTRY_TIME
+                    },
+                )
+                z.write(bytes)
+                z.closeEntry()
+            }
+            // M28: embedded images (binary payloads) after the text entries.
+            for ((path, bytes) in article.images) {
+                z.putNextEntry(
+                    ZipEntry("OEBPS/$path").apply {
                         method = ZipEntry.DEFLATED
                         time = FIXED_ENTRY_TIME
                     },

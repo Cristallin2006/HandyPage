@@ -23,6 +23,8 @@ class SourceEngine(
     private val client: OkHttpClient,
     private val userAgent: String = DESKTOP_UA,
     private val enforceDelays: Boolean = true,
+    /** M28: embeds article images into the EPUB; null disables (offline fixture tests). */
+    private val imageEmbedder: ImageEmbedder? = ImageEmbedder(client),
 ) {
     companion object {
         const val DESKTOP_UA =
@@ -96,7 +98,15 @@ class SourceEngine(
             // Absolutize resource/link URLs so the body is self-contained.
             content.select("img[src]").forEach { it.attr("src", it.absUrl("src")) }
             content.select("a[href]").forEach { it.attr("href", it.absUrl("href")) }
-            ArticleContent(title = title, bodyHtml = content.html(), sourceUrl = url)
+            // M28: download images into the EPUB package (CDN hotlink blocks,
+            // offline reading, cleartext policy); failures keep remote URLs.
+            val embedded = imageEmbedder?.embed(content.html(), url, cfg.userAgent ?: userAgent)
+            ArticleContent(
+                title = title,
+                bodyHtml = embedded?.html ?: content.html(),
+                sourceUrl = url,
+                images = embedded?.images ?: emptyMap(),
+            )
         } catch (e: EngineException) {
             throw e
         } catch (e: Exception) {

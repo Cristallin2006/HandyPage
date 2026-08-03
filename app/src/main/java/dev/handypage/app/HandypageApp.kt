@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.tom_roush.pdfbox.android.PDFBoxResourceLoader
 import dev.handypage.app.dict.DictManager
 import dev.handypage.app.dict.Dictionary
+import dev.handypage.app.engine.ImageEmbedder
 import dev.handypage.app.engine.SourceEngine
 import dev.handypage.app.vocab.VocabDatabase
 import kotlinx.coroutines.CoroutineScope
@@ -30,7 +31,13 @@ class HandypageApp : Application() {
     }
 
     val engine: SourceEngine by lazy {
-        SourceEngine(handypageHttpClient())
+        // M30: one shared client; the embedder gets the BitmapFactory
+        // transcoder so webp/avif payloads are normalized for the reader.
+        val client = handypageHttpClient()
+        SourceEngine(
+            client,
+            imageEmbedder = ImageEmbedder(client, transcoder = AndroidImageTranscoder),
+        )
     }
 
     /**

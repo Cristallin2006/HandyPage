@@ -60,8 +60,8 @@ class ArxivHtmlTest {
         assertFalse("inner banner text removed", body.contains("inner banner"))
         assertFalse("footer outside root never included", body.contains("page footer"))
         assertTrue(
-            "img src absolutised",
-            body.contains("""src="https://arxiv.org/x.png""""),
+            "img src absolutised against the /html/<id>/ page dir (M28)",
+            body.contains("""src="https://arxiv.org/html/1706.03762v5/x.png""""),
         )
         assertTrue("img style added", body.contains("max-width:100%"))
         assertTrue(

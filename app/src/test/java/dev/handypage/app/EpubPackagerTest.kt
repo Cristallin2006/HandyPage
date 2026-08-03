@@ -59,6 +59,49 @@ class EpubPackagerTest {
     }
 
     @Test
+    fun packEmbedsImagesIntoPackageAndManifest() {
+        // M28: image bytes land under OEBPS/images/, and every image is
+        // declared in the OPF manifest with the media-type for its extension.
+        val png = byteArrayOf(0x89.toByte(), 0x50, 0x4E, 0x47)
+        val article = ArticleContent(
+            title = "With images",
+            bodyHtml = """<p>text</p><img src="images/img-abc123def456.png"/>""",
+            sourceUrl = "https://example.com/with-images",
+            images = linkedMapOf(
+                "images/img-abc123def456.png" to png,
+                "images/img-999888777666.jpeg" to byteArrayOf(1, 2, 3),
+            ),
+        )
+        val out = File.createTempFile("handypage-test-img", ".epub")
+        try {
+            EpubPackager.pack(article, "Example Source", out)
+            ZipFile(out).use { z ->
+                val names = z.entries().toList().map { it.name }
+                assertTrue("png missing from package", "OEBPS/images/img-abc123def456.png" in names)
+                assertTrue("jpeg missing from package", "OEBPS/images/img-999888777666.jpeg" in names)
+                assertEquals(
+                    "png bytes corrupted",
+                    png.toList(),
+                    z.getInputStream(z.getEntry("OEBPS/images/img-abc123def456.png"))
+                        .readBytes().toList(),
+                )
+                val opf = z.read("OEBPS/content.opf")
+                assertTrue(
+                    "manifest missing png item",
+                    opf.contains("""<item id="img0" href="images/img-abc123def456.png" media-type="image/png"/>"""),
+                )
+                assertTrue(
+                    "manifest missing jpeg item",
+                    opf.contains("""<item id="img1" href="images/img-999888777666.jpeg" media-type="image/jpeg"/>"""),
+                )
+                parseXml(opf)
+            }
+        } finally {
+            out.delete()
+        }
+    }
+
+    @Test
     fun packStripsUndeclaredNamespaces() {
         // Scraped HTML in the wild carries prefixed junk: SVG <use xlink:href>
         // (Nature registration wall) and CMS tags like <o:p>. The xmlns

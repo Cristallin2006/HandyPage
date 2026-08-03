@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
+import dev.handypage.app.AndroidImageTranscoder
 import dev.handypage.app.HandypageApp
 import dev.handypage.app.R
 import dev.handypage.app.ReaderActivity
@@ -34,6 +35,8 @@ import dev.handypage.app.arxiv.ArxivApi
 import dev.handypage.app.handypageHttpClient
 import dev.handypage.app.arxiv.ArxivEntry
 import dev.handypage.app.arxiv.ArxivHtml
+import dev.handypage.app.engine.ImageEmbedder
+import dev.handypage.app.engine.SourceEngine
 import dev.handypage.app.epub.EpubPackager
 import dev.handypage.app.paper.PaperReaderActivity
 import dev.handypage.app.pdf.PdfToArticle
@@ -184,11 +187,20 @@ class PaperOpener(
         app.appScope.launch {
             try {
                 val html = api.fetchHtmlVersion(entry.id)
-                val article = if (html != null) {
+                val fetched = if (html != null) {
                     ArxivHtml.toArticle(html, entry.title, entry.authors, entry.absUrl)
                 } else {
                     PdfToArticle.convert(paperFile, entry.title, entry.authors, entry.absUrl)
                 }
+                // M28: embed figure images into the reflow EPUB (same pipeline
+                // as the source engine; failures keep the remote URL).
+                // M30: with the BitmapFactory transcoder (webp/avif → jpg/png).
+                val embedded = ImageEmbedder(handypageHttpClient(), transcoder = AndroidImageTranscoder)
+                    .embed(fetched.bodyHtml, entry.absUrl, SourceEngine.DESKTOP_UA)
+                val article = fetched.copy(
+                    bodyHtml = embedded.html,
+                    images = embedded.images,
+                )
                 val tmp = File(epubFile.parentFile, epubFile.name + ".tmp")
                 try {
                     EpubPackager.pack(article, sourceName, tmp)

@@ -29,21 +29,28 @@ object ArxivHtml {
      * kept as [ArticleContent.sourceUrl]. The paper body is taken from the
      * ar5iv main container `article.ltx_document` (falling back to `main`,
      * then the whole body), cleaned of page chrome, with relative img/a
-     * URLs absolutised against arxiv.org.
+     * URLs absolutised against the HTML page directory.
+     *
+     * M28: URLs are resolved MANUALLY against `https://arxiv.org/html/<id>/`
+     * — jsoup honours the ar5iv `<base>` tag, which points at
+     * `arxiv.org/<id>/` and 404s every figure (curl-verified: only the
+     * `/html/<id>/` prefix serves them).
      */
     fun toArticle(html: String, title: String, authors: List<String>, absUrl: String): ArticleContent {
         val doc = Jsoup.parse(html, "https://arxiv.org")
+        val htmlBase = "https://arxiv.org/html/" +
+            absUrl.trimEnd('/').substringAfterLast('/') + "/"
         val root: Element = doc.selectFirst("article.ltx_document")
             ?: doc.selectFirst("main")
             ?: doc.body()
         root.select(DROP_SELECTORS).remove()
         root.select(ARXIV_CHROME_SELECTORS).remove()
         for (img in root.select("img")) {
-            if (img.hasAttr("src")) img.attr("src", img.absUrl("src"))
+            if (img.hasAttr("src")) img.attr("src", resolveArxivUrl(htmlBase, img.attr("src")))
             img.attr("style", "max-width:100%;height:auto")
         }
         for (a in root.select("a[href]")) {
-            a.attr("href", a.absUrl("href"))
+            a.attr("href", resolveArxivUrl(htmlBase, a.attr("href")))
         }
         val byline = if (authors.isEmpty()) {
             ""
@@ -51,6 +58,21 @@ object ArxivHtml {
             "<p><i>by ${authors.joinToString(", ") { esc(it) }}</i></p>"
         }
         return ArticleContent(title = title, bodyHtml = byline + root.outerHtml(), sourceUrl = absUrl)
+    }
+
+    /**
+     * Resolves [url] against the paper's HTML page directory, bypassing
+     * jsoup's base machinery (the ar5iv `<base>` tag is wrong for figures).
+     */
+    private fun resolveArxivUrl(htmlBase: String, url: String): String {
+        val u = url.trim()
+        return when {
+            u.isEmpty() || u.startsWith("#") -> u
+            u.startsWith("http://") || u.startsWith("https://") -> u
+            u.startsWith("//") -> "https:$u"
+            u.startsWith("/") -> "https://arxiv.org$u"
+            else -> htmlBase + u
+        }
     }
 
     private fun esc(s: String): String = buildString(s.length) {

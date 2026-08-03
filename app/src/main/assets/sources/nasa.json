@@ -18,7 +18,12 @@
   "article": {
     "content": "article",
     "title": "h1",
-    "remove": [],
+    "remove": [
+      ".article-meta-item",
+      "img[src*=\"gravatar.com\"]",
+      "a:has(svg)",
+      "button"
+    ],
     "encoding": null
   },
   "request": {
@@ -26,7 +31,7 @@
     "user_agent": null
   },
   "reader_css": null,
-  "notes": "NASA 官方新闻稿,航天科普词汇。2026-07-25 直连探测:feed 10 items,article 约 4700 字符。",
+  "notes": "NASA 官方新闻稿,航天科普词汇。2026-07-25 直连探测:feed 10 items,article 约 4700 字符。。M30: 补 chrome 清洗——.article-meta-item(「Image Article」书签图标行,内联 svg 无尺寸属性会撑满屏)、a:has(svg)(分享图标钮)、button(图片详情展开器)、gravatar 头像(img[src*=gravatar.com],该域名国内超时必死,留远程 src 只会留个裂图图标)。",
   "test": {
     "fixture": "fixtures/nasa/"
   }
