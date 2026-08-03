@@ -2,6 +2,7 @@ package dev.handypage.app.reader
 
 import android.content.Context
 import org.readium.r2.navigator.epub.EpubPreferences
+import org.readium.r2.navigator.preferences.Color
 import org.readium.r2.navigator.preferences.TextAlign
 import org.readium.r2.navigator.preferences.Theme
 import org.readium.r2.shared.ExperimentalReadiumApi
@@ -77,14 +78,24 @@ data class ReaderSettings(
 
 /** Maps to Readium [EpubPreferences] for `submitPreferences` / `initialPreferences`. */
 @OptIn(ExperimentalReadiumApi::class)
-fun ReaderSettings.toEpubPreferences(): EpubPreferences = EpubPreferences(
-    fontSize = clampedFontScale,
-    theme = when (normalizedThemeName) {
-        ReaderSettings.THEME_DARK -> Theme.DARK
-        ReaderSettings.THEME_SEPIA -> Theme.SEPIA
-        else -> Theme.LIGHT
-    },
-    pageMargins = clampedPageMargins,
+fun ReaderSettings.toEpubPreferences(): EpubPreferences {
+    val dark = normalizedThemeName == ReaderSettings.THEME_DARK
+    return EpubPreferences(
+        fontSize = clampedFontScale,
+        // M27: night mode no longer uses Readium's Theme.DARK — its stock
+        // #FEFEFE-on-#000000 is maximum-glare pure contrast (and the pure
+        // black breaks our own off-black rule). Neutral LIGHT base plus
+        // explicit user colours instead: warm DarkPaper background with a
+        // ~72% warm-grey ink (≈7.8:1, no halation at night). The --USER__
+        // colour rules propagate through the book via ReadiumCSS's own
+        // inherit selectors, so no publisherStyles flip is needed.
+        theme = when (normalizedThemeName) {
+            ReaderSettings.THEME_SEPIA -> Theme.SEPIA
+            else -> Theme.LIGHT
+        },
+        backgroundColor = if (dark) Color(NIGHT_BACKGROUND) else null,
+        textColor = if (dark) Color(NIGHT_TEXT) else null,
+        pageMargins = clampedPageMargins,
     // M9: justify only makes sense for English with hyphenation — without
     // `hyphens: auto` the justified columns get ugly word gaps. Readium
     // injects the CSS; the EPUB chapters carry lang="en" (EpubPackager).
@@ -96,10 +107,15 @@ fun ReaderSettings.toEpubPreferences(): EpubPreferences = EpubPreferences(
     // JUSTIFY preference silently renders as left — so justify must disable
     // publisher styles. (advanced mode also auto-enables body hyphens for
     // justify, the explicit hyphens flag is belt and braces.)
-    textAlign = if (justified) TextAlign.JUSTIFY else null,
-    hyphens = if (justified) true else null,
-    publisherStyles = if (justified) false else null,
-)
+        textAlign = if (justified) TextAlign.JUSTIFY else null,
+        hyphens = if (justified) true else null,
+        publisherStyles = if (justified) false else null,
+    )
+}
+
+/** M27 night-reading palette (design-system.md §2): warm off-black page + ~72% warm-grey ink. */
+private const val NIGHT_BACKGROUND = 0xFF171512.toInt()
+private const val NIGHT_TEXT = 0xFFB8B3A8.toInt()
 
 /**
  * SharedPreferences-backed store ("reader_prefs"): `fontScale` float,

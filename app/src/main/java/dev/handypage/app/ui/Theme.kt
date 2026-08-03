@@ -210,9 +210,12 @@ private val EditorialShapes = Shapes(
 )
 
 @Composable
-fun HandypageTheme(content: @Composable () -> Unit) {
+fun HandypageTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit,
+) {
     MaterialTheme(
-        colorScheme = if (isSystemInDarkTheme()) DarkScheme else LightScheme,
+        colorScheme = if (darkTheme) DarkScheme else LightScheme,
         shapes = EditorialShapes,
         content = content,
     )

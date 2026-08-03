@@ -36,6 +36,10 @@
 - hairline `rgba(255,255,255,.14)` / 实墨线用 `#ece7db`
 - 编辑红提亮 `#d4574a`
 
+**阅读器内明暗由阅读主题全权驱动(M26)**:文章阅读器(EPUB)里,顶栏/Aa 面板/AI 抽屉/对话面板不看系统主题,只看阅读主题——「夜间」→ 全套暗色,「日间/羊皮纸」→ 全套亮色(羊皮纸配暖白 chrome)。切换即时生效(readerSettings 是 Compose state)。例外:词卡面板是 View 体系(values-night 资源),仍随系统;PDF 原版阅读器无阅读主题,随系统。
+
+**夜间阅读页配色(M27)**:页面 `#171512`(与暗色 paper 同色),正文墨 `#B8B3A8`(≈72% 暖灰,对比 ≈7.8:1)——弃用 Readium 内建夜间主题的 #FEFEFE-on-#000000(纯白纯黑是夜间最大眩光);chrome 主文字维持 `#ECE7DB`,形成「UI 亮 / 正文柔」的层次。夜间正文亮度低于 UI 是有意的:长文阅读防刺眼,UI 小字要可辨。
+
 M3 角色映射:`primary=ink`、`onPrimary=paper`、`primaryContainer=paperAlt`、`error=red`、`surface*`=paper 系。
 
 ## 3. 排版规则

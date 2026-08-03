@@ -92,7 +92,14 @@ class ReaderActivity : AppCompatActivity() {
         applyHpAxisOpenTransition()
         val epubPath = intent.getStringExtra(EXTRA_EPUB_PATH)
         setContent {
-            HandypageTheme {
+            // M26: inside the reader the READING theme drives the chrome
+            // (top bar / Aa panel / AI drawer / chat), not the system theme —
+            // a light drawer over the night-mode page was the desync this
+            // fixes. readerSettingsState is Compose state, so flipping the
+            // theme in the Aa panel re-themes every surface instantly.
+            val readerDark = readerSettingsState.value.normalizedThemeName ==
+                ReaderSettings.THEME_DARK
+            HandypageTheme(darkTheme = readerDark) {
                 ReaderShell(
                     controller = chatController.value,
                     openRequests = chatOpenRequests.intValue,
