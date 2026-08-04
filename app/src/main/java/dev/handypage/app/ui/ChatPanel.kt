@@ -266,8 +266,22 @@ private fun MessageBubble(
             ) {
                 Box(modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)) {
                     if (isUser || streaming) {
-                        SelectionContainer {
-                            Text(text = text, style = MaterialTheme.typography.bodyMedium)
+                        // M32: while streaming, a cards block under construction
+                        // collapses into a placeholder instead of raw JSON text.
+                        val (visible, generatingCards) =
+                            if (!isUser) splitStreamingCards(text) else text to false
+                        Column {
+                            SelectionContainer {
+                                Text(text = visible, style = MaterialTheme.typography.bodyMedium)
+                            }
+                            if (generatingCards) {
+                                Text(
+                                    text = stringResource(R.string.agent_cards_generating),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.padding(top = 4.dp),
+                                )
+                            }
                         }
                     } else {
                         MarkdownText(markdown = prose)

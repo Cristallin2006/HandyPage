@@ -61,6 +61,7 @@ import dev.handypage.app.reader.ChatController
 import dev.handypage.app.reader.VocabHighlight
 import dev.handypage.app.reader.WordCardPanel
 import dev.handypage.app.ui.AgentDrawer
+import dev.handypage.app.agent.PaperIndex
 import dev.handypage.app.ui.EditorialHairline
 import dev.handypage.app.ui.EditorialSpacing
 import dev.handypage.app.ui.EditorialStarIcon
@@ -201,7 +202,9 @@ class PaperReaderActivity : AppCompatActivity() {
     /**
      * Article-scoped chat session, same wiring as ReaderFragment — except the
      * article text comes from the reflow EPUB, which the background conversion
-     * may not have produced yet; the ArticleTextTool appears once it exists.
+     * may not have produced yet; the paper tools appear once it exists.
+     * M33: the agent gets a [PaperIndex] over the reflow EPUB (outline +
+     * section drill-down + in-paper search) instead of a truncated text dump.
      */
     private fun setupChat() {
         val controller = ChatController(
@@ -213,10 +216,38 @@ class PaperReaderActivity : AppCompatActivity() {
             sourceName = "arXiv",
             articleTextProvider = { extractArticleText() },
             articleTextAvailable = { File(epubPath).isFile },
+            paperIndexProvider = { buildPaperIndex() },
             scope = lifecycleScope,
         )
         controller.start()
         chatController.value = controller
+    }
+
+    /**
+     * M33: builds the agent's [PaperIndex] from the reflow EPUB's HTML
+     * documents (same zip recipe as [extractArticleText], but keeping the
+     * section markup the text dump throws away). Null while the background
+     * conversion has not produced the EPUB yet.
+     */
+    private suspend fun buildPaperIndex(): PaperIndex? {
+        val file = File(epubPath)
+        if (!file.isFile) return null
+        return withContext(Dispatchers.IO) {
+            ZipFile(file).use { zip ->
+                val docs = zip.entries().toList()
+                    .filter {
+                        it.name.endsWith(".xhtml") || it.name.endsWith(".html") ||
+                            it.name.endsWith(".htm")
+                    }
+                    .sortedBy { it.name }
+                    .map { entry ->
+                        zip.getInputStream(entry).use { input ->
+                            input.readBytes().toString(Charsets.UTF_8)
+                        }
+                    }
+                PaperIndex.fromHtmlDocuments(docs).takeIf { !it.isEmpty }
+            }
+        }
     }
 
     /** Pushes the vocab-book term set into the page whenever it changes. */

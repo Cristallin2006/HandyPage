@@ -8,11 +8,14 @@ import dev.handypage.app.engine.SourceConfig
 import dev.handypage.app.engine.SourceEngine
 import dev.handypage.app.engine.ArticleCfg
 import kotlinx.coroutines.runBlocking
+import mockwebserver3.Dispatcher
 import mockwebserver3.MockResponse
 import mockwebserver3.MockWebServer
+import mockwebserver3.RecordedRequest
 import okhttp3.OkHttpClient
 import org.json.JSONObject
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -66,14 +69,15 @@ class SearchArticlesToolTest {
     )
 
     private fun enqueueRss() {
-        server.enqueue(
-            MockResponse.Builder()
-                .code(200)
-                .addHeader("Content-Type", "application/rss+xml; charset=utf-8")
-                .body(rssFeed)
-                .build(),
-        )
+        server.enqueue(rssResponse())
     }
+
+    private fun rssResponse(): MockResponse =
+        MockResponse.Builder()
+            .code(200)
+            .addHeader("Content-Type", "application/rss+xml; charset=utf-8")
+            .body(rssFeed)
+            .build()
 
     @Before
     fun setUp() {
@@ -170,6 +174,81 @@ class SearchArticlesToolTest {
         tool = SearchArticlesTool(engine, { listOf(arxivSource) }, prefsStore)
         val result = tool.execute(JSONObject())
         assertTrue(result.contains("没有匹配分类"))
+    }
+
+    // ---- M32: concurrent gather with hard timeouts ----
+
+    @Test
+    fun `sources are fetched concurrently not sequentially (M32)`() = runBlocking {
+        server.dispatcher = object : Dispatcher() {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                Thread.sleep(300)
+                return rssResponse()
+            }
+        }
+        val baseUrl = server.url("/rss").toString()
+        val sources = (1..8).map { makeSource("s$it", "S$it", "news", baseUrl) }
+        tool = SearchArticlesTool(engine, { sources }, prefsStore)
+
+        val start = System.currentTimeMillis()
+        val result = tool.execute(JSONObject())
+        val elapsed = System.currentTimeMillis() - start
+
+        // 8 sources × 2 items, capped at 5 newest: the Jan-02 item wins the
+        // string-descending date sort, so it (not the Jan-01 one) survives.
+        assertTrue("unexpected result: ${result.take(300)}", result.contains("AI Breakthrough"))
+        assertEquals(8, server.requestCount)
+        // Sequential would take ≥ 8×300 = 2400 ms; chunks of 4 land in ~2 rounds.
+        assertTrue("elapsed ${elapsed}ms suggests sequential fetching", elapsed < 2200)
+    }
+
+    @Test
+    fun `a hung source is abandoned at the per-source timeout (M32)`() = runBlocking {
+        server.dispatcher = object : Dispatcher() {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                if (request.url.encodedPath == "/hang") Thread.sleep(4000)
+                return rssResponse()
+            }
+        }
+        val sources = listOf(
+            makeSource("hang", "Hang", "news", server.url("/hang").toString()),
+            makeSource("good", "Good", "news", server.url("/rss").toString()),
+        )
+        tool = SearchArticlesTool(
+            engine, { sources }, prefsStore,
+            perSourceTimeoutMs = 800, totalBudgetMs = 15_000,
+        )
+
+        val start = System.currentTimeMillis()
+        val result = tool.execute(JSONObject())
+        val elapsed = System.currentTimeMillis() - start
+
+        assertTrue(result.contains("Climate Change Report"))
+        assertTrue(result.contains("1 个源抓取失败"))
+        assertTrue("took ${elapsed}ms despite the hung source", elapsed < 3500)
+    }
+
+    @Test
+    fun `total budget bounds the whole gather (M32)`() = runBlocking {
+        server.dispatcher = object : Dispatcher() {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                Thread.sleep(4000)
+                return rssResponse()
+            }
+        }
+        val baseUrl = server.url("/rss").toString()
+        val sources = (1..3).map { makeSource("s$it", "S$it", "news", baseUrl) }
+        tool = SearchArticlesTool(
+            engine, { sources }, prefsStore,
+            perSourceTimeoutMs = 30_000, totalBudgetMs = 1_000,
+        )
+
+        val start = System.currentTimeMillis()
+        val result = tool.execute(JSONObject())
+        val elapsed = System.currentTimeMillis() - start
+
+        assertTrue(result.contains("所有阅读源均抓取失败"))
+        assertTrue("took ${elapsed}ms despite the total budget", elapsed < 3500)
     }
 
     private class FakePreferences : PreferencesProvider {

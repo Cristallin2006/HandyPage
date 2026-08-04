@@ -6,6 +6,12 @@ import dev.handypage.app.dict.DictEntry
 import dev.handypage.app.dict.Dictionary
 import dev.handypage.app.vocab.VocabWord
 import dev.handypage.app.vocab.VocabWordDao
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withTimeoutOrNull
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -168,6 +174,115 @@ class ArticleTextTool(
 }
 
 // ---------------------------------------------------------------------------
+// M33: paper-memory tools (outline / section drill-down / in-paper search).
+// Registered INSTEAD of ArticleTextTool when the reader has a PaperIndex —
+// a truncated dump is replaced by agentic navigation (DESIGN.md D20).
+// ---------------------------------------------------------------------------
+
+/** Shared lazily-built index access for the three paper tools. */
+private typealias PaperIndexProvider = suspend () -> PaperIndex?
+
+/**
+ * `get_paper_outline`: the paper's section map (heading + length per
+ * section). Cheap orientation call before any section read.
+ */
+class PaperOutlineTool(
+    private val indexProvider: PaperIndexProvider,
+) : AgentTool {
+
+    override val spec = ToolSpec(
+        name = "get_paper_outline",
+        description = "获取当前论文的章节大纲（节号 + 标题 + 篇幅）。阅读论文具体内容前先用它定位。",
+        parametersSchema = JSONObject()
+            .put("type", "object")
+            .put("properties", JSONObject()),
+    )
+
+    override suspend fun execute(arguments: JSONObject): String {
+        val index = indexProvider() ?: return "论文内容尚未就绪"
+        if (index.isEmpty) return "无法解析论文章节结构"
+        return index.outline()
+    }
+}
+
+/**
+ * `read_paper_section`: reads one section by outline number (0 = abstract),
+ * with [PaperIndex]'s offset continuation for long sections.
+ */
+class ReadPaperSectionTool(
+    private val indexProvider: PaperIndexProvider,
+) : AgentTool {
+
+    override val spec = ToolSpec(
+        name = "read_paper_section",
+        description = "按大纲节号阅读论文某一节的内容。0 为摘要；长节分窗口返回，用 offset 续读（返回末尾会给出下一个 offset）。",
+        parametersSchema = JSONObject()
+            .put("type", "object")
+            .put(
+                "properties",
+                JSONObject()
+                    .put(
+                        "index",
+                        JSONObject()
+                            .put("type", "integer")
+                            .put("description", "大纲中的节号，0 = 摘要"),
+                    )
+                    .put(
+                        "offset",
+                        JSONObject()
+                            .put("type", "integer")
+                            .put("description", "续读起点字符偏移，默认 0"),
+                    ),
+            )
+            .put("required", JSONArray().put("index")),
+    )
+
+    override suspend fun execute(arguments: JSONObject): String {
+        val index = indexProvider() ?: return "论文内容尚未就绪"
+        if (!arguments.has("index")) return "missing parameter: index"
+        return index.readSection(
+            index = arguments.optInt("index"),
+            offset = arguments.optInt("offset", 0),
+        )
+    }
+}
+
+/**
+ * `search_in_paper`: paragraph-level keyword search over the whole paper,
+ * each hit labelled with its section — the associative-memory shortcut for
+ * "论文里 X 是怎么定义的" questions.
+ */
+class SearchInPaperTool(
+    private val indexProvider: PaperIndexProvider,
+) : AgentTool {
+
+    override val spec = ToolSpec(
+        name = "search_in_paper",
+        description = "在论文全文中检索关键词，返回命中段落及其所在章节。",
+        parametersSchema = JSONObject()
+            .put("type", "object")
+            .put(
+                "properties",
+                JSONObject()
+                    .put(
+                        "query",
+                        JSONObject()
+                            .put("type", "string")
+                            .put("description", "要检索的关键词（英文效果最佳）"),
+                    ),
+            )
+            .put("required", JSONArray().put("query")),
+    )
+
+    override suspend fun execute(arguments: JSONObject): String {
+        val index = indexProvider() ?: return "论文内容尚未就绪"
+        val query = arguments.optString("query").trim()
+        if (query.isEmpty()) return "missing parameter: query"
+        return index.search(query)
+    }
+}
+
+// ---------------------------------------------------------------------------
 // M16: Recommendation tools for the global Agent session.
 // ---------------------------------------------------------------------------
 
@@ -184,6 +299,16 @@ class SearchArticlesTool(
     private val engine: dev.handypage.app.engine.SourceEngine,
     private val sourcesProvider: () -> List<dev.handypage.app.engine.SourceConfig>,
     private val preferencesStore: PreferencesProvider,
+    /**
+     * M32: fetch pacing. Pre-M32 the loop below was SEQUENTIAL — ~19 sources ×
+     * 1-3 s each (45 s on a timeout) made one tool call run for minutes. Now
+     * sources are fetched in chunks of [maxConcurrent], each source is capped
+     * at [perSourceTimeoutMs], and the whole gather gives up after
+     * [totalBudgetMs] keeping whatever landed (timeouts are reported, not fatal).
+     */
+    private val maxConcurrent: Int = 4,
+    private val perSourceTimeoutMs: Long = 12_000,
+    private val totalBudgetMs: Long = 20_000,
 ) : AgentTool {
 
     override val spec = ToolSpec(
@@ -235,36 +360,79 @@ class SearchArticlesTool(
         }
         if (filtered.isEmpty()) return "没有匹配分类 \"$category\" 的阅读源"
 
-        val results = ArrayList<JSONObject>()
-        var failedCount = 0
-        for (cfg in filtered) {
-            try {
-                val items = engine.fetchIndex(cfg)
-                for (item in items) {
-                    if (query.isNotEmpty() &&
-                        !item.title.lowercase().contains(query) &&
-                        !(item.summary?.lowercase()?.contains(query) == true)
-                    ) continue
-                    results += JSONObject()
-                        .put("type", "article")
-                        .put("title", item.title)
-                        .put("source", cfg.name)
-                        .put("url", item.url)
-                        .put("summary", item.summary ?: "")
-                        .put("published", item.published ?: "")
+        val results = java.util.concurrent.ConcurrentLinkedQueue<JSONObject>()
+        val failed = java.util.concurrent.atomic.AtomicInteger()
+        val succeeded = java.util.concurrent.atomic.AtomicInteger()
+        // M32: concurrent gather with HARD timeouts. OkHttp's execute() is a
+        // blocking call that ignores coroutine cancellation, so the fetch runs
+        // detached (DETACHED_FETCH) and the timeout races its await() — a hung
+        // source is abandoned, the orphan call dies at OkHttp's own timeout.
+        // A total-budget cancellation lands here as CancellationException and
+        // must NOT be swallowed into the failure count.
+        withTimeoutOrNull(totalBudgetMs) {
+            for (chunk in filtered.chunked(maxConcurrent)) {
+                coroutineScope {
+                    chunk.map { cfg ->
+                        async {
+                            val fetch = DETACHED_FETCH.async {
+                                try {
+                                    engine.fetchIndex(cfg)
+                                } catch (_: Exception) {
+                                    null
+                                }
+                            }
+                            val items = try {
+                                withTimeoutOrNull(perSourceTimeoutMs) { fetch.await() }
+                            } catch (e: CancellationException) {
+                                throw e
+                            }
+                            if (items == null) {
+                                failed.incrementAndGet()
+                            } else {
+                                succeeded.incrementAndGet()
+                                for (item in items) {
+                                    if (query.isNotEmpty() &&
+                                        !item.title.lowercase().contains(query) &&
+                                        !(item.summary?.lowercase()?.contains(query) == true)
+                                    ) continue
+                                    results += JSONObject()
+                                        .put("type", "article")
+                                        .put("title", item.title)
+                                        .put("source", cfg.name)
+                                        .put("url", item.url)
+                                        .put("summary", item.summary ?: "")
+                                        .put("published", item.published ?: "")
+                                }
+                            }
+                        }
+                    }.awaitAll()
                 }
-            } catch (_: Exception) {
-                failedCount++
             }
         }
-        if (results.isEmpty() && failedCount == filtered.size) {
+        val missed = filtered.size - succeeded.get() - failed.get()
+        if (results.isEmpty() && failed.get() + missed == filtered.size) {
             return "所有阅读源均抓取失败（可能需要联网或源已改版）"
         }
         // Sort by published descending (best-effort; empty dates sink).
-        val sorted = results.sortedByDescending { it.optString("published") }
+        val sorted = results.toList().sortedByDescending { it.optString("published") }
         val capped = sorted.take(max)
-        val note = if (failedCount > 0) " ($failedCount 个源抓取失败已跳过)" else ""
+        val note = buildString {
+            if (failed.get() > 0) append(" (${failed.get()} 个源抓取失败已跳过)")
+            if (missed > 0) append(" ($missed 个源响应超时未计入)")
+        }
         return prefsNote + JSONArray(capped).toString() + note
+    }
+
+    companion object {
+        /**
+         * M32: app-lifetime detached scope for source fetches. A fetch whose
+         * per-source timeout fired is abandoned here to die at OkHttp's own
+         * socket timeout; SupervisorJob so one abandoned fetch can't cancel
+         * the others.
+         */
+        private val DETACHED_FETCH = kotlinx.coroutines.CoroutineScope(
+            kotlinx.coroutines.SupervisorJob() + Dispatchers.IO,
+        )
     }
 }
 
@@ -293,7 +461,7 @@ class SearchPapersTool(
                         "query",
                         JSONObject()
                             .put("type", "string")
-                            .put("description", "可选：搜索关键词（英文效果最佳）"),
+                            .put("description", "可选：搜索关键词（英文效果最佳）。多个关键词为 AND 关系；支持字段前缀，如 au:hinton 按作者、ti:transformer 按标题"),
                     )
                     .put(
                         "category",

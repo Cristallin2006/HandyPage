@@ -18,8 +18,13 @@ object ContextBuilder {
     /** Total content characters kept from the conversation history. */
     const val HISTORY_BUDGET_CHARS = 8_000
 
-    /** A single role "tool" message's content is capped at this many chars. */
-    const val TOOL_CONTENT_MAX_CHARS = 2_000
+    /**
+     * A single role "tool" message's content is capped at this many chars.
+     * M33: raised 2 000 → 4 000 so paper-section reads ([PaperIndex]'s
+     * READ_WINDOW_CHARS) survive intact; the 8 000-char history budget
+     * still bounds the total.
+     */
+    const val TOOL_CONTENT_MAX_CHARS = 4_000
 
     fun build(
         systemPrompt: String,

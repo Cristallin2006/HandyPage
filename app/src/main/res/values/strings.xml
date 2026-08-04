@@ -149,4 +149,6 @@
     <string name="ai_config_section">AI 配置</string>
     <string name="agent_empty_title">随手问，随时学</string>
     <string name="agent_empty_hint">语法、翻译、精读方法……直接向你的英语老师提问。API Key 在「设置」里配置。</string>
+    <!-- M32: streaming placeholder while a recommendation cards block is being generated -->
+    <string name="agent_cards_generating">正在生成推荐卡片…</string>
 </resources>

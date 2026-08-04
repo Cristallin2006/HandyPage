@@ -13,9 +13,13 @@ import dev.handypage.app.handypageHttpClient
 import dev.handypage.app.agent.DailyBudgetStore
 import dev.handypage.app.agent.GetPreferencesTool
 import dev.handypage.app.agent.LookupWordTool
+import dev.handypage.app.agent.PaperIndex
+import dev.handypage.app.agent.PaperOutlineTool
+import dev.handypage.app.agent.ReadPaperSectionTool
 import dev.handypage.app.agent.SavePreferenceTool
 import dev.handypage.app.agent.SaveVocabTool
 import dev.handypage.app.agent.SearchArticlesTool
+import dev.handypage.app.agent.SearchInPaperTool
 import dev.handypage.app.agent.SearchPapersTool
 import dev.handypage.app.agent.UsageLog
 import dev.handypage.app.Sources
@@ -57,6 +61,13 @@ class ChatController(
      * keeps the EPUB reader's always-available behavior.
      */
     private val articleTextAvailable: () -> Boolean = { true },
+    /**
+     * M33: when non-null (paper reader), the agent gets a [PaperIndex]
+     * instead of a truncated text dump — the system prompt carries abstract
+     * + outline, and the outline/section/search tools replace
+     * ArticleTextTool.
+     */
+    private val paperIndexProvider: (suspend () -> PaperIndex?)? = null,
     private val scope: CoroutineScope,
 ) {
 
@@ -93,8 +104,14 @@ class ChatController(
     private val history = ArrayList<ChatMessage>()
     private var runJob: Job? = null
     private var articleTextCache: String? = null
+    /** M33: built once per session; a null build (conversion pending) is not cached. */
+    private var paperIndexCache: PaperIndex? = null
     private var lastPrompt: String? = null
     private var lastDisplay: String = ""
+
+    /** M33: lazily builds and caches the paper index (null until ready). */
+    private suspend fun paperIndex(): PaperIndex? =
+        paperIndexCache ?: paperIndexProvider?.invoke()?.also { if (!it.isEmpty) paperIndexCache = it }
 
     /** Creates/resumes the session and starts observing its messages. */
     fun start() {
@@ -196,31 +213,50 @@ class ChatController(
                     }
                 },
             )
-            val articleText = articleTextCache
-                ?: articleTextProvider().also { if (it.isNotBlank()) articleTextCache = it }
+            // M33: paper mode inlines abstract + outline instead of a
+            // truncated full-text dump; navigation happens via the tools.
+            val index = paperIndex()
+            val articleText = if (index != null) {
+                buildString {
+                    if (index.abstractText.isNotBlank()) {
+                        append("【论文摘要】\n").append(index.abstractText)
+                    }
+                    append("\n\n【论文大纲】\n").append(index.outline())
+                }
+            } else {
+                articleTextCache
+                    ?: articleTextProvider().also { if (it.isNotBlank()) articleTextCache = it }
+            }
             val context = ContextBuilder.build(
-                systemPrompt = Prompts.agentSystem(articleTitle),
+                systemPrompt = Prompts.agentSystem(
+                    articleTitle,
+                    paperMode = paperIndexProvider != null,
+                ),
                 articleText = articleText,
                 history = history.dropLast(1),
             )
 
-            val answer = StringBuilder()
+            val answer = dev.handypage.app.agent.AnswerAccumulator()
             runner.run(context, prompt).collect { event ->
                 when (event) {
                     is AgentEvent.AssistantDelta -> {
-                        answer.append(event.text)
+                        answer.onDelta(event.text)
                         state.update {
-                            it.copy(thinking = false, streamingText = answer.toString())
+                            it.copy(thinking = false, streamingText = answer.currentText())
                         }
                     }
                     is AgentEvent.ReasoningDelta ->
                         state.update { it.copy(thinking = true) }
-                    is AgentEvent.ToolStarted ->
-                        state.update { it.copy(toolRunning = event.name) }
+                    is AgentEvent.ToolStarted -> {
+                        // M32: the round that just ended was tool-call preamble;
+                        // its text must not reach the final bubble.
+                        answer.onToolRoundEnded()
+                        state.update { it.copy(toolRunning = event.name, streamingText = "") }
+                    }
                     is AgentEvent.ToolFinished ->
                         state.update { it.copy(toolRunning = null) }
-                    is AgentEvent.Completed -> finishRun(answer.toString(), toolLimit = false)
-                    AgentEvent.ToolLimitReached -> finishRun(answer.toString(), toolLimit = true)
+                    is AgentEvent.Completed -> finishRun(answer.finalText(), toolLimit = false)
+                    AgentEvent.ToolLimitReached -> finishRun(answer.finalText(), toolLimit = true)
                     is AgentEvent.Failed -> state.update {
                         it.copy(
                             busy = false, thinking = false, toolRunning = null,
@@ -269,12 +305,19 @@ class ChatController(
         // would only invite a hallucinated call against empty text. The
         // paper reader registers it only once the reflow EPUB exists.
         if (articleUrl.isNotBlank() && articleTextAvailable()) {
-            add(
-                ArticleTextTool(textProvider = {
-                    articleTextCache
-                        ?: articleTextProvider().also { if (it.isNotBlank()) articleTextCache = it }
-                }),
-            )
+            if (paperIndexProvider != null) {
+                // M33: paper memory tools replace the truncated text dump.
+                add(PaperOutlineTool(indexProvider = { paperIndex() }))
+                add(ReadPaperSectionTool(indexProvider = { paperIndex() }))
+                add(SearchInPaperTool(indexProvider = { paperIndex() }))
+            } else {
+                add(
+                    ArticleTextTool(textProvider = {
+                        articleTextCache
+                            ?: articleTextProvider().also { if (it.isNotBlank()) articleTextCache = it }
+                    }),
+                )
+            }
         }
         // M16: recommendation tools are only registered for the global
         // Agent-tab session (no article context needed).

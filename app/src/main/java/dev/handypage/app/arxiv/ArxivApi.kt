@@ -122,6 +122,17 @@ class ArxivApi(
         private const val MAX_RETRY_AFTER_MS = 120_000L
         private val RETRYABLE_CODES = setOf(429, 500, 502, 503, 504)
         private val WS_RUN = Regex("\\s+")
+        /** Official field prefixes (API manual §5.1); a token starting with one passes through untouched. */
+        private val FIELD_PREFIX = Regex("^(ti|au|abs|co|jr|cat|rn|all):", RegexOption.IGNORE_CASE)
+        /** Boolean operators the user may type explicitly (uppercase, per the manual). */
+        private val BOOLEAN_OPS = setOf("AND", "OR", "ANDNOT")
+        /**
+         * M31: everything outside letters/digits/`._-` is stripped from a term.
+         * Empirical (v0.2.x probes): hyphens pass through fine (`all:GPT-4`),
+         * while quotes/parens/colons can silently corrupt the server-side parse
+         * (an unbalanced quote makes the API rewrite the query into a term-OR).
+         */
+        private val TERM_STRIP = Regex("[^\\p{L}\\p{N}._-]+")
 
         /** App-wide single gate/cache shared by every ArxivApi instance. */
         val sharedGate = ArxivGate()
@@ -129,17 +140,71 @@ class ArxivApi(
         private val sharedFlightLocks = ConcurrentHashMap<String, Any>()
     }
 
-    /** Full-text relevance search: `search_query=all:"<query>"`, most relevant first. */
-    fun search(query: String, start: Int = 0, maxResults: Int = 25): List<ArxivEntry> =
-        queryFeed(searchQuery = "all:\"$query\"", start = start, maxResults = maxResults, sortBy = "relevance")
+    /**
+     * M31: free-text search built the official way (API manual §5.1) — terms
+     * are split on whitespace, cleaned of parser-hostile characters and ANDed
+     * (`all:diffusion AND all:transformer`), instead of the pre-M31 verbatim
+     * `all:"<whole input>"` exact-phrase query that missed most relevant papers
+     * (1 570 vs 7 486 hits for "diffusion transformer") and silently degraded
+     * into a term-OR whenever the input contained an unbalanced quote.
+     * Tokens with a recognised field prefix (`ti:`/`au:`/`abs:`/…) and
+     * uppercase boolean operators pass through, so power users and the Agent
+     * can write `au:hinton AND ti:dropout`. Empty input yields no results.
+     */
+    fun search(query: String, start: Int = 0, maxResults: Int = 25): List<ArxivEntry> {
+        val q = buildSearchQuery(query)
+        if (q.isEmpty()) return emptyList()
+        return queryFeed(searchQuery = q, start = start, maxResults = maxResults, sortBy = "relevance")
+    }
 
     /** Latest submissions in one subject category (e.g. "cs.CL"), newest first. */
     fun byCategory(category: String, start: Int = 0, maxResults: Int = 25): List<ArxivEntry> =
         queryFeed(searchQuery = "cat:$category", start = start, maxResults = maxResults, sortBy = "submittedDate")
 
-    /** Combined keyword + category search (M16 Agent tool). */
-    fun searchAndCategory(query: String, category: String, start: Int = 0, maxResults: Int = 25): List<ArxivEntry> =
-        queryFeed(searchQuery = "all:\"$query\" AND cat:$category", start = start, maxResults = maxResults, sortBy = "relevance")
+    /** Combined keyword + category search (M16 Agent tool). M31: keyword part is parenthesised so a user-typed OR can't leak past the category filter. */
+    fun searchAndCategory(query: String, category: String, start: Int = 0, maxResults: Int = 25): List<ArxivEntry> {
+        val q = buildSearchQuery(query)
+        val combined = if (q.isEmpty()) "cat:$category" else "($q) AND cat:$category"
+        return queryFeed(searchQuery = combined, start = start, maxResults = maxResults, sortBy = "relevance")
+    }
+
+    /**
+     * M31: turns free-form input into an official-style `search_query`.
+     * Plain terms become `all:<term>` and are ANDed; a token carrying a
+     * recognised field prefix (`ti:`/`au:`/`abs:`/…) stays as-is; an
+     * uppercase `AND`/`OR`/`ANDNOT` between terms is honoured. Leading,
+     * trailing and doubled operators are dropped, and characters that could
+     * corrupt the server-side parse (quotes, parens, colons inside terms,
+     * backslashes…) are stripped — the API never reports a malformed query,
+     * it silently rewrites it, so the cleaning must happen client-side.
+     * Returns "" when nothing usable remains.
+     */
+    internal fun buildSearchQuery(input: String): String {
+        val sb = StringBuilder()
+        var pendingOp: String? = null
+        for (raw in input.trim().split(WS_RUN)) {
+            if (raw.isEmpty()) continue
+            if (raw in BOOLEAN_OPS) {
+                // First operator wins between two terms; a leading operator is
+                // ignored and a trailing one is never flushed.
+                if (sb.isNotEmpty() && pendingOp == null) pendingOp = raw
+                continue
+            }
+            val term = cleanTerm(raw) ?: continue
+            if (sb.isNotEmpty()) sb.append(' ').append(pendingOp ?: "AND").append(' ')
+            sb.append(term)
+            pendingOp = null
+        }
+        return sb.toString()
+    }
+
+    /** Cleans one raw token; keeps a recognised field prefix intact. Null when nothing usable remains. */
+    private fun cleanTerm(raw: String): String? {
+        val prefix = FIELD_PREFIX.find(raw)?.value
+        val body = TERM_STRIP.replace(raw.substring(prefix?.length ?: 0), "")
+        if (body.isEmpty()) return null
+        return (prefix ?: "all:") + body
+    }
 
     private fun queryFeed(searchQuery: String, start: Int, maxResults: Int, sortBy: String): List<ArxivEntry> {
         val cacheKey = "$searchQuery|$start|$maxResults|$sortBy"

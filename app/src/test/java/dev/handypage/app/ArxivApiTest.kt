@@ -134,7 +134,10 @@ class ArxivApiTest {
         val recorded = server.takeRequest()
         assertEquals("GET", recorded.method)
         assertEquals("/api/query", recorded.url.encodedPath)
-        assertEquals("all:\"attention is all you need\"", recorded.url.queryParameter("search_query"))
+        assertEquals(
+            "all:attention AND all:is AND all:all AND all:you AND all:need",
+            recorded.url.queryParameter("search_query"),
+        )
         assertEquals("5", recorded.url.queryParameter("start"))
         assertEquals("10", recorded.url.queryParameter("max_results"))
         assertEquals("relevance", recorded.url.queryParameter("sortBy"))
@@ -159,6 +162,52 @@ class ArxivApiTest {
         assertEquals("0", recorded.url.queryParameter("start"))
         assertEquals("25", recorded.url.queryParameter("max_results"))
         assertEquals("submittedDate", recorded.url.queryParameter("sortBy"))
+    }
+
+    // ---- M31: buildSearchQuery ----
+
+    @Test
+    fun `plain terms are ANDed under the all field`() {
+        assertEquals("all:diffusion AND all:transformer", api.buildSearchQuery("diffusion transformer"))
+    }
+
+    @Test
+    fun `field prefixes and explicit booleans pass through`() {
+        assertEquals("ti:attention AND au:vaswani", api.buildSearchQuery("ti:attention au:vaswani"))
+        assertEquals("all:llm OR all:vlm", api.buildSearchQuery("llm OR vlm"))
+    }
+
+    @Test
+    fun `leading trailing and doubled operators are dropped`() {
+        assertEquals("all:llm", api.buildSearchQuery("OR llm"))
+        assertEquals("all:llm", api.buildSearchQuery("llm AND"))
+        assertEquals("all:a AND all:b", api.buildSearchQuery("a AND OR b"))
+    }
+
+    @Test
+    fun `parser-hostile characters are stripped but hyphens and dots survive`() {
+        // Unbalanced quotes / parens / colons previously let the API silently
+        // rewrite the query into a term-OR; hyphens are empirically safe.
+        assertEquals("all:GPT-4", api.buildSearchQuery("GPT-4"))
+        assertEquals("all:attention AND all:is AND all:all", api.buildSearchQuery("attention \"(is: all"))
+        assertEquals("cat:cs.CL", api.buildSearchQuery("cat:cs.CL"))
+    }
+
+    @Test
+    fun `empty or punctuation-only input yields an empty query and no request`() {
+        assertEquals("", api.buildSearchQuery("  \"( )  "))
+        assertTrue(api.search("\"( )").isEmpty())
+        assertEquals(0, server.requestCount)
+    }
+
+    @Test
+    fun `searchAndCategory parenthesises the keyword part`() {
+        enqueueFeed()
+
+        api.searchAndCategory("llm OR vlm", "cs.CL")
+
+        val recorded = server.takeRequest()
+        assertEquals("(all:llm OR all:vlm) AND cat:cs.CL", recorded.url.queryParameter("search_query"))
     }
 
     @Test

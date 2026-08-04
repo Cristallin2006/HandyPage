@@ -2,6 +2,7 @@ package dev.handypage.app
 
 import dev.handypage.app.ui.RecommendCard
 import dev.handypage.app.ui.parseCards
+import dev.handypage.app.ui.splitStreamingCards
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -98,10 +99,44 @@ class RecommendCardsParseTest {
     }
 
     @Test
-    fun `unclosed cards block returns null`() {
-        val text = "text\n```cards\n[{\"type\":\"article\"}]"
+    fun `unclosed cards block still parses (M32)`() {
+        // A truncated stream no longer dumps raw JSON into the bubble.
+        val text = "text\n```cards\n[{\"type\":\"article\",\"title\":\"T\",\"source\":\"S\",\"url\":\"u\"}]"
         val (prose, cards) = parseCards(text)
-        assertEquals(text, prose)
-        assertNull(cards)
+        assertEquals("text", prose)
+        assertEquals(1, cards!!.size)
+        assertEquals("T", cards[0].title)
+    }
+
+    @Test
+    fun `json fence is accepted (M32)`() {
+        val text = "推荐：\n```json\n[{\"type\":\"paper\",\"title\":\"P\",\"absUrl\":\"a\"}]\n```"
+        val (prose, cards) = parseCards(text)
+        assertEquals("推荐：", prose)
+        assertEquals(1, cards!!.size)
+        assertEquals("paper", cards[0].type)
+    }
+
+    @Test
+    fun `trailing commas are repaired (M32)`() {
+        val text = "```cards\n[{\"type\":\"article\",\"title\":\"T\",\"url\":\"u\",},]\n```"
+        val (_, cards) = parseCards(text)
+        assertEquals(1, cards!!.size)
+        assertEquals("T", cards[0].title)
+    }
+
+    @Test
+    fun `text after the closing fence is kept in prose (M32)`() {
+        val text = "前\n```cards\n[{\"type\":\"article\",\"title\":\"T\",\"url\":\"u\"}]\n```\n\n后"
+        val (prose, cards) = parseCards(text)
+        assertEquals("前\n\n后", prose)
+        assertEquals(1, cards!!.size)
+    }
+
+    @Test
+    fun `splitStreamingCards hides the block under construction (M32)`() {
+        assertEquals("你好" to false, splitStreamingCards("你好"))
+        assertEquals("前文" to true, splitStreamingCards("前文\n```cards\n[{\"type\":"))
+        assertEquals("前文" to true, splitStreamingCards("前文\n```json\n["))
     }
 }

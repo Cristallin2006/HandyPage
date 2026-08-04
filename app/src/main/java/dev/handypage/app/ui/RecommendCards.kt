@@ -36,21 +36,41 @@ data class RecommendCard(
 )
 
 /**
+ * M32: fences the model may use for the cards block. The contract says
+ * ```cards, but thinking models sometimes emit ```json instead — both are
+ * accepted rather than dumping raw JSON into the bubble.
+ */
+private val CARD_FENCES = listOf("```cards", "```json")
+
+/** Strips trailing commas (`{"a":1,}` / `[1,]`) — the most common model JSON slip. */
+private val TRAILING_COMMA = Regex(",\\s*([}\\]])")
+
+/**
  * Splits an assistant message into the prose part (Markdown) and the
- * structured cards list. Returns null for cards when no valid ```cards
- * block is found.
+ * structured cards list. Returns null for cards when no usable block is
+ * found (the caller then shows the full raw text as an honest fallback).
+ *
+ * M32 hardening: accepts ```json fences, an UNCLOSED fence (truncated
+ * stream — the rest of the text is tried as JSON), trailing-comma repair,
+ * and text after the closing fence is appended back to the prose instead of
+ * being silently dropped.
  */
 fun parseCards(text: String): Pair<String, List<RecommendCard>?> {
-    val startMarker = "```cards"
-    val startIdx = text.indexOf(startMarker)
+    var startIdx = -1
+    var marker = ""
+    for (fence in CARD_FENCES) {
+        val i = text.indexOf(fence)
+        if (i >= 0 && (startIdx < 0 || i < startIdx)) {
+            startIdx = i
+            marker = fence
+        }
+    }
     if (startIdx < 0) return text to null
-    val jsonStart = startIdx + startMarker.length
+    val jsonStart = startIdx + marker.length
     val endIdx = text.indexOf("```", jsonStart)
-    if (endIdx < 0) return text to null
-    val prose = text.substring(0, startIdx).trimEnd()
-    val jsonStr = text.substring(jsonStart, endIdx).trim()
+    val jsonStr = (if (endIdx >= 0) text.substring(jsonStart, endIdx) else text.substring(jsonStart)).trim()
     val cards = try {
-        val arr = JSONArray(jsonStr)
+        val arr = JSONArray(TRAILING_COMMA.replace(jsonStr, "$1"))
         (0 until arr.length()).mapNotNull { i ->
             val obj = arr.getJSONObject(i)
             val type = obj.optString("type", "")
@@ -75,7 +95,33 @@ fun parseCards(text: String): Pair<String, List<RecommendCard>?> {
     } catch (_: Exception) {
         null
     }
-    return prose to cards?.takeIf { it.isNotEmpty() }
+    // Total parse failure: hide the broken block, keep the prose (legacy
+    // behaviour) — the raw JSON never reaches the bubble.
+    if (cards.isNullOrEmpty()) return text.substring(0, startIdx).trimEnd() to null
+    val prose = buildString {
+        append(text.substring(0, startIdx).trimEnd())
+        if (endIdx >= 0) {
+            val tail = text.substring(endIdx + 3).trim()
+            if (tail.isNotEmpty()) {
+                if (isNotEmpty()) append("\n\n")
+                append(tail)
+            }
+        }
+    }
+    return prose to cards
+}
+
+/**
+ * M32: streaming counterpart of [parseCards] — while the answer is still
+ * being generated, the raw cards JSON must not be typed into the bubble.
+ * Returns the visible text up to the first cards fence, plus whether a
+ * cards block is currently being generated (the UI shows a placeholder
+ * line instead of the JSON).
+ */
+fun splitStreamingCards(text: String): Pair<String, Boolean> {
+    val idx = CARD_FENCES.map { text.indexOf(it) }.filter { it >= 0 }.minOrNull()
+        ?: return text to false
+    return text.substring(0, idx).trimEnd() to true
 }
 
 /** Renders a vertical list of recommendation cards. */

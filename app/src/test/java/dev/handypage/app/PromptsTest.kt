@@ -91,4 +91,15 @@ class PromptsTest {
         assertFalse(noTitle.contains("《"))
         assertTrue(noTitle.contains("不可信数据"))
     }
+
+    @Test
+    fun `agentSystem paper mode directs to section tools (M33)`() {
+        val paper = Prompts.agentSystem("Attention Is All You Need", paperMode = true)
+        assertTrue(paper.contains("read_paper_section"))
+        assertTrue(paper.contains("search_in_paper"))
+        assertTrue(paper.contains("不要凭摘要臆测未读章节"))
+        // News-article sessions keep the plain prompt.
+        val news = Prompts.agentSystem("A news story")
+        assertFalse(news.contains("read_paper_section"))
+    }
 }

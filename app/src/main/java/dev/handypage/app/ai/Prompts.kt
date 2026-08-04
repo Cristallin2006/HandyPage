@@ -96,14 +96,27 @@ object Prompts {
      *
      * M16: when [articleTitle] is null (global Agent-tab session), appends
      * recommendation tool guidance and the structured card output contract.
+     *
+     * M33: [paperMode] (paper reader with a PaperIndex) replaces the inline
+     * full text with abstract + outline and directs the model to the
+     * section/search tools instead of guessing unread chapters.
      */
-    fun agentSystem(articleTitle: String?): String = buildString {
+    fun agentSystem(articleTitle: String?, paperMode: Boolean = false): String = buildString {
         append(SYSTEM_TUTOR)
         if (!articleTitle.isNullOrBlank()) {
             append("\n用户正在阅读的文章：\n《").append(articleTitle.trim()).append("》")
         }
         append("\n你可以调用工具查询内置词典、把生词保存到生词本、获取文章正文；")
         append("只在确有需要时调用，不要滥用。")
+        // M32: thinking-mode models occasionally type the call as text instead
+        // of using the tool_calls channel; forbid it explicitly.
+        append("调用工具时必须使用工具调用通道（tool_calls），")
+        append("不要在回复正文里输出工具名、参数或任何调用 JSON。")
+        if (paperMode) {
+            append("\n这是一篇学术论文，正文不会全部内联（上方已附摘要与章节大纲）。")
+            append("回答涉及具体内容的问题前，用 read_paper_section 阅读相关章节，")
+            append("或用 search_in_paper 检索关键词定位；不要凭摘要臆测未读章节的内容。")
+        }
         if (articleTitle.isNullOrBlank()) {
             append(RECOMMEND_GUIDANCE)
         }
