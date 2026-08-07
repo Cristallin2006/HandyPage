@@ -37,6 +37,7 @@ class AgentRunnerTest {
         override fun streamChat(
             messages: List<ChatMessage>,
             tools: List<ToolSpec>?,
+            disableThinking: Boolean,
         ): Flow<AIEvent> = flow {
             calls += messages.toList()
             for (event in script(calls.size - 1, messages)) emit(event)
@@ -50,6 +51,7 @@ class AgentRunnerTest {
         override fun streamChat(
             messages: List<ChatMessage>,
             tools: List<ToolSpec>?,
+            disableThinking: Boolean,
         ): Flow<AIEvent> = flow {
             delay(delayMs)
             emit(AIEvent.Content("late"))

@@ -124,6 +124,23 @@
     <string name="paper_reflow">重排</string>
     <string name="paper_reflow_ready">重排模式已就绪</string>
     <string name="paper_load_error">论文加载失败</string>
+    <!-- Bilingual HTML reader: official ar5iv page + BYOK 双语翻译 -->
+    <string name="start">开始</string>
+    <string name="paper_view_menu">阅读视图</string>
+    <string name="paper_view_pdf">原版 PDF</string>
+    <string name="paper_view_html">网页原版</string>
+    <string name="paper_view_bilingual">双语翻译</string>
+    <string name="paper_html_preparing">正在准备网页版…</string>
+    <string name="paper_html_unavailable">该论文暂无官方 HTML 版本</string>
+    <string name="paper_ai_not_configured">请先在「设置」中配置 AI 服务商</string>
+    <string name="paper_translate_confirm_title">全文双语翻译</string>
+    <string name="paper_translate_confirm_message">将使用你配置的 API Key 翻译全文 %1$d 个段落（约 %2$d 批请求），按服务商计费。继续？</string>
+    <string name="paper_translate_preparing">翻译准备中…</string>
+    <string name="paper_translating">翻译中 %1$d/%2$d · %3$d 字</string>
+    <string name="paper_translate_failed">翻译失败：%1$s</string>
+    <string name="paper_mode_orig">原文</string>
+    <string name="paper_mode_target">译文</string>
+    <string name="paper_mode_both">双语</string>
     <!-- M13: full category taxonomy + starred papers -->
     <string name="arxiv_more_categories">更多</string>
     <string name="arxiv_pick_category">选择分类</string>

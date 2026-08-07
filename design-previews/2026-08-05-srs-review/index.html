@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>设计方向预览 — SRS 生词复习屏</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f4f4f2;color:#1a1a1a}
+  .bar{padding:20px 32px;border-bottom:1px solid #ddd;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .bar span{color:#666;font-size:13px}
+  .dials{display:grid;grid-template-columns:repeat(3,minmax(180px,1fr));gap:12px;padding:20px 32px;border-bottom:1px solid #ddd}
+  .dial{display:grid;gap:6px;font-size:13px}.dial b{font-weight:650}.dial output{font-variant-numeric:tabular-nums}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;padding:32px}
+  .card{background:#fff;border:2px solid #e2e2e0;border-radius:12px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;min-width:0;position:relative}
+  .card.selected{border-color:#1a1a1a}
+  .rec{position:absolute;top:10px;left:10px;z-index:3;background:#1a1a1a;color:#fff;font-size:11px;letter-spacing:.12em;padding:3px 10px;border-radius:999px}
+  .mock{height:600px;overflow:hidden;position:relative;display:grid;place-items:center;background:#eceae6;container-type:size}
+  .stage{width:390px;height:760px;flex:none;transform:scale(min(calc(100cqw/390px),calc(100cqh/760px)));box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+  .meta{padding:16px 20px;display:grid;gap:4px;min-width:0;width:100%;box-sizing:border-box}
+  .meta b{font-size:15px}
+  .meta p{margin:0;font-size:13px;color:#666;line-height:1.55}
+  .qmdp-pick-button{position:relative;z-index:1;width:calc(100% - 40px);min-height:44px;margin:0 20px 20px;border:1.5px solid #1a1a1a;background:#1a1a1a;color:#fff;font-size:14px;border-radius:8px;cursor:pointer}
+  .qmdp-pick-button:hover{background:#333}
+  .notes{border-top:1px solid #ddd;padding:24px 32px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .note{background:#fff;border:1px solid #e2e2e0;border-radius:12px;padding:16px 20px;font-size:13px;line-height:1.7;color:#444}
+  .note b{display:block;font-size:14px;color:#1a1a1a;margin-bottom:4px}
+  .note.rec-note{border-color:#1a1a1a}
+  .mixnote{padding:0 32px 28px;font-size:13px;color:#666}
+  .confirm{position:fixed;inset:0;display:none;place-items:center;background:rgb(0 0 0 / 32%);z-index:20}
+  .confirm.open{display:grid}
+  .dialog{width:min(520px,calc(100vw - 32px));background:#fff;border-radius:12px;padding:20px}
+  .dialog h2{margin:0 0 8px;font-size:17px}
+  .dialog p{margin:0 0 12px;font-size:13px;color:#555}
+  .dialog textarea{width:100%;min-height:84px;resize:vertical;box-sizing:border-box;padding:8px;border:1px solid #ccc;border-radius:8px;font:inherit;margin-bottom:12px}
+  .dialog .row{display:flex;gap:10px;justify-content:flex-end}
+  .dialog button{min-height:40px;padding:0 18px;border-radius:8px;cursor:pointer;font-size:14px}
+  #cancelPick{background:#fff;border:1px solid #999;color:#333}
+  #confirmPick{background:#1a1a1a;border:1px solid #1a1a1a;color:#fff}
+  .pickbar{position:fixed;bottom:0;left:0;right:0;padding:14px;background:#1a1a1a;color:#fff;text-align:center;transform:translateY(100%);transition:transform 200ms cubic-bezier(.23,1,.32,1);z-index:30}
+  .pickbar.show{transform:translateY(0)}
+  @media (max-width:760px){
+    .bar{padding:16px}
+    .dials{grid-template-columns:1fr;padding:16px}
+    .grid{grid-template-columns:1fr;padding:16px}
+    .mock{height:520px}
+    .notes{grid-template-columns:1fr;padding:16px}
+    .mixnote{padding:0 16px 20px}
+  }
+</style>
+</head>
+<body>
+  <div class="bar"><strong>SRS 生词复习屏 · 方向样机</strong>
+    <span>方向样机,不是最终 App;键盘 1-4 选择 · 确认后回传</span></div>
+  <div class="dials" data-qmdp-dials aria-label="设计拨盘">
+    <label class="dial"><b>视觉冒险度 <output id="varianceOut" data-qmdp-output="variance">5</output></b><input id="variance" data-qmdp-dial="variance" type="range" min="1" max="10" value="5"></label>
+    <label class="dial"><b>动效强度 <output id="motionOut" data-qmdp-output="motion">4</output></b><input id="motion" data-qmdp-dial="motion" type="range" min="1" max="10" value="4"></label>
+    <label class="dial"><b>信息密度 <output id="densityOut" data-qmdp-output="density">5</output></b><input id="density" data-qmdp-dial="density" type="range" min="1" max="10" value="5"></label>
+  </div>
+  <div class="grid">
+    <div class="card" data-dir="0">
+      <div class="mock"><div class="stage"><style>
+.srs-A{
+  width:390px;height:760px;overflow:hidden;
+  background:#f3f0e9;
+  display:flex;align-items:center;justify-content:center;
+  font-family:-apple-system,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+  color:#141414;
+  -webkit-font-smoothing:antialiased;
+}
+.srs-A .card{
+  width:350px;
+  background:#fbfaf7;
+  border:1px solid rgba(0,0,0,.10);
+  border-radius:4px;
+  padding:18px 20px 0;
+  box-sizing:border-box;
+}
+.srs-A .kicker{
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  color:#5c5c58;
+  padding-bottom:10px;
+  border-bottom:1px solid rgba(0,0,0,.10);
+}
+.srs-A .progress{
+  padding-top:12px;
+  font-size:12px;color:#5c5c58;
+  font-variant-numeric:tabular-nums;
+}
+.srs-A .sentence{
+  margin-top:30px;
+  padding-bottom:32px;
+  font-family:'Fraunces',Georgia,-apple-system,'Segoe UI','PingFang SC','Microsoft YaHei',serif;
+  font-size:19px;line-height:1.5;color:#141414;
+}
+.srs-A .blank{
+  position:relative;
+  display:inline-block;
+  width:92px;height:.72em;
+  border-bottom:1.5px solid #141414;
+  vertical-align:baseline;
+}
+.srs-A .pos{
+  position:absolute;left:50%;top:100%;
+  transform:translate(-50%,8px);
+  font-family:-apple-system,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+  font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  color:#a39e98;
+  white-space:nowrap;
+}
+.srs-A .reveal{
+  margin-top:6px;
+  height:48px;
+  display:flex;align-items:center;justify-content:center;
+  background:#141414;color:#fbfaf7;
+  border-radius:4px;
+  font-size:15px;font-weight:500;letter-spacing:.04em;
+}
+.srs-A .grade{
+  margin:20px -20px 0;
+  border-top:1px solid rgba(0,0,0,.10);
+  display:flex;
+  min-height:52px;
+}
+.srs-A .g{
+  flex:1;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;color:#141414;
+}
+.srs-A .g + .g{
+  border-left:1px solid rgba(0,0,0,.10);
+}
+.srs-A .g span{
+  color:#5c5c58;
+  font-variant-numeric:tabular-nums;
+}
+</style>
+<div class="srs-A">
+  <div class="card">
+    <div class="kicker"><span>Daily Review</span><span>Aug 5, 2026 · 12 Due</span></div>
+    <div class="progress">第 3 个 / 共 12 个</div>
+    <div class="sentence">Communities are proving remarkably <span class="blank"><span class="pos">Adj.</span></span> in the face of repeated flooding.</div>
+    <div class="reveal">揭示</div>
+    <div class="grade">
+      <div class="g">认识 <span>&nbsp;· 4 天后</span></div>
+      <div class="g">模糊 <span>&nbsp;· 10 分钟</span></div>
+      <div class="g">不认识 <span>&nbsp;· 明天</span></div>
+    </div>
+  </div>
+</div>
+</div></div>
+      <div class="meta"><b>A · 批注卡</b><p>居中单卡,判定三栏墨线分隔——查词面板的延伸,最稳</p></div>
+      <button type="button" class="qmdp-pick-button" data-qmdp-native-handler="true">选择 A · 批注卡</button>
+    </div>
+    <div class="card" data-dir="1">
+      <div class="mock"><div class="stage"><style>
+.srs-B{box-sizing:border-box;width:390px;height:760px;overflow:hidden;background:#fbfaf7;color:#141414;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
+.srs-B div,.srs-B span{box-sizing:border-box;margin:0;padding:0;}
+.srs-B button{margin:0;padding:0;border:0;background:none;font:inherit;color:inherit;cursor:pointer;}
+.srs-B .srs-B-toprule{flex:none;height:2px;background:#141414;}
+.srs-B .srs-B-body{flex:1;min-height:0;display:flex;flex-direction:column;padding:0 22px 26px;}
+.srs-B .srs-B-kicker{flex:none;display:flex;justify-content:space-between;align-items:baseline;padding-top:16px;font-family:'Fraunces',Georgia,serif;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#5c5c58;font-variant-numeric:tabular-nums;}
+.srs-B .srs-B-prog{flex:none;margin-top:14px;}
+.srs-B .srs-B-prog-meta{font-family:'Fraunces',Georgia,serif;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#5c5c58;font-variant-numeric:tabular-nums;}
+.srs-B .srs-B-prog-track{margin-top:8px;height:2px;background:rgba(0,0,0,.10);}
+.srs-B .srs-B-prog-fill{height:2px;width:25%;background:#141414;}
+.srs-B .srs-B-stage{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;}
+.srs-B .srs-B-word{font-family:'Fraunces',Georgia,serif;font-weight:700;font-style:normal;font-size:84px;line-height:1;letter-spacing:-.02em;color:#141414;}
+.srs-B .srs-B-entry{margin-top:18px;display:flex;align-items:baseline;flex-wrap:wrap;gap:10px;}
+.srs-B .srs-B-phon{font-family:'Fraunces',Georgia,serif;font-size:16px;color:#141414;font-variant-numeric:tabular-nums;}
+.srs-B .srs-B-pos{font-family:'Fraunces',Georgia,serif;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#5c5c58;}
+.srs-B .srs-B-def{font-size:14px;color:#5c5c58;}
+.srs-B .srs-B-sent{margin-top:32px;font-family:'Fraunces',Georgia,serif;font-size:21px;line-height:1.5;color:#141414;}
+.srs-B .srs-B-sent strong{font-weight:700;font-style:normal;}
+.srs-B .srs-B-srchair{margin-top:28px;height:1px;background:rgba(0,0,0,.10);}
+.srs-B .srs-B-src{margin-top:10px;font-family:'Fraunces',Georgia,serif;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#5c5c58;font-variant-numeric:tabular-nums;}
+.srs-B .srs-B-grade{flex:none;}
+.srs-B .srs-B-btn-know{display:flex;align-items:center;justify-content:space-between;width:100%;height:54px;padding:0 18px;background:#141414;color:#fbfaf7;border-radius:4px;font-size:16px;}
+.srs-B .srs-B-btn-know .srs-B-next{font-size:14px;color:rgba(251,250,247,.66);font-variant-numeric:tabular-nums;}
+.srs-B .srs-B-btn-row{display:flex;gap:10px;margin-top:10px;}
+.srs-B .srs-B-btn-sub{flex:1;height:50px;display:flex;align-items:center;justify-content:center;gap:6px;border:1px solid #141414;border-radius:4px;background:transparent;color:#141414;font-size:14px;}
+.srs-B .srs-B-btn-sub .srs-B-t{color:#5c5c58;font-variant-numeric:tabular-nums;}
+</style>
+<div class="srs-B">
+  <div class="srs-B-toprule"></div>
+  <div class="srs-B-body">
+    <div class="srs-B-kicker"><span>Daily Review</span><span>Aug 5, 2026 · 12 Due</span></div>
+    <div class="srs-B-prog">
+      <div class="srs-B-prog-meta">Word 3 / 12</div>
+      <div class="srs-B-prog-track"><div class="srs-B-prog-fill"></div></div>
+    </div>
+    <div class="srs-B-stage">
+      <div class="srs-B-word">resilient</div>
+      <div class="srs-B-entry"><span class="srs-B-phon">/rɪˈzɪlɪənt/</span><span class="srs-B-pos">adj.</span><span class="srs-B-def">坚韧的,能迅速恢复的</span></div>
+      <div class="srs-B-sent">Communities are proving remarkably <strong>resilient</strong> in the face of repeated flooding.</div>
+      <div class="srs-B-srchair"></div>
+      <div class="srs-B-src">NPR · Saved 3 Days Ago</div>
+    </div>
+    <div class="srs-B-grade">
+      <button type="button" class="srs-B-btn-know"><span>认识</span><span class="srs-B-next">下次 4 天后</span></button>
+      <div class="srs-B-btn-row">
+        <button type="button" class="srs-B-btn-sub"><span>模糊</span><span class="srs-B-t">10 分钟后</span></button>
+        <button type="button" class="srs-B-btn-sub"><span>不认识</span><span class="srs-B-t">明天再会</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+</div></div>
+      <div class="meta"><b>B · 头版巨词</b><p>揭示态即头版:84px 衬线巨词,每天 12 次上头版的仪式感</p></div>
+      <button type="button" class="qmdp-pick-button" data-qmdp-native-handler="true">选择 B · 头版巨词</button>
+    </div>
+    <div class="card" data-dir="2">
+      <div class="mock"><div class="stage"><style>
+.srs-C{
+  width:390px;height:760px;overflow:hidden;background:#fbfaf7;color:#141414;
+  display:flex;flex-direction:column;
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.srs-C .rule-top{flex:none;height:2px;background:#141414;}
+.srs-C .head{flex:none;display:flex;justify-content:space-between;align-items:baseline;padding:18px 20px 0;}
+.srs-C .head span{
+  font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#5c5c58;
+  font-variant-numeric:tabular-nums;
+}
+.srs-C .progress{flex:none;display:flex;gap:4px;margin:14px 20px 0;}
+.srs-C .progress i{flex:1;height:2px;background:rgba(0,0,0,.10);}
+.srs-C .progress i.done{background:#141414;}
+.srs-C .deck{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 0 8px;}
+.srs-C .card{
+  margin:0 20px;background:#fbfaf7;border:1px solid rgba(0,0,0,.10);border-radius:4px;
+  padding:24px 22px 20px;
+}
+.srs-C .card .kicker{
+  font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#5c5c58;
+  font-variant-numeric:tabular-nums;
+}
+.srs-C .card .cue{
+  margin:16px 0 0;font-family:'Fraunces',Georgia,serif;font-size:20px;line-height:1.75;color:#141414;
+}
+.srs-C .blank{position:relative;display:inline-block;width:92px;height:1em;vertical-align:-0.12em;border-bottom:1.5px solid #141414;}
+.srs-C .blank .pos{
+  position:absolute;left:50%;top:100%;transform:translateX(-50%);padding-top:3px;
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:11px;letter-spacing:.08em;color:#a39e98;white-space:nowrap;
+}
+.srs-C .card .meta{
+  margin:18px 0 0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#5c5c58;
+  font-variant-numeric:tabular-nums;
+}
+.srs-C .peek{flex:none;height:48px;overflow:hidden;margin-top:14px;}
+.srs-C .peek .card{
+  margin:0 32px;opacity:.6;padding:18px 20px 20px;
+}
+.srs-C .band{
+  flex:none;min-height:52px;display:flex;align-items:center;justify-content:center;
+  border-top:1px solid rgba(0,0,0,.10);border-bottom:1px solid rgba(0,0,0,.10);
+  font-size:12px;letter-spacing:.06em;color:#5c5c58;
+}
+</style>
+<div class="srs-C">
+  <div class="rule-top"></div>
+  <div class="head"><span>Daily Review</span><span>12 due</span></div>
+  <div class="progress"><i class="done"></i><i class="done"></i><i class="done"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="deck">
+    <div class="card">
+      <div class="kicker">Word 3 · NPR</div>
+      <p class="cue">Communities are proving remarkably <span class="blank"><span class="pos">ADJ.</span></span> in the face of repeated flooding.</p>
+      <div class="meta">NPR · 3 天前保存</div>
+    </div>
+    <div class="peek">
+      <div class="card">
+        <div class="kicker">Word 4 · ubiquitous</div>
+      </div>
+    </div>
+  </div>
+  <div class="band">← 不认识&nbsp;&nbsp;·&nbsp;&nbsp;点按揭示&nbsp;&nbsp;·&nbsp;&nbsp;认识 →</div>
+</div>
+</div></div>
+      <div class="meta"><b>C · 牌组快闪</b><p>纵深牌组 + 滑动判定,无按钮,节奏最快、密度最高</p></div>
+      <button type="button" class="qmdp-pick-button" data-qmdp-native-handler="true">选择 C · 牌组快闪</button>
+    </div>
+    <div class="card" data-dir="3" data-rec>
+      <span class="rec">推荐</span>
+      <div class="mock"><div class="stage"><style>
+.srs-D{width:390px;height:760px;overflow:hidden;background:#fbfaf7;color:#141414;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;display:flex;flex-direction:column;position:relative}
+.srs-D *{margin:0;padding:0;box-sizing:border-box;font-style:normal}
+.srs-D-kick{display:flex;justify-content:space-between;align-items:baseline;padding:22px 24px 0}
+.srs-D-kick span{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#5c5c58;font-variant-numeric:tabular-nums}
+.srs-D-ruleT{margin-top:14px;height:1px;background:rgba(0,0,0,.10)}
+.srs-D-prog{margin-top:20px;text-align:center;font-family:'Fraunces',Georgia,serif;font-size:13px;letter-spacing:.14em;color:#5c5c58;font-variant-numeric:tabular-nums}
+.srs-D-mid{padding:0 30px}
+.srs-D-sent{margin-top:64px;font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:24px;line-height:1.45;text-align:center;color:#141414}
+.srs-D-ln{display:block}
+.srs-D-lnb{padding-bottom:24px}
+.srs-D-blank{display:inline-block;position:relative;width:4.4em;height:.92em;border-bottom:1.5px solid #141414;vertical-align:baseline}
+.srs-D-pos{position:absolute;left:50%;top:calc(100% + 5px);transform:translateX(-50%);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;font-size:11px;font-weight:500;letter-spacing:.1em;color:#5c5c58;line-height:1.4;white-space:nowrap}
+.srs-D-srcRule{margin-top:28px;height:1px;background:rgba(0,0,0,.10)}
+.srs-D-src{margin-top:12px;text-align:center;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#5c5c58;font-variant-numeric:tabular-nums}
+.srs-D-reveal{margin:34px auto 0;display:flex;align-items:center;justify-content:center;min-height:44px;min-width:132px;width:fit-content;padding:0 26px 0 29px;border:1px solid #141414;border-radius:4px;background:transparent;color:#141414;font-size:13px;font-weight:500;letter-spacing:.3em}
+.srs-D-hint{margin-top:10px;text-align:center;font-size:11px;letter-spacing:.08em;color:#a39e98}
+.srs-D-judge{margin-top:auto}
+.srs-D-jrow{display:flex;align-items:center;justify-content:space-between;min-height:54px;padding:0 24px;border-top:1px solid rgba(0,0,0,.10)}
+.srs-D-jlab{font-size:15px;font-weight:500;color:#a39e98}
+.srs-D-jint{font-size:12px;color:#a39e98;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+</style>
+<div class="srs-D">
+  <div class="srs-D-kick"><span>DAILY REVIEW</span><span>AUG 5, 2026 · 12 DUE</span></div>
+  <div class="srs-D-ruleT"></div>
+  <div class="srs-D-prog">3 / 12</div>
+  <div class="srs-D-mid">
+    <p class="srs-D-sent"><span class="srs-D-ln">Communities are proving</span><span class="srs-D-ln srs-D-lnb">remarkably <span class="srs-D-blank"><span class="srs-D-pos">adj.</span></span></span><span class="srs-D-ln">in the face of</span><span class="srs-D-ln">repeated flooding.</span></p>
+    <div class="srs-D-srcRule"></div>
+    <div class="srs-D-src">NPR · 3 天前保存</div>
+    <div class="srs-D-reveal">揭示</div>
+    <div class="srs-D-hint">点按空位即可揭示</div>
+  </div>
+  <div class="srs-D-judge">
+    <div class="srs-D-jrow"><span class="srs-D-jlab">认识</span><span class="srs-D-jint">下次 4 天后</span></div>
+    <div class="srs-D-jrow"><span class="srs-D-jlab">模糊</span><span class="srs-D-jint">10 分钟后</span></div>
+    <div class="srs-D-jrow"><span class="srs-D-jlab">不认识</span><span class="srs-D-jint">明天再会</span></div>
+  </div>
+</div>
+</div></div>
+      <div class="meta"><b>D · 语境批注</b><p>句子是唯一主角,词永不离开语境——功能的存在理由就是视觉主角</p></div>
+      <button type="button" class="qmdp-pick-button" data-qmdp-native-handler="true">选择 D · 语境批注</button>
+    </div>
+  </div>
+  <div class="notes">
+    <div class="note"><b>A · 批注卡</b>问题态。全部内容收进居中纸卡:kicker / 进度 / 挖空句 / 墨色「揭示」主钮 / hairline 三栏文字判定。与查词面板同血统,学习成本零。适合:求稳,想和最熟悉的组件保持一致。</div>
+    <div class="note"><b>B · 头版巨词</b>揭示态。2dp 墨线压顶,resilient 以 84px Fraunces 落版如头版标题,判定 = 通栏墨块主钮 + 双描边次钮。记忆点最强,但复习是高频场景,巨词仪式感可能随次数递减。适合:想要每天打开有期待感。</div>
+    <div class="note"><b>C · 牌组快闪</b>问题态。分段进度 + 主卡 + 下一张透视(ubiquitous),右滑认识/左滑不认识/点按揭示,无判定按钮。12 词 60 秒刷完的节奏。适合:复习量大、追求效率;代价是手势误判定风险。</div>
+    <div class="note rec-note"><b>D · 语境批注(推荐)</b>问题态。语境句 22-26px 衬线为唯一主角,目标词只留一道 1.5dp 墨线空位;判定是通栏 hairline 文字钮。推荐理由:SRS 的 pedagogical 核心是"在语境中回忆",D 把语境做成视觉主角;与 App 已有的「好句下划线」「查词批注」同一血统,是四个方向里设计语言最自洽的。</div>
+  </div>
+  <div class="mixnote">也可以只选中意某个细节,在对话里告诉我(如:要 D 的语境句 + C 的滑动判定)。</div>
+  <div class="confirm" id="confirm" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="dialog">
+      <h2 id="confirmTitle">确认设计方向</h2>
+      <p id="confirmMeta"></p>
+      <textarea id="adjustments" placeholder="可选:写下想调整的地方,比如更稳一点、要 D 的语境句 + C 的滑动判定"></textarea>
+      <div class="row">
+        <button type="button" id="cancelPick">取消</button>
+        <button type="button" id="confirmPick">确认并回传</button>
+      </div>
+    </div>
+  </div>
+  <div class="pickbar" id="pickbar"></div>
+<script>
+  const NAMES = ['批注卡','头版巨词','牌组快闪','语境批注'];
+  let pending = null;
+  function dials(){
+    return {
+      variance: Number(document.getElementById('variance').value),
+      motion: Number(document.getElementById('motion').value),
+      density: Number(document.getElementById('density').value)
+    };
+  }
+  ['variance','motion','density'].forEach(id => {
+    const input = document.getElementById(id), out = document.getElementById(id + 'Out');
+    input.addEventListener('input', () => { out.value = input.value; out.textContent = input.value; });
+  });
+  function selectionText(payload){
+    const values = payload.dials || dials();
+    const advice = payload.adjustments ? ';建议:' + payload.adjustments : '';
+    return payload.label + ';拨盘:视觉冒险度 ' + values.variance +
+      ' / 动效强度 ' + values.motion + ' / 信息密度 ' + values.density + advice;
+  }
+  async function sendSelection(payload){
+    const msg = selectionText(payload);
+    if (location.protocol === 'file:') {
+      if (navigator.clipboard) await navigator.clipboard.writeText(msg).catch(()=>{});
+      return {ok:false, fallback:true};
+    }
+    const res = await fetch('/api/select', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    return res.json();
+  }
+  function openConfirm(i){
+    document.querySelectorAll('.card').forEach((c,idx)=>c.classList.toggle('selected', idx===i));
+    const id = 'ABCD'[i];
+    pending = {id, name: NAMES[i], label:'选 ' + id + ':' + NAMES[i]};
+    const values = dials();
+    document.getElementById('confirmMeta').textContent =
+      pending.label + ' · 视觉冒险度 ' + values.variance + ' / 动效强度 ' + values.motion + ' / 信息密度 ' + values.density;
+    document.getElementById('confirm').classList.add('open');
+    document.getElementById('adjustments').focus();
+  }
+  async function confirmSelection(){
+    if(!pending) return;
+    const msg = pending.label;
+    const bar = document.getElementById('pickbar');
+    const payload = {...pending, notes:'', dials: dials(), adjustments: document.getElementById('adjustments').value.trim()};
+    const result = await sendSelection(payload);
+    bar.textContent = result.ok
+      ? '已选择 ' + msg + ' — 已回传'
+      : '已选择 ' + msg + ' — 当前为静态降级,请回到对话发送这句话';
+    bar.classList.add('show');
+    document.getElementById('confirm').classList.remove('open');
+  }
+  document.querySelectorAll('.card').forEach((c,i)=>{
+    c.addEventListener('click', ()=>openConfirm(i));
+  });
+  document.addEventListener('keydown', e=>{
+    const i = ['1','2','3','4'].indexOf(e.key);
+    if(i>-1) openConfirm(i);
+  });
+  document.getElementById('cancelPick').onclick = () => document.getElementById('confirm').classList.remove('open');
+  document.getElementById('confirmPick').onclick = confirmSelection;
+</script>
+</body>
+</html>

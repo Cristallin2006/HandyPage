@@ -47,8 +47,9 @@ class OpenAICompatProvider(
     override fun streamChat(
         messages: List<ChatMessage>,
         tools: List<ToolSpec>?,
+        disableThinking: Boolean,
     ): Flow<AIEvent> = callbackFlow {
-        val request = buildRequest(messages, stream = true, tools = tools)
+        val request = buildRequest(messages, stream = true, tools = tools, disableThinking = disableThinking)
         dbg("streamChat -> ${request.url} bodyBytes=${request.body?.contentLength()}")
         val call = client.newCall(request)
         call.enqueue(object : Callback {
@@ -131,6 +132,7 @@ class OpenAICompatProvider(
         stream: Boolean,
         maxTokens: Int? = null,
         tools: List<ToolSpec>? = null,
+        disableThinking: Boolean = false,
     ): Request {
         val jsonMessages = JSONArray()
         // The probe goes out with a minimal prompt; real calls use the given list.
@@ -145,6 +147,11 @@ class OpenAICompatProvider(
             .put("messages", jsonMessages)
             .put("stream", stream)
         if (maxTokens != null) body.put("max_tokens", maxTokens)
+        // M34: batch translation opts out of the reasoning phase (DeepSeek V4
+        // thinks by default; translation needs none of it).
+        if (disableThinking) {
+            body.put("thinking", JSONObject().put("type", "disabled"))
+        }
         if (!tools.isNullOrEmpty()) {
             val jsonTools = JSONArray()
             for (tool in tools) {

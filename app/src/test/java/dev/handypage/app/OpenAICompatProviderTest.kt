@@ -92,6 +92,40 @@ class OpenAICompatProviderTest {
     }
 
     @Test
+    fun `disableThinking puts the thinking toggle in the request body (M34)`() = runBlocking {
+        val sse = "data: {\"choices\":[{\"delta\":{\"content\":\"ok\"}}]}\n\ndata: [DONE]\n\n"
+        server.enqueue(
+            MockResponse.Builder()
+                .code(200)
+                .addHeader("Content-Type", "text/event-stream")
+                .body(sse)
+                .build(),
+        )
+
+        provider(server.url("/v1").toString())
+            .streamChat(
+                listOf(ChatMessage(role = "user", content = "Hi")),
+                disableThinking = true,
+            )
+            .toList()
+
+        assertTrue(server.takeRequest().body!!.utf8().contains("\"thinking\":{\"type\":\"disabled\"}"))
+
+        // Default path stays byte-clean: no thinking key at all.
+        server.enqueue(
+            MockResponse.Builder()
+                .code(200)
+                .addHeader("Content-Type", "text/event-stream")
+                .body(sse)
+                .build(),
+        )
+        provider(server.url("/v1").toString())
+            .streamChat(listOf(ChatMessage(role = "user", content = "Hi")))
+            .toList()
+        assertTrue(!server.takeRequest().body!!.utf8().contains("\"thinking\""))
+    }
+
+    @Test
     fun `SSE stream without DONE still completes at EOF`() = runBlocking {
         server.enqueue(
             MockResponse.Builder()

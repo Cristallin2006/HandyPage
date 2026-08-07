@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>设计方向预览 — SRS 生词复习屏</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f4f4f2;color:#1a1a1a}
+  .bar{padding:20px 32px;border-bottom:1px solid #ddd;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .bar span{color:#666;font-size:13px}
+  .dials{display:grid;grid-template-columns:repeat(3,minmax(180px,1fr));gap:12px;padding:20px 32px;border-bottom:1px solid #ddd}
+  .dial{display:grid;gap:6px;font-size:13px}.dial b{font-weight:650}.dial output{font-variant-numeric:tabular-nums}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;padding:32px}
+  .card{background:#fff;border:2px solid #e2e2e0;border-radius:12px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;min-width:0;position:relative}
+  .card.selected{border-color:#1a1a1a}
+  .rec{position:absolute;top:10px;left:10px;z-index:3;background:#1a1a1a;color:#fff;font-size:11px;letter-spacing:.12em;padding:3px 10px;border-radius:999px}
+  .mock{height:600px;overflow:hidden;position:relative;display:grid;place-items:center;background:#eceae6;container-type:size}
+  .stage{width:390px;height:760px;flex:none;transform:scale(min(calc(100cqw/390px),calc(100cqh/760px)));box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+  .meta{padding:16px 20px;display:grid;gap:4px;min-width:0;width:100%;box-sizing:border-box}
+  .meta b{font-size:15px}
+  .meta p{margin:0;font-size:13px;color:#666;line-height:1.55}
+  .qmdp-pick-button{position:relative;z-index:1;width:calc(100% - 40px);min-height:44px;margin:0 20px 20px;border:1.5px solid #1a1a1a;background:#1a1a1a;color:#fff;font-size:14px;border-radius:8px;cursor:pointer}
+  .qmdp-pick-button:hover{background:#333}
+  .notes{border-top:1px solid #ddd;padding:24px 32px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .note{background:#fff;border:1px solid #e2e2e0;border-radius:12px;padding:16px 20px;font-size:13px;line-height:1.7;color:#444}
+  .note b{display:block;font-size:14px;color:#1a1a1a;margin-bottom:4px}
+  .note.rec-note{border-color:#1a1a1a}
+  .mixnote{padding:0 32px 28px;font-size:13px;color:#666}
+  .confirm{position:fixed;inset:0;display:none;place-items:center;background:rgb(0 0 0 / 32%);z-index:20}
+  .confirm.open{display:grid}
+  .dialog{width:min(520px,calc(100vw - 32px));background:#fff;border-radius:12px;padding:20px}
+  .dialog h2{margin:0 0 8px;font-size:17px}
+  .dialog p{margin:0 0 12px;font-size:13px;color:#555}
+  .dialog textarea{width:100%;min-height:84px;resize:vertical;box-sizing:border-box;padding:8px;border:1px solid #ccc;border-radius:8px;font:inherit;margin-bottom:12px}
+  .dialog .row{display:flex;gap:10px;justify-content:flex-end}
+  .dialog button{min-height:40px;padding:0 18px;border-radius:8px;cursor:pointer;font-size:14px}
+  #cancelPick{background:#fff;border:1px solid #999;color:#333}
+  #confirmPick{background:#1a1a1a;border:1px solid #1a1a1a;color:#fff}
+  .pickbar{position:fixed;bottom:0;left:0;right:0;padding:14px;background:#1a1a1a;color:#fff;text-align:center;transform:translateY(100%);transition:transform 200ms cubic-bezier(.23,1,.32,1);z-index:30}
+  .pickbar.show{transform:translateY(0)}
+  @media (max-width:760px){
+    .bar{padding:16px}
+    .dials{grid-template-columns:1fr;padding:16px}
+    .grid{grid-template-columns:1fr;padding:16px}
+    .mock{height:520px}
+    .notes{grid-template-columns:1fr;padding:16px}
+    .mixnote{padding:0 16px 20px}
+  }
+</style>
+</head>
+<body>
+  <div class="bar"><strong>SRS 生词复习屏 · 方向样机</strong>
+    <span>方向样机,不是最终 App;键盘 1-4 选择 · 确认后回传</span></div>
+  <div class="dials" data-qmdp-dials aria-label="设计拨盘">
+    <label class="dial"><b>视觉冒险度 <output id="varianceOut" data-qmdp-output="variance">5</output></b><input id="variance" data-qmdp-dial="variance" type="range" min="1" max="10" value="5"></label>
+    <label class="dial"><b>动效强度 <output id="motionOut" data-qmdp-output="motion">4</output></b><input id="motion" data-qmdp-dial="motion" type="range" min="1" max="10" value="4"></label>
+    <label class="dial"><b>信息密度 <output id="densityOut" data-qmdp-output="density">5</output></b><input id="density" data-qmdp-dial="density" type="range" min="1" max="10" value="5"></label>
+  </div>
+  <div class="grid">
+    <div class="card" data-dir="0">
+      <div class="mock"><div class="stage"><!--FRAG_A--></div></div>
+      <div class="meta"><b>A · 批注卡</b><p>居中单卡,判定三栏墨线分隔——查词面板的延伸,最稳</p></div>
+      <button type="button" class="qmdp-pick-button" data-qmdp-native-handler="true">选择 A · 批注卡</button>
+    </div>
+    <div class="card" data-dir="1">
+      <div class="mock"><div class="stage"><!--FRAG_B--></div></div>
+      <div class="meta"><b>B · 头版巨词</b><p>揭示态即头版:84px 衬线巨词,每天 12 次上头版的仪式感</p></div>
+      <button type="button" class="qmdp-pick-button" data-qmdp-native-handler="true">选择 B · 头版巨词</button>
+    </div>
+    <div class="card" data-dir="2">
+      <div class="mock"><div class="stage"><!--FRAG_C--></div></div>
+      <div class="meta"><b>C · 牌组快闪</b><p>纵深牌组 + 滑动判定,无按钮,节奏最快、密度最高</p></div>
+      <button type="button" class="qmdp-pick-button" data-qmdp-native-handler="true">选择 C · 牌组快闪</button>
+    </div>
+    <div class="card" data-dir="3" data-rec>
+      <span class="rec">推荐</span>
+      <div class="mock"><div class="stage"><!--FRAG_D--></div></div>
+      <div class="meta"><b>D · 语境批注</b><p>句子是唯一主角,词永不离开语境——功能的存在理由就是视觉主角</p></div>
+      <button type="button" class="qmdp-pick-button" data-qmdp-native-handler="true">选择 D · 语境批注</button>
+    </div>
+  </div>
+  <div class="notes">
+    <div class="note"><b>A · 批注卡</b>问题态。全部内容收进居中纸卡:kicker / 进度 / 挖空句 / 墨色「揭示」主钮 / hairline 三栏文字判定。与查词面板同血统,学习成本零。适合:求稳,想和最熟悉的组件保持一致。</div>
+    <div class="note"><b>B · 头版巨词</b>揭示态。2dp 墨线压顶,resilient 以 84px Fraunces 落版如头版标题,判定 = 通栏墨块主钮 + 双描边次钮。记忆点最强,但复习是高频场景,巨词仪式感可能随次数递减。适合:想要每天打开有期待感。</div>
+    <div class="note"><b>C · 牌组快闪</b>问题态。分段进度 + 主卡 + 下一张透视(ubiquitous),右滑认识/左滑不认识/点按揭示,无判定按钮。12 词 60 秒刷完的节奏。适合:复习量大、追求效率;代价是手势误判定风险。</div>
+    <div class="note rec-note"><b>D · 语境批注(推荐)</b>问题态。语境句 22-26px 衬线为唯一主角,目标词只留一道 1.5dp 墨线空位;判定是通栏 hairline 文字钮。推荐理由:SRS 的 pedagogical 核心是"在语境中回忆",D 把语境做成视觉主角;与 App 已有的「好句下划线」「查词批注」同一血统,是四个方向里设计语言最自洽的。</div>
+  </div>
+  <div class="mixnote">也可以只选中意某个细节,在对话里告诉我(如:要 D 的语境句 + C 的滑动判定)。</div>
+  <div class="confirm" id="confirm" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="dialog">
+      <h2 id="confirmTitle">确认设计方向</h2>
+      <p id="confirmMeta"></p>
+      <textarea id="adjustments" placeholder="可选:写下想调整的地方,比如更稳一点、要 D 的语境句 + C 的滑动判定"></textarea>
+      <div class="row">
+        <button type="button" id="cancelPick">取消</button>
+        <button type="button" id="confirmPick">确认并回传</button>
+      </div>
+    </div>
+  </div>
+  <div class="pickbar" id="pickbar"></div>
+<script>
+  const NAMES = ['批注卡','头版巨词','牌组快闪','语境批注'];
+  let pending = null;
+  function dials(){
+    return {
+      variance: Number(document.getElementById('variance').value),
+      motion: Number(document.getElementById('motion').value),
+      density: Number(document.getElementById('density').value)
+    };
+  }
+  ['variance','motion','density'].forEach(id => {
+    const input = document.getElementById(id), out = document.getElementById(id + 'Out');
+    input.addEventListener('input', () => { out.value = input.value; out.textContent = input.value; });
+  });
+  function selectionText(payload){
+    const values = payload.dials || dials();
+    const advice = payload.adjustments ? ';建议:' + payload.adjustments : '';
+    return payload.label + ';拨盘:视觉冒险度 ' + values.variance +
+      ' / 动效强度 ' + values.motion + ' / 信息密度 ' + values.density + advice;
+  }
+  async function sendSelection(payload){
+    const msg = selectionText(payload);
+    if (location.protocol === 'file:') {
+      if (navigator.clipboard) await navigator.clipboard.writeText(msg).catch(()=>{});
+      return {ok:false, fallback:true};
+    }
+    const res = await fetch('/api/select', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    return res.json();
+  }
+  function openConfirm(i){
+    document.querySelectorAll('.card').forEach((c,idx)=>c.classList.toggle('selected', idx===i));
+    const id = 'ABCD'[i];
+    pending = {id, name: NAMES[i], label:'选 ' + id + ':' + NAMES[i]};
+    const values = dials();
+    document.getElementById('confirmMeta').textContent =
+      pending.label + ' · 视觉冒险度 ' + values.variance + ' / 动效强度 ' + values.motion + ' / 信息密度 ' + values.density;
+    document.getElementById('confirm').classList.add('open');
+    document.getElementById('adjustments').focus();
+  }
+  async function confirmSelection(){
+    if(!pending) return;
+    const msg = pending.label;
+    const bar = document.getElementById('pickbar');
+    const payload = {...pending, notes:'', dials: dials(), adjustments: document.getElementById('adjustments').value.trim()};
+    const result = await sendSelection(payload);
+    bar.textContent = result.ok
+      ? '已选择 ' + msg + ' — 已回传'
+      : '已选择 ' + msg + ' — 当前为静态降级,请回到对话发送这句话';
+    bar.classList.add('show');
+    document.getElementById('confirm').classList.remove('open');
+  }
+  document.querySelectorAll('.card').forEach((c,i)=>{
+    c.addEventListener('click', ()=>openConfirm(i));
+  });
+  document.addEventListener('keydown', e=>{
+    const i = ['1','2','3','4'].indexOf(e.key);
+    if(i>-1) openConfirm(i);
+  });
+  document.getElementById('cancelPick').onclick = () => document.getElementById('confirm').classList.remove('open');
+  document.getElementById('confirmPick').onclick = confirmSelection;
+</script>
+</body>
+</html>

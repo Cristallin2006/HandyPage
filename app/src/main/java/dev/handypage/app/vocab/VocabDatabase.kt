@@ -207,12 +207,54 @@ interface VocabWordDao {
     suspend fun exists(word: String, articleUrl: String): Boolean
 }
 
+/**
+ * A cached paragraph translation of an arXiv paper's HTML version
+ * (bilingual reading). Identity is (paperKey, paraHash, model): paperKey is
+ * the urlHash16 of the abs URL, paraHash the SHA-1 of the normalized
+ * paragraph text, model the "preset:effectiveModel" fingerprint — so a
+ * paper's new version only refetches changed paragraphs and switching
+ * models never clobbers existing translations.
+ */
+@Entity(
+    tableName = "paper_translations",
+    indices = [Index(value = ["paperKey", "paraHash", "model"], unique = true)],
+)
+data class PaperTranslation(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
+    val paperKey: String,
+    val paraHash: String,
+    val model: String,
+    val translatedText: String,
+    val createdAt: Long,
+)
+
+@Dao
+interface PaperTranslationDao {
+
+    /** Cached translations of [hashes] for one paper under one model. */
+    @Query(
+        "SELECT * FROM paper_translations " +
+            "WHERE paperKey = :paperKey AND model = :model AND paraHash IN (:hashes)",
+    )
+    suspend fun cachedFor(paperKey: String, model: String, hashes: List<String>): List<PaperTranslation>
+
+    /** REPLACE: re-translating a paragraph overwrites its cached text. */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(rows: List<PaperTranslation>)
+
+    /** Drops every cached translation of one paper (「重译」). */
+    @Query("DELETE FROM paper_translations WHERE paperKey = :paperKey")
+    suspend fun deleteByPaper(paperKey: String): Int
+}
+
 @Database(
     entities = [
         VocabWord::class, ChatSession::class, ChatMessageEntity::class, UsageLog::class,
         ArticleRecord::class, SavedSentence::class, PaperStar::class, ArticleStar::class,
+        PaperTranslation::class,
     ],
-    version = 6,
+    version = 7,
     exportSchema = false,
 )
 abstract class VocabDatabase : RoomDatabase() {
@@ -223,6 +265,7 @@ abstract class VocabDatabase : RoomDatabase() {
     abstract fun chatDao(): ChatDao
     abstract fun usageDao(): UsageDao
     abstract fun articleRecordDao(): ArticleRecordDao
+    abstract fun paperTranslationDao(): PaperTranslationDao
 
     companion object {
         /**
@@ -352,6 +395,29 @@ abstract class VocabDatabase : RoomDatabase() {
                         "`sourceId` TEXT NOT NULL, " +
                         "`sourceName` TEXT NOT NULL, " +
                         "`starredAt` INTEGER NOT NULL)",
+                )
+            }
+        }
+
+        /**
+         * 6 → 7 adds the paper-translation cache for the bilingual HTML
+         * reader. Pure CREATE TABLE/INDEX; existing data untouched.
+         */
+        val MIGRATION_6_7 = object : Migration(6, 7) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `paper_translations` (" +
+                        "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                        "`paperKey` TEXT NOT NULL, " +
+                        "`paraHash` TEXT NOT NULL, " +
+                        "`model` TEXT NOT NULL, " +
+                        "`translatedText` TEXT NOT NULL, " +
+                        "`createdAt` INTEGER NOT NULL)",
+                )
+                db.execSQL(
+                    "CREATE UNIQUE INDEX IF NOT EXISTS" +
+                        " `index_paper_translations_paperKey_paraHash_model`" +
+                        " ON `paper_translations` (`paperKey`, `paraHash`, `model`)",
                 )
             }
         }

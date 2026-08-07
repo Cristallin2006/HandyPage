@@ -273,8 +273,11 @@ private fun LoadingPanel(text: String) {
     }
 }
 
-/** Stable 16-hex-char hash per article/paper URL; shared by epub and pdf naming. */
-private fun urlHash16(url: String): String =
+/**
+ * Stable 16-hex-char hash per article/paper URL; shared by epub, pdf and the
+ * ar5iv HTML cache (paperhtml/) naming.
+ */
+internal fun urlHash16(url: String): String =
     MessageDigest.getInstance("SHA-256")
         .digest(url.toByteArray(Charsets.UTF_8))
         .joinToString("") { "%02x".format(it) }

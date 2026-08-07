@@ -10,6 +10,7 @@ local.properties
 .idea/
 *.iml
 .vscode/
+.qoder/
 
 # OS
 .DS_Store

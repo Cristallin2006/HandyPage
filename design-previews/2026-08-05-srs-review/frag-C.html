@@ -1,0 +1,66 @@
+<style>
+.srs-C{
+  width:390px;height:760px;overflow:hidden;background:#fbfaf7;color:#141414;
+  display:flex;flex-direction:column;
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.srs-C .rule-top{flex:none;height:2px;background:#141414;}
+.srs-C .head{flex:none;display:flex;justify-content:space-between;align-items:baseline;padding:18px 20px 0;}
+.srs-C .head span{
+  font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#5c5c58;
+  font-variant-numeric:tabular-nums;
+}
+.srs-C .progress{flex:none;display:flex;gap:4px;margin:14px 20px 0;}
+.srs-C .progress i{flex:1;height:2px;background:rgba(0,0,0,.10);}
+.srs-C .progress i.done{background:#141414;}
+.srs-C .deck{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 0 8px;}
+.srs-C .card{
+  margin:0 20px;background:#fbfaf7;border:1px solid rgba(0,0,0,.10);border-radius:4px;
+  padding:24px 22px 20px;
+}
+.srs-C .card .kicker{
+  font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#5c5c58;
+  font-variant-numeric:tabular-nums;
+}
+.srs-C .card .cue{
+  margin:16px 0 0;font-family:'Fraunces',Georgia,serif;font-size:20px;line-height:1.75;color:#141414;
+}
+.srs-C .blank{position:relative;display:inline-block;width:92px;height:1em;vertical-align:-0.12em;border-bottom:1.5px solid #141414;}
+.srs-C .blank .pos{
+  position:absolute;left:50%;top:100%;transform:translateX(-50%);padding-top:3px;
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:11px;letter-spacing:.08em;color:#a39e98;white-space:nowrap;
+}
+.srs-C .card .meta{
+  margin:18px 0 0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#5c5c58;
+  font-variant-numeric:tabular-nums;
+}
+.srs-C .peek{flex:none;height:48px;overflow:hidden;margin-top:14px;}
+.srs-C .peek .card{
+  margin:0 32px;opacity:.6;padding:18px 20px 20px;
+}
+.srs-C .band{
+  flex:none;min-height:52px;display:flex;align-items:center;justify-content:center;
+  border-top:1px solid rgba(0,0,0,.10);border-bottom:1px solid rgba(0,0,0,.10);
+  font-size:12px;letter-spacing:.06em;color:#5c5c58;
+}
+</style>
+<div class="srs-C">
+  <div class="rule-top"></div>
+  <div class="head"><span>Daily Review</span><span>12 due</span></div>
+  <div class="progress"><i class="done"></i><i class="done"></i><i class="done"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="deck">
+    <div class="card">
+      <div class="kicker">Word 3 · NPR</div>
+      <p class="cue">Communities are proving remarkably <span class="blank"><span class="pos">ADJ.</span></span> in the face of repeated flooding.</p>
+      <div class="meta">NPR · 3 天前保存</div>
+    </div>
+    <div class="peek">
+      <div class="card">
+        <div class="kicker">Word 4 · ubiquitous</div>
+      </div>
+    </div>
+  </div>
+  <div class="band">← 不认识&nbsp;&nbsp;·&nbsp;&nbsp;点按揭示&nbsp;&nbsp;·&nbsp;&nbsp;认识 →</div>
+</div>

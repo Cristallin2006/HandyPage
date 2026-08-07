@@ -1,0 +1,30 @@
+/*
+ * Handypage bilingual reader styles — injected into the cached ar5iv page.
+ * The mode classes live on <html> (window.__setBilingualMode); translation
+ * blocks are hidden until Kotlin picks a mode that shows them.
+ */
+
+.hp-t {
+  display: none;
+  margin: 4px 0 16px;
+  padding-left: 10px;
+  border-left: 2px solid rgba(128, 128, 128, 0.45);
+  color: #4d4d4d;
+  font-size: 0.95em;
+  line-height: 1.75;
+  overflow-wrap: break-word;
+}
+
+/* Bilingual: originals + translations stacked. */
+html.hp-mode-both .hp-t {
+  display: block;
+}
+
+/* Translations only: hide every marked original paragraph/title/caption. */
+html.hp-mode-target .hp-t {
+  display: block;
+}
+
+html.hp-mode-target [data-hp-p] {
+  display: none;
+}

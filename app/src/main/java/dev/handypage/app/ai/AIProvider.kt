@@ -61,8 +61,19 @@ interface AIProvider {
      * When [tools] is non-empty the request carries OpenAI function-calling
      * tool definitions and asks for streamed usage accounting; null or empty
      * keeps the legacy no-tools behaviour byte-for-byte.
+     *
+     * M34: [disableThinking] asks hybrid-reasoning providers (DeepSeek V4,
+     * thinking on by default) to skip the reasoning phase for this call —
+     * `thinking: {"type":"disabled"}` on the wire. The batch translation
+     * pipeline uses it: translation needs zero reasoning, and the thinking
+     * phase costs 10-60 s of pure latency per batch. Providers without a
+     * thinking toggle ignore the flag.
      */
-    fun streamChat(messages: List<ChatMessage>, tools: List<ToolSpec>? = null): Flow<AIEvent>
+    fun streamChat(
+        messages: List<ChatMessage>,
+        tools: List<ToolSpec>? = null,
+        disableThinking: Boolean = false,
+    ): Flow<AIEvent>
 }
 
 /** Provider failure with a user-displayable message (status/body included). */
