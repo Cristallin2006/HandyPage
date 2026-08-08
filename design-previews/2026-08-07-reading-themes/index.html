@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Handypage 阅读主题试衣间</title>
+<style>
+  @font-face {
+    font-family: 'Fraunces';
+    src: url('fraunces_semibold.ttf') format('truetype');
+    font-weight: 600;
+  }
+  @font-face {
+    font-family: 'Fraunces';
+    src: url('fraunces_bold.ttf') format('truetype');
+    font-weight: 700;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root { --ease-out: cubic-bezier(0.23, 1, 0.32, 1); }
+
+  body {
+    min-height: 100dvh;
+    background: #e9e7e1;
+    font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    color: #141414;
+    padding: 32px 20px 48px;
+  }
+
+  .bench-head { text-align: center; display: grid; gap: 6px; margin-bottom: 26px; }
+  .bench-head .kicker {
+    font-size: 11px; font-weight: 500; letter-spacing: .12em;
+    color: #6b6760; text-transform: uppercase;
+  }
+  .bench-head h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 26px; font-weight: 700; letter-spacing: -0.01em;
+  }
+  .bench-head .note { font-size: 12px; color: #8a857c; }
+
+  /* ---------- 六宫格 ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+  @media (max-width: 1080px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 640px) {
+    body { padding: 20px 12px 36px; }
+    .grid { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  .card { display: grid; gap: 12px; align-content: start; min-width: 0; }
+
+  /* ---------- 阅读器样机框 ---------- */
+  .frame {
+    position: relative;
+    height: 400px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--paper);
+    border: 1px solid var(--hair);
+    box-shadow: 0 1px 2px rgb(0 0 0 / .05), 0 8px 20px rgb(0 0 0 / .06);
+    display: flex; flex-direction: column;
+    transition: transform 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
+  }
+  .card:hover .frame {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgb(0 0 0 / .05), 0 14px 30px rgb(0 0 0 / .09);
+  }
+
+  /* ---------- 主题调色板(与 App 变量一一对应) ---------- */
+  .t-forest    { --paper:#F0F4EE; --ink:#23382C; --sub:#5C6E60; --faint:#9BA89C; --hair:rgba(35,56,44,.13);  --hl:rgba(35,56,44,.10); }
+  .t-burgundy  { --paper:#F8F1EF; --ink:#46242B; --sub:#7A5A5C; --faint:#B4A09E; --hair:rgba(70,36,43,.14);  --hl:rgba(70,36,43,.09); }
+  .t-prussian  { --paper:#EEF2F5; --ink:#1F3348; --sub:#526578; --faint:#97A5B1; --hair:rgba(31,51,72,.14);  --hl:rgba(31,51,72,.09); }
+  .t-iris      { --paper:#F3F1F7; --ink:#3B3450; --sub:#67607C; --faint:#A5A0B2; --hair:rgba(59,52,80,.14);  --hl:rgba(59,52,80,.09); }
+  .t-midnight  { --paper:#101A26; --ink:#B9CCDD; --sub:#7E93A6; --faint:#4E6172; --hair:rgba(185,204,221,.18); --hl:rgba(185,204,221,.12); }
+  .t-pinesmoke { --paper:#151E1A; --ink:#C2D2C6; --sub:#84988B; --faint:#50645A; --hair:rgba(194,210,198,.17); --hl:rgba(194,210,198,.11); }
+
+  /* ---------- 文章区 ---------- */
+  .art {
+    flex: 1; min-height: 0;
+    padding: 22px 22px 14px;
+    overflow: hidden;
+    color: var(--ink);
+  }
+  .art .kick {
+    font-size: 10px; font-weight: 500; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--sub);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 10px;
+  }
+  .art h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 20px; font-weight: 700; line-height: 1.28;
+    letter-spacing: -0.005em;
+    margin-bottom: 10px;
+  }
+  .art p {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 13.5px; line-height: 1.72;
+    margin-bottom: .9em;
+  }
+  .art .hl { background: var(--hl); border-radius: 2px; padding: 0 1px; }
+
+  /* ---------- 词卡面板(M37:随主题) ---------- */
+  .wp {
+    flex-shrink: 0;
+    background: var(--paper);
+    border-top: 2px solid var(--ink);
+    padding: 10px 16px 12px;
+  }
+  .wp-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+  .wp-word {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 18px; font-weight: 600; line-height: 1.2; color: var(--ink);
+  }
+  .wp-meta {
+    margin-top: 3px;
+    font-size: 10px; font-weight: 500; letter-spacing: .1em;
+    color: var(--sub); text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+  }
+  .wp-x { color: var(--sub); font-size: 13px; line-height: 1; padding: 2px; }
+  .wp-rule { border-top: 1px solid var(--hair); margin: 9px 0 8px; }
+  .wp-trans { font-size: 13px; line-height: 1.55; color: var(--ink); }
+  .wp-btns { display: flex; gap: 8px; margin-top: 10px; }
+  .wp-btns .b {
+    flex: 1; height: 30px;
+    display: grid; place-items: center;
+    font-size: 11.5px; font-weight: 500;
+    border-radius: 4px;
+  }
+  .wp-btns .fill { background: var(--ink); color: var(--paper); }
+  .wp-btns .line { border: 1px solid var(--ink); color: var(--ink); }
+
+  /* ---------- 卡片说明区(与样机分离) ---------- */
+  .meta { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 0 2px; }
+  .meta .names { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+  .meta strong { font-size: 15px; font-weight: 600; white-space: nowrap; }
+  .meta .en {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 13px; font-weight: 600; color: #6b6760;
+  }
+  .meta .vibe { font-size: 11.5px; color: #8a857c; text-align: right; }
+  .rec {
+    display: inline-block; margin-left: 6px;
+    font-size: 10px; font-weight: 600; letter-spacing: .06em;
+    color: #fbfaf7; background: #23382c;
+    border-radius: 3px; padding: 2px 6px;
+    vertical-align: 2px;
+  }
+
+  .qmdp-pick-button { width: 100%; justify-content: center; }
+</style>
+</head>
+<body>
+  <div class="bench-head">
+    <div class="kicker">Handypage · 阅读主题试衣间</div>
+    <h1>六款阅读配色</h1>
+    <div class="note">设计方向样机,不是最终 App;选择后才进入正式实现。现有 亮 / 暖褐 / 暗 三主题保留不动。</div>
+  </div>
+
+  <div class="grid">
+
+    <section class="card" data-design-option="forest" data-name="森林绿 Forest">
+      <div class="frame t-forest">
+        <div class="art">
+          <div class="kick">nature news · aug 7, 2026</div>
+          <h3>How plants learn to forget the drought</h3>
+          <p>For decades, biologists assumed that a plant's memory of drought was a burden it could not afford to keep. New work suggests the opposite: forgetting is an active, elegant process.</p>
+          <p>When water runs short, many plants enter a <span class="hl">dormant</span> state, folding their metabolic ambitions into a tight, protective knot.</p>
+        </div>
+        <div class="wp">
+          <div class="wp-top">
+            <div>
+              <div class="wp-word">dormant</div>
+              <div class="wp-meta">/ˈdɔːrmənt/ · adj · ★★★☆☆</div>
+            </div>
+            <span class="wp-x">✕</span>
+          </div>
+          <div class="wp-rule"></div>
+          <div class="wp-trans">休眠的;蛰伏的</div>
+          <div class="wp-btns"><span class="b fill">加入生词本</span><span class="b line">问 AI</span></div>
+        </div>
+      </div>
+      <div class="meta">
+        <div class="names"><strong>森林绿</strong><span class="en">Forest</span><span class="rec">推荐</span></div>
+        <div class="vibe">豆沙绿纸 · 松烟墨字,长读最不累</div>
+      </div>
+      <button class="qmdp-pick-button" type="button">选择 · 森林绿</button>
+    </section>
+
+    <section class="card" data-design-option="burgundy" data-name="勃艮第红 Burgundy">
+      <div class="frame t-burgundy">
+        <div class="art">
+          <div class="kick">nature news · aug 7, 2026</div>
+          <h3>How plants learn to forget the drought</h3>
+          <p>For decades, biologists assumed that a plant's memory of drought was a burden it could not afford to keep. New work suggests the opposite: forgetting is an active, elegant process.</p>
+          <p>When water runs short, many plants enter a <span class="hl">dormant</span> state, folding their metabolic ambitions into a tight, protective knot.</p>
+        </div>
+        <div class="wp">
+          <div class="wp-top">
+            <div>
+              <div class="wp-word">dormant</div>
+              <div class="wp-meta">/ˈdɔːrmənt/ · adj · ★★★☆☆</div>
+            </div>
+            <span class="wp-x">✕</span>
+          </div>
+          <div class="wp-rule"></div>
+          <div class="wp-trans">休眠的;蛰伏的</div>
+          <div class="wp-btns"><span class="b fill">加入生词本</span><span class="b line">问 AI</span></div>
+        </div>
+      </div>
+      <div class="meta">
+        <div class="names"><strong>勃艮第红</strong><span class="en">Burgundy</span></div>
+        <div class="vibe">胭脂纸 · 酒渍墨字,暖而收</div>
+      </div>
+      <button class="qmdp-pick-button" type="button">选择 · 勃艮第红</button>
+    </section>
+
+    <section class="card" data-design-option="prussian" data-name="普鲁士蓝 Prussian">
+      <div class="frame t-prussian">
+        <div class="art">
+          <div class="kick">nature news · aug 7, 2026</div>
+          <h3>How plants learn to forget the drought</h3>
+          <p>For decades, biologists assumed that a plant's memory of drought was a burden it could not afford to keep. New work suggests the opposite: forgetting is an active, elegant process.</p>
+          <p>When water runs short, many plants enter a <span class="hl">dormant</span> state, folding their metabolic ambitions into a tight, protective knot.</p>
+        </div>
+        <div class="wp">
+          <div class="wp-top">
+            <div>
+              <div class="wp-word">dormant</div>
+              <div class="wp-meta">/ˈdɔːrmənt/ · adj · ★★★☆☆</div>
+            </div>
+            <span class="wp-x">✕</span>
+          </div>
+          <div class="wp-rule"></div>
+          <div class="wp-trans">休眠的;蛰伏的</div>
+          <div class="wp-btns"><span class="b fill">加入生词本</span><span class="b line">问 AI</span></div>
+        </div>
+      </div>
+      <div class="meta">
+        <div class="names"><strong>普鲁士蓝</strong><span class="en">Prussian</span></div>
+        <div class="vibe">钢青纸 · 普鲁士墨,冷静专注</div>
+      </div>
+      <button class="qmdp-pick-button" type="button">选择 · 普鲁士蓝</button>
+    </section>
+
+    <section class="card" data-design-option="iris" data-name="鸢尾花 Iris">
+      <div class="frame t-iris">
+        <div class="art">
+          <div class="kick">nature news · aug 7, 2026</div>
+          <h3>How plants learn to forget the drought</h3>
+          <p>For decades, biologists assumed that a plant's memory of drought was a burden it could not afford to keep. New work suggests the opposite: forgetting is an active, elegant process.</p>
+          <p>When water runs short, many plants enter a <span class="hl">dormant</span> state, folding their metabolic ambitions into a tight, protective knot.</p>
+        </div>
+        <div class="wp">
+          <div class="wp-top">
+            <div>
+              <div class="wp-word">dormant</div>
+              <div class="wp-meta">/ˈdɔːrmənt/ · adj · ★★★☆☆</div>
+            </div>
+            <span class="wp-x">✕</span>
+          </div>
+          <div class="wp-rule"></div>
+          <div class="wp-trans">休眠的;蛰伏的</div>
+          <div class="wp-btns"><span class="b fill">加入生词本</span><span class="b line">问 AI</span></div>
+        </div>
+      </div>
+      <div class="meta">
+        <div class="names"><strong>鸢尾花</strong><span class="en">Iris</span></div>
+        <div class="vibe">紫罗兰纸 · 鸢尾墨,柔而不甜</div>
+      </div>
+      <button class="qmdp-pick-button" type="button">选择 · 鸢尾花</button>
+    </section>
+
+    <section class="card" data-design-option="midnight" data-name="夜航蓝 Midnight Prussian">
+      <div class="frame t-midnight">
+        <div class="art">
+          <div class="kick">nature news · aug 7, 2026</div>
+          <h3>How plants learn to forget the drought</h3>
+          <p>For decades, biologists assumed that a plant's memory of drought was a burden it could not afford to keep. New work suggests the opposite: forgetting is an active, elegant process.</p>
+          <p>When water runs short, many plants enter a <span class="hl">dormant</span> state, folding their metabolic ambitions into a tight, protective knot.</p>
+        </div>
+        <div class="wp">
+          <div class="wp-top">
+            <div>
+              <div class="wp-word">dormant</div>
+              <div class="wp-meta">/ˈdɔːrmənt/ · adj · ★★★☆☆</div>
+            </div>
+            <span class="wp-x">✕</span>
+          </div>
+          <div class="wp-rule"></div>
+          <div class="wp-trans">休眠的;蛰伏的</div>
+          <div class="wp-btns"><span class="b fill">加入生词本</span><span class="b line">问 AI</span></div>
+        </div>
+      </div>
+      <div class="meta">
+        <div class="names"><strong>夜航蓝</strong><span class="en">Midnight Prussian</span></div>
+        <div class="vibe">深色 · 海图底雾蓝字,夜间专注</div>
+      </div>
+      <button class="qmdp-pick-button" type="button">选择 · 夜航蓝</button>
+    </section>
+
+    <section class="card" data-design-option="pinesmoke" data-name="松烟墨 Pine Smoke">
+      <div class="frame t-pinesmoke">
+        <div class="art">
+          <div class="kick">nature news · aug 7, 2026</div>
+          <h3>How plants learn to forget the drought</h3>
+          <p>For decades, biologists assumed that a plant's memory of drought was a burden it could not afford to keep. New work suggests the opposite: forgetting is an active, elegant process.</p>
+          <p>When water runs short, many plants enter a <span class="hl">dormant</span> state, folding their metabolic ambitions into a tight, protective knot.</p>
+        </div>
+        <div class="wp">
+          <div class="wp-top">
+            <div>
+              <div class="wp-word">dormant</div>
+              <div class="wp-meta">/ˈdɔːrmənt/ · adj · ★★★☆☆</div>
+            </div>
+            <span class="wp-x">✕</span>
+          </div>
+          <div class="wp-rule"></div>
+          <div class="wp-trans">休眠的;蛰伏的</div>
+          <div class="wp-btns"><span class="b fill">加入生词本</span><span class="b line">问 AI</span></div>
+        </div>
+      </div>
+      <div class="meta">
+        <div class="names"><strong>松烟墨</strong><span class="en">Pine Smoke</span></div>
+        <div class="vibe">深色 · 松烟入纸,夜读温润</div>
+      </div>
+      <button class="qmdp-pick-button" type="button">选择 · 松烟墨</button>
+    </section>
+
+  </div>
+</body>
+</html>

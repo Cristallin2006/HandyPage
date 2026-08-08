@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.fragment.compose.AndroidFragment
 import dev.handypage.app.reader.ChatController
 import dev.handypage.app.reader.ReaderSettings
+import androidx.compose.runtime.collectAsState
+import dev.handypage.app.ui.AppThemeController
 import dev.handypage.app.ui.HandypageTheme
 import dev.handypage.app.ui.ReaderShell
 import dev.handypage.app.ui.applyHpAxisCloseTransition
@@ -99,7 +101,10 @@ class ReaderActivity : AppCompatActivity() {
             // theme in the Aa panel re-themes every surface instantly.
             val readerDark = readerSettingsState.value.normalizedThemeName ==
                 ReaderSettings.THEME_DARK
-            HandypageTheme(darkTheme = readerDark) {
+            // M38: the chrome hue follows the app theme; light/dark still
+            // comes from the READING theme (M26), which stays untouched.
+            val appTheme = AppThemeController.theme.collectAsState().value
+            HandypageTheme(appTheme = appTheme, darkTheme = readerDark) {
                 ReaderShell(
                     controller = chatController.value,
                     openRequests = chatOpenRequests.intValue,

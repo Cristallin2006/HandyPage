@@ -200,6 +200,13 @@ class ChatController(
                 provider = provider,
                 tools = buildTools(),
                 budget = budget,
+                // M39: paper mode reads sections in paged tool calls — give
+                // the loop the wider paper budget, news keeps the tight one.
+                maxToolRounds = if (paperIndexProvider != null) {
+                    AgentRunner.PAPER_MAX_TOOL_ROUNDS
+                } else {
+                    AgentRunner.MAX_TOOL_ROUNDS
+                },
                 callbacks = AgentRunner.Callbacks { promptTokens, completionTokens ->
                     budgetStore.save(budget)
                     withContext(Dispatchers.IO) {

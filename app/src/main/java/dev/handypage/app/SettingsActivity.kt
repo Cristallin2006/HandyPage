@@ -3,6 +3,8 @@ package dev.handypage.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.collectAsState
+import dev.handypage.app.ui.AppThemeController
 import dev.handypage.app.ui.HandypageTheme
 import dev.handypage.app.ui.SettingsScreen
 import dev.handypage.app.ui.SettingsSection
@@ -33,7 +35,7 @@ class SettingsActivity : ComponentActivity() {
             null
         }
         setContent {
-            HandypageTheme {
+            HandypageTheme(appTheme = AppThemeController.theme.collectAsState().value) {
                 SettingsScreen(onBack = { finish() }, initialSection = initial)
             }
         }

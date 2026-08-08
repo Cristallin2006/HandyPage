@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.webkit.ConsoleMessage
@@ -79,6 +80,7 @@ import dev.handypage.app.paperhtml.PaperHtmlCache
 import dev.handypage.app.paperhtml.PaperHtmlUnavailableException
 import dev.handypage.app.reader.ChatController
 import dev.handypage.app.reader.VocabHighlight
+import dev.handypage.app.reader.ReaderSettings
 import dev.handypage.app.reader.WordCardPanel
 import dev.handypage.app.translate.PaperTranslateEngine
 import dev.handypage.app.translate.TranslateBatcher
@@ -90,6 +92,7 @@ import dev.handypage.app.ui.EditorialSpacing
 import dev.handypage.app.ui.EditorialStarIcon
 import dev.handypage.app.ui.EditorialType
 import dev.handypage.app.ui.FrauncesFamily
+import dev.handypage.app.ui.AppThemeController
 import dev.handypage.app.ui.HandypageTheme
 import dev.handypage.app.ui.HpMotion
 import dev.handypage.app.ui.applyHpAxisCloseTransition
@@ -241,7 +244,9 @@ class PaperReaderActivity : AppCompatActivity() {
         setupChat()
         collectVocabTerms()
         setContent {
-            HandypageTheme { PaperReaderScreen() }
+            HandypageTheme(appTheme = AppThemeController.theme.collectAsState().value) {
+                PaperReaderScreen()
+            }
         }
     }
 
@@ -850,6 +855,12 @@ class PaperReaderActivity : AppCompatActivity() {
         frame.setBackgroundResource(R.drawable.word_card_panel_bg)
         frame.elevation = 4f * resources.displayMetrics.density
         val panel = WordCardPanel(frame)
+        // M37: the paper reader has no in-app reading theme, so the panel
+        // follows the system night mode — same rule as this screen's
+        // Compose chrome (values-night) — instead of staying day-bright.
+        val night = resources.configuration.uiMode and
+            Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+        panel.applyTheme(if (night) ReaderSettings.THEME_DARK else ReaderSettings.THEME_LIGHT)
         panel.onVisibilityChanged = { visible ->
             wordCardBackCallback.isEnabled = visible
         }

@@ -3,21 +3,27 @@ package dev.handypage.app.ui
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
@@ -40,6 +46,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,6 +54,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -92,12 +100,13 @@ fun SettingsScreen(
     BackHandler(enabled = section != null) { section = null }
     when (section) {
         SettingsSection.Reading -> ReadingSettingsPage(onBack = { section = null })
+        SettingsSection.Appearance -> AppearanceSettingsPage(onBack = { section = null })
         SettingsSection.Ai -> AiSettingsPage(onBack = { section = null })
         null -> SettingsHub(onBack = onBack, onOpen = { section = it })
     }
 }
 
-enum class SettingsSection { Reading, Ai }
+enum class SettingsSection { Reading, Appearance, Ai }
 
 // ------------------------------------------------------------------ hub
 
@@ -106,6 +115,8 @@ private fun SettingsHub(onBack: (() -> Unit)?, onOpen: (SettingsSection) -> Unit
     val context = LocalContext.current
     val readerSettings = remember { ReaderSettingsStore(context).load() }
     val aiConfig = remember { AISettingsStore(context).selectedConfig() }
+    // M38: live summary — the row reflects a theme switch immediately.
+    val appTheme by AppThemeController.theme.collectAsState()
 
     Scaffold { padding ->
         Column(modifier = Modifier.fillMaxSize().padding(padding)) {
@@ -133,6 +144,12 @@ private fun SettingsHub(onBack: (() -> Unit)?, onOpen: (SettingsSection) -> Unit
                     title = stringResource(R.string.reader_settings_title),
                     summary = readingSummary(readerSettings),
                     onClick = { onOpen(SettingsSection.Reading) },
+                )
+                EditorialHairline()
+                SettingsCategoryRow(
+                    title = stringResource(R.string.settings_appearance_title),
+                    summary = stringResource(appTheme.labelRes) + " · " + appTheme.labelEn,
+                    onClick = { onOpen(SettingsSection.Appearance) },
                 )
                 EditorialHairline()
                 SettingsCategoryRow(
@@ -543,5 +560,92 @@ private fun AiSettingsPage(onBack: () -> Unit) {
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+    }
+}
+
+// ------------------------------------------------------------------ appearance page (M38)
+
+/**
+ * App colour-theme picker: one row per [AppTheme], dual-tone dots (accent +
+ * soft container, rendered from the palette of the current light/dark mode),
+ * zh label + decorative English subscript, check on the active row. Tapping
+ * switches instantly via [AppThemeController] — no recreate, every Compose
+ * host repaints. Reader themes are a separate setting (Reading page).
+ */
+@Composable
+private fun AppearanceSettingsPage(onBack: () -> Unit) {
+    val active by AppThemeController.theme.collectAsState()
+    val dark = isSystemInDarkTheme()
+
+    SettingsDetailPage(
+        titleRes = R.string.settings_appearance_title,
+        titleEn = "APPEARANCE",
+        metaRes = R.string.settings_appearance_meta,
+        onBack = onBack,
+    ) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            AppTheme.entries.forEachIndexed { index, theme ->
+                AppThemeRow(
+                    theme = theme,
+                    dark = dark,
+                    selected = theme == active,
+                    onClick = { AppThemeController.set(theme) },
+                )
+                if (index < AppTheme.entries.size - 1) EditorialHairline()
+            }
+        }
+    }
+}
+
+/** Theme row: dual-tone dots + 15sp/500 label + en subscript + trailing check. */
+@Composable
+private fun AppThemeRow(
+    theme: AppTheme,
+    dark: Boolean,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    val palette = theme.palette(dark)
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(vertical = 14.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Row(modifier = Modifier.padding(end = 14.dp)) {
+            Box(
+                Modifier
+                    .size(16.dp)
+                    .background(Color(palette.accent), CircleShape),
+            )
+            Box(
+                Modifier
+                    .padding(start = 4.dp)
+                    .size(16.dp)
+                    .background(Color(palette.accentSoft), CircleShape),
+            )
+        }
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = stringResource(theme.labelRes),
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+            Text(
+                text = theme.labelEn,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(top = 2.dp),
+            )
+        }
+        if (selected) {
+            Icon(
+                imageVector = Icons.Filled.Check,
+                contentDescription = null, // row state is announced by the label
+                tint = MaterialTheme.colorScheme.primary,
+            )
+        }
     }
 }

@@ -235,8 +235,9 @@ data class EditorialNavItem(val route: String, val label: String, val glyph: Str
 
 /**
  * Bottom nav (§4.5, replaces M3 NavigationBar): 2dp solid ink top rule, four
- * equal icon+label items. Selected = 600 weight + 2dp ink dash under the
- * label; unselected = sub colour. No pill, no colour block, no elevation.
+ * equal icon+label items. Selected = 600 weight + 2dp dash under the label,
+ * both in the theme accent (M38: colorScheme.primary — ink in Classic);
+ * unselected = sub colour. No pill, no colour block, no elevation.
  *
  * M22 (§9): the dash is ONE indicator sliding between items (200ms
  * standard), not a per-item box popping in and out; each item keeps a
@@ -269,7 +270,9 @@ fun EditorialNavBar(
                     val selected = index == selectedIndex
                     val contentColor by animateColorAsState(
                         targetValue = if (selected) {
-                            MaterialTheme.colorScheme.onSurface
+                            // M38: selected state tracks the theme accent
+                            // (primary == ink in Classic, so no visual delta).
+                            MaterialTheme.colorScheme.primary
                         } else {
                             MaterialTheme.colorScheme.onSurfaceVariant
                         },
@@ -337,8 +340,9 @@ fun EditorialNavBar(
 }
 
 /**
- * Segment tabs (§4.6, 本机四段): 15sp labels, selected = ink 600 + 2dp
- * underline, full-width hairline baseline, horizontally scrollable.
+ * Segment tabs (§4.6, 本机四段): 15sp labels, selected = 600 + 2dp underline,
+ * both in the theme accent (M38), full-width hairline baseline, horizontally
+ * scrollable.
  *
  * M22 (§9): same single-sliding-indicator treatment as the bottom nav —
  * the underline glides between segments (200ms standard); each label keeps
@@ -368,7 +372,9 @@ fun EditorialTabRow(
                     val selected = index == selectedIndex
                     val contentColor by animateColorAsState(
                         targetValue = if (selected) {
-                            MaterialTheme.colorScheme.onSurface
+                            // M38: selected state tracks the theme accent
+                            // (primary == ink in Classic, so no visual delta).
+                            MaterialTheme.colorScheme.primary
                         } else {
                             MaterialTheme.colorScheme.onSurfaceVariant
                         },

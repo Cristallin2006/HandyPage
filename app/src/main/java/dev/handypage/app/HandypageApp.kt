@@ -25,6 +25,8 @@ class HandypageApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        // M38: load the stored app colour theme before any activity composes.
+        dev.handypage.app.ui.AppThemeController.init(this)
         // pdfbox-android needs its resource loader bound to the app context
         // before any PDDocument load (pdf/PdfToArticle).
         PDFBoxResourceLoader.init(this)

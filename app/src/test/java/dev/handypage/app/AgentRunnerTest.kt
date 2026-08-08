@@ -154,6 +154,25 @@ class AgentRunnerTest {
     }
 
     @Test
+    fun `paper-mode cap allows twelve rounds before the limit`() = runBlocking {
+        // M39: paged paper-section reads legitimately need more than 5 rounds.
+        val provider = FakeProvider { _, _ ->
+            listOf(AIEvent.ToolCalls(listOf(ToolCallRequest("c", "echo", "{}"))))
+        }
+        val events = AgentRunner(
+            provider, listOf(echoTool()), DailyBudget(),
+            maxToolRounds = AgentRunner.PAPER_MAX_TOOL_ROUNDS,
+        ).run(emptyList(), "hi").toList()
+        assertEquals(AgentRunner.PAPER_MAX_TOOL_ROUNDS, provider.calls.size)
+        assertEquals(AgentEvent.ToolLimitReached, events.last())
+        assertEquals(
+            AgentRunner.PAPER_MAX_TOOL_ROUNDS,
+            events.filterIsInstance<AgentEvent.ToolStarted>().size,
+        )
+        assertTrue(events.none { it is AgentEvent.Completed })
+    }
+
+    @Test
     fun `exhausted budget refuses the call without hitting the provider`() = runBlocking {
         val provider = FakeProvider { _, _ -> listOf(AIEvent.Content("never")) }
         val events = AgentRunner(

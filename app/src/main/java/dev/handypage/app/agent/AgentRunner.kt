@@ -32,7 +32,8 @@ sealed interface AgentEvent {
  * self-discipline:
  *
  * - the daily token [budget] is checked before every provider round;
- * - at most [MAX_TOOL_ROUNDS] provider rounds per run ([AgentEvent.ToolLimitReached]);
+ * - at most [maxToolRounds] provider rounds per run ([AgentEvent.ToolLimitReached]);
+ *   paper mode passes [PAPER_MAX_TOOL_ROUNDS] (M39 — paged section reads);
  * - the first round fails visibly when no event arrives within
  *   [firstEventTimeoutMs] (same watchdog idea as the M3 panel's 60 s rule);
  * - tool results are capped at [ContextBuilder.TOOL_CONTENT_MAX_CHARS].
@@ -46,6 +47,7 @@ class AgentRunner(
     private val budget: DailyBudget,
     private val callbacks: Callbacks = Callbacks.NONE,
     private val firstEventTimeoutMs: Long = FIRST_EVENT_TIMEOUT_MS,
+    private val maxToolRounds: Int = MAX_TOOL_ROUNDS,
 ) {
 
     /**
@@ -80,7 +82,7 @@ class AgentRunner(
                 emit(AgentEvent.Failed(BUDGET_EXHAUSTED_MESSAGE, retryable = false))
                 return@flow
             }
-            if (round >= MAX_TOOL_ROUNDS) {
+            if (round >= maxToolRounds) {
                 emit(AgentEvent.ToolLimitReached)
                 return@flow
             }
@@ -218,6 +220,17 @@ class AgentRunner(
     companion object {
         /** Hard cap on provider rounds per run (tool-call loop bound). */
         const val MAX_TOOL_ROUNDS = 5
+
+        /**
+         * M39: paper mode gets a wider loop — M33's memory tools are
+         * deliberately fine-grained (read_paper_section pages through a
+         * section in 4000-char windows, one continuation per round), so a
+         * serious paper read needs outline + several paged section reads.
+         * 5 rounds terminated real analyses mid-paper; 12 covers
+         * outline + ~4 sections with continuations. The daily token budget
+         * remains the actual cost guard — this cap only bounds loops.
+         */
+        const val PAPER_MAX_TOOL_ROUNDS = 12
 
         /** First-round watchdog: mirrors the M3 panel's 60 s first-token rule. */
         const val FIRST_EVENT_TIMEOUT_MS = 60_000L

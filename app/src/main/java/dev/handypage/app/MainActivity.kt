@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -37,6 +38,7 @@ import dev.handypage.app.ui.AgentScreen
 import dev.handypage.app.ui.ArticleListScreen
 import dev.handypage.app.ui.EditorialNavBar
 import dev.handypage.app.ui.EditorialNavItem
+import dev.handypage.app.ui.AppThemeController
 import dev.handypage.app.ui.HandypageTheme
 import dev.handypage.app.ui.AgentHistoryRoute
 import dev.handypage.app.ui.HistoryScreen
@@ -64,7 +66,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            HandypageTheme {
+            // M38: app-wide colour theme, repaints live on a settings switch.
+            val appTheme by AppThemeController.theme.collectAsState()
+            HandypageTheme(appTheme = appTheme) {
                 val nav = rememberNavController()
                 val backStackEntry by nav.currentBackStackEntryAsState()
                 val currentRoute = backStackEntry?.destination?.route

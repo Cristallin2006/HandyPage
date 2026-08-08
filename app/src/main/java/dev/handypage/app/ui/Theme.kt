@@ -2,6 +2,7 @@ package dev.handypage.app.ui
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.darkColorScheme
@@ -19,94 +20,59 @@ import dev.handypage.app.R
 
 /**
  * Editorial print theme (docs/design-system.md §2/§3): fixed light/dark
- * schemes — dynamic wallpaper colour is gone. Paper-white surface, off-black
- * ink, warm greys; the single editorial red is reserved for the proxy badge
- * and destructive actions (M3 error role). Light/dark follows the system.
+ * schemes per [AppTheme] (M38) — dynamic wallpaper colour is gone. Paper
+ * surface, ink text, warm greys; the theme hue lives in the accent roles
+ * (primary / primaryContainer). The single editorial red is reserved for the
+ * proxy badge and destructive actions (M3 error role) in EVERY theme.
+ * Light/dark follows the system (or the reader theme in ReaderActivity).
  */
-private val Paper = Color(0xFFFBFAF7)
-private val PaperAlt = Color(0xFFF3F0E9)
-private val Ink = Color(0xFF141414)
-private val Sub = Color(0xFF5C5C58)
-private val Faint = Color(0xFFA39E98)
 private val Red = Color(0xFFB3352B)
-
-private val DarkPaper = Color(0xFF171512)
-private val DarkPaperAlt = Color(0xFF26231E)
-private val DarkInk = Color(0xFFECE7DB)
-private val DarkSub = Color(0xFFA8A29A)
 private val DarkRed = Color(0xFFD4574A)
 
-private val LightScheme = lightColorScheme(
-    primary = Ink,
-    onPrimary = Paper,
-    primaryContainer = PaperAlt,
-    onPrimaryContainer = Ink,
-    secondary = Sub,
-    onSecondary = Paper,
-    secondaryContainer = PaperAlt,
-    onSecondaryContainer = Sub,
-    tertiary = Sub,
-    onTertiary = Paper,
-    tertiaryContainer = PaperAlt,
-    onTertiaryContainer = Sub,
-    error = Red,
-    onError = Paper,
-    background = Paper,
-    onBackground = Ink,
-    surface = Paper,
-    onSurface = Ink,
-    surfaceVariant = PaperAlt,
-    onSurfaceVariant = Sub,
-    surfaceTint = Ink,
-    inverseSurface = Ink,
-    inverseOnSurface = Paper,
-    inversePrimary = PaperAlt,
-    outline = Faint,
-    outlineVariant = Color(0x1A000000), // hairline: black 10%
-    surfaceBright = Paper,
-    surfaceDim = PaperAlt,
-    surfaceContainerLowest = Paper,
-    surfaceContainerLow = Paper,
-    surfaceContainer = Paper,
-    surfaceContainerHigh = PaperAlt,
-    surfaceContainerHighest = PaperAlt,
-)
-
-private val DarkScheme = darkColorScheme(
-    primary = DarkInk,
-    onPrimary = DarkPaper,
-    primaryContainer = DarkPaperAlt,
-    onPrimaryContainer = DarkInk,
-    secondary = DarkSub,
-    onSecondary = DarkPaper,
-    secondaryContainer = DarkPaperAlt,
-    onSecondaryContainer = DarkSub,
-    tertiary = DarkSub,
-    onTertiary = DarkPaper,
-    tertiaryContainer = DarkPaperAlt,
-    onTertiaryContainer = DarkSub,
-    error = DarkRed,
-    onError = DarkPaper,
-    background = DarkPaper,
-    onBackground = DarkInk,
-    surface = DarkPaper,
-    onSurface = DarkInk,
-    surfaceVariant = DarkPaperAlt,
-    onSurfaceVariant = DarkSub,
-    surfaceTint = DarkInk,
-    inverseSurface = DarkInk,
-    inverseOnSurface = DarkPaper,
-    inversePrimary = Ink,
-    outline = DarkSub,
-    outlineVariant = Color(0x24FFFFFF), // hairline: white 14%
-    surfaceBright = DarkPaperAlt,
-    surfaceDim = DarkPaper,
-    surfaceContainerLowest = DarkPaper,
-    surfaceContainerLow = DarkPaper,
-    surfaceContainer = DarkPaper,
-    surfaceContainerHigh = DarkPaperAlt,
-    surfaceContainerHighest = DarkPaperAlt,
-)
+/**
+ * Maps an [AppThemePalette] (plain Longs) to a Material3 scheme. Neutral
+ * roles come from paper/ink/sub/faint; the hue enters through the primary
+ * roles. Classic reproduces the pre-M38 fixed schemes exactly, except
+ * inversePrimary (an unused-in-app role) which now tracks accentSoft.
+ */
+private fun schemeFor(p: AppThemePalette, dark: Boolean): ColorScheme {
+    val base = if (dark) darkColorScheme() else lightColorScheme()
+    return base.copy(
+        primary = Color(p.accent),
+        onPrimary = Color(p.onAccent),
+        primaryContainer = Color(p.accentSoft),
+        onPrimaryContainer = Color(p.onAccentSoft),
+        secondary = Color(p.sub),
+        onSecondary = Color(p.paper),
+        secondaryContainer = Color(p.paperAlt),
+        onSecondaryContainer = Color(p.sub),
+        tertiary = Color(p.sub),
+        onTertiary = Color(p.paper),
+        tertiaryContainer = Color(p.paperAlt),
+        onTertiaryContainer = Color(p.sub),
+        error = if (dark) DarkRed else Red,
+        onError = Color(p.paper),
+        background = Color(p.paper),
+        onBackground = Color(p.ink),
+        surface = Color(p.paper),
+        onSurface = Color(p.ink),
+        surfaceVariant = Color(p.paperAlt),
+        onSurfaceVariant = Color(p.sub),
+        surfaceTint = Color(p.accent),
+        inverseSurface = Color(p.ink),
+        inverseOnSurface = Color(p.paper),
+        inversePrimary = Color(p.accentSoft),
+        outline = Color(p.faint),
+        outlineVariant = Color(p.hairline),
+        surfaceBright = if (dark) Color(p.paperAlt) else Color(p.paper),
+        surfaceDim = if (dark) Color(p.paper) else Color(p.paperAlt),
+        surfaceContainerLowest = Color(p.paper),
+        surfaceContainerLow = Color(p.paper),
+        surfaceContainer = Color(p.paper),
+        surfaceContainerHigh = Color(p.paperAlt),
+        surfaceContainerHighest = Color(p.paperAlt),
+    )
+}
 
 /**
  * Fraunces serif display face (SIL OFL 1.1, see res/font/OFL.txt). CJK
@@ -211,11 +177,12 @@ private val EditorialShapes = Shapes(
 
 @Composable
 fun HandypageTheme(
+    appTheme: AppTheme = AppTheme.CLASSIC,
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
     MaterialTheme(
-        colorScheme = if (darkTheme) DarkScheme else LightScheme,
+        colorScheme = schemeFor(appTheme.palette(darkTheme), darkTheme),
         shapes = EditorialShapes,
         content = content,
     )

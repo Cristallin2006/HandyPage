@@ -179,6 +179,9 @@ class ReaderFragment : Fragment(R.layout.fragment_reader), EpubNavigatorFragment
         recordResolved = false
 
         val panel = WordCardPanel(view.findViewById<FrameLayout>(R.id.word_card_container))
+        // M37: skin for the in-reader theme (re-applied after settings load
+        // and on every theme flip — see applyReaderSettings).
+        panel.applyTheme(readerSettings.normalizedThemeName)
         panel.onVisibilityChanged = { visible ->
             wordCardBackCallback.isEnabled = visible
             // While the panel is open its buttons live in the same bottom
@@ -242,6 +245,7 @@ class ReaderFragment : Fragment(R.layout.fragment_reader), EpubNavigatorFragment
 
     private fun installNavigatorFactory(publication: Publication) {
         readerSettings = settingsStore.load()
+        wordCardPanel?.applyTheme(readerSettings.normalizedThemeName)
         // M16: keep the Compose settings panel's mirror of the settings fresh.
         (activity as? ReaderActivity)?.onReaderSettingsLoaded(readerSettings)
         val navigatorFactory = EpubNavigatorFactory(
@@ -785,6 +789,11 @@ class ReaderFragment : Fragment(R.layout.fragment_reader), EpubNavigatorFragment
         if (themeChanged || layoutChanged || highlightChanged) {
             refreshVocabHighlights()
             refreshSentenceHighlights()
+        }
+        // M37: the word panel is a native view outside Readium's reach —
+        // re-skin it on a theme flip even while it is open.
+        if (themeChanged) {
+            wordCardPanel?.applyTheme(settings.normalizedThemeName)
         }
     }
 

@@ -12,6 +12,15 @@
     <string name="vocab_already_saved">已在生词本中</string>
     <string name="dict_init_failed">词典初始化失败</string>
     <string name="reader_settings_title">阅读设置</string>
+    <!-- M38 app-wide colour themes (main-UI chrome; reader themes untouched) -->
+    <string name="settings_appearance_title">界面主题</string>
+    <string name="settings_appearance_meta">APP THEME · DUAL-TONE</string>
+    <string name="app_theme_classic">经典墨</string>
+    <string name="app_theme_forest">森林绿</string>
+    <string name="app_theme_burgundy">勃艮第红</string>
+    <string name="app_theme_prussian">普鲁士蓝</string>
+    <string name="app_theme_iris">鸢尾花</string>
+    <string name="app_theme_oat">燕麦拿铁</string>
     <string name="settings_font_size">字号</string>
     <string name="settings_theme">主题</string>
     <string name="settings_theme_light">日间</string>
