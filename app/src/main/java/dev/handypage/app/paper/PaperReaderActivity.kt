@@ -320,7 +320,9 @@ class PaperReaderActivity : AppCompatActivity() {
             app.vocabDb.vocabWordDao().observeAll()
                 .map { words ->
                     VocabHighlight.normalizeTerms(
-                        words.flatMap { listOfNotNull(it.word, it.lemma) },
+                        // M40: mastered words stop being highlighted.
+                        words.filter { it.mastery < 2 }
+                            .flatMap { listOfNotNull(it.word, it.lemma) },
                     )
                 }
                 .distinctUntilChanged()

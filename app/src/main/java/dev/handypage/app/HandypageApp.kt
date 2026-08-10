@@ -59,6 +59,7 @@ class HandypageApp : Application() {
                 VocabDatabase.MIGRATION_4_5,
                 VocabDatabase.MIGRATION_5_6,
                 VocabDatabase.MIGRATION_6_7,
+                VocabDatabase.MIGRATION_7_8,
             )
             .build()
     }

@@ -45,6 +45,12 @@ data class VocabWord(
     val articleUrl: String = "",
     val sourceName: String = "",
     val addedAt: Long,
+    /**
+     * M40: mastery level — 0 新词 / 1 学习中 / 2 已掌握. Defaults to 0 so all
+     * existing named-arg constructions (and the 7 → 8 migration's DEFAULT 0)
+     * keep every pre-M40 row a 新词.
+     */
+    val mastery: Int = 0,
 )
 
 /**
@@ -188,17 +194,26 @@ interface VocabWordDao {
     @Query("DELETE FROM vocab_words WHERE id = :id")
     suspend fun deleteById(id: Long): Int
 
+    /** M40: batch delete — all rows of the selected groups. */
+    @Query("DELETE FROM vocab_words WHERE id IN (:ids)")
+    suspend fun deleteByIds(ids: List<Long>): Int
+
+    /** M40: batch mastery update — all rows of one or more groups. */
+    @Query("UPDATE vocab_words SET mastery = :mastery WHERE id IN (:ids)")
+    suspend fun updateMastery(ids: List<Long>, mastery: Int): Int
+
     @Query("SELECT COUNT(*) FROM vocab_words")
     suspend fun count(): Int
 
     /**
      * M8: distinct surface forms worth weak-highlighting in articles — every
      * saved word plus its lemma (dedup via UNION). [VocabHighlight] filters
-     * blanks/short tokens further.
+     * blanks/short tokens further. M40: mastered words (mastery = 2) stop
+     * being highlighted — they no longer need the in-article nudge.
      */
     @Query(
-        "SELECT word FROM vocab_words " +
-            "UNION SELECT lemma FROM vocab_words WHERE lemma IS NOT NULL",
+        "SELECT word FROM vocab_words WHERE mastery < 2 " +
+            "UNION SELECT lemma FROM vocab_words WHERE lemma IS NOT NULL AND mastery < 2",
     )
     suspend fun highlightTerms(): List<String>
 
@@ -254,7 +269,7 @@ interface PaperTranslationDao {
         ArticleRecord::class, SavedSentence::class, PaperStar::class, ArticleStar::class,
         PaperTranslation::class,
     ],
-    version = 7,
+    version = 8,
     exportSchema = false,
 )
 abstract class VocabDatabase : RoomDatabase() {
@@ -418,6 +433,19 @@ abstract class VocabDatabase : RoomDatabase() {
                     "CREATE UNIQUE INDEX IF NOT EXISTS" +
                         " `index_paper_translations_paperKey_paraHash_model`" +
                         " ON `paper_translations` (`paperKey`, `paraHash`, `model`)",
+                )
+            }
+        }
+
+        /**
+         * 7 → 8 adds the M40 mastery column to vocab_words (0 新词 / 1 学习中
+         * / 2 已掌握). Pure ALTER TABLE with DEFAULT 0: every existing row
+         * becomes a 新词, no data rewritten.
+         */
+        val MIGRATION_7_8 = object : Migration(7, 8) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    "ALTER TABLE vocab_words ADD COLUMN mastery INTEGER NOT NULL DEFAULT 0",
                 )
             }
         }
